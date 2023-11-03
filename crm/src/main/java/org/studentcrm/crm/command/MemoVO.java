@@ -1,6 +1,6 @@
 package org.studentcrm.crm.command;
 
-public class Memo {
+public class MemoVO {
 	private String content;
 	private int s_id;
 }

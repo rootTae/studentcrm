@@ -10,5 +10,6 @@ import org.studentcrm.crm.command.StudentVO;
 public interface AttendanceMapper {
    public StudentVO read(int s_id);
    public int insertMemo(AttendanceVO vo);
-   public 
+   public void updateStatus(StudentVO vo);
 }
+

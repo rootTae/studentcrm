@@ -3,10 +3,17 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.mapper.StudentMapper">
+<mapper namespace="org.studentcrm.crm.mapper.AttendanceMapper">
+	<!-- 학생id로 학생의 학교이름, 전번 받아오기 -->
+	<select id="read" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
+		select school, s_phone from student where s_id = #{s_id}
+	</select>
+	<!--  -->
+	<insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
+		insert into attendance(a_comment) values(#{a_comment})
+	</insert>
     <update id="updateStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
-        UPDATE students
-        SET status = #{status}
-        WHERE id = #{id}
+        update attendance set a_status = #{a_status}
+        where s_id = #{a_id}
     </update>
 </mapper>

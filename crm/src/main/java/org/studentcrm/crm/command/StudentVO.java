@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentVO {
  
-	private String s_name;
-	private String s_birth;
-	private String s_phone;
-	private Timestamp reg_date;
-	private Timestamp first_date;
-	private String family;
-	private String school;
-	private String gender;
-	private String address;
-	private String filename;
+   private String s_name;
+   private String s_birth;
+   private String s_phone;
+   private Timestamp reg_date;
+   private Timestamp first_date;
+   private String family;
+   private String school;
+   private String gender;
+   private String address;
+   private String filename;
 }

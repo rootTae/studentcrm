@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterVO {
-	private int r_id;
-	private int s_id;
-	private String c_startdate;
-	private String c_enddate;
-	private String class_name;
+   private int r_id;
+   private int s_id;
+   private String c_startdate;
+   private String c_enddate;
+   private String class_name;
 }

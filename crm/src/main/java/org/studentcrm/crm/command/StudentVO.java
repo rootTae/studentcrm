@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentVO {
-	
+public class StudentVO {	
    private int s_id;
    private String s_name;
    private String s_school;

@@ -14,5 +14,5 @@ public interface StudentMapper {
 	//학생 정보 수정
 	public boolean updateStudent(StudentVO vo);
 	//학생 정보 삭제
-	public void deleteStudent(String num);
+	public void deleteStudent(int s_id);
 }

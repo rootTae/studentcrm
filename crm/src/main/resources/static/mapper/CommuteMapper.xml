@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.studentcrm.crm.mapper.CommuteMapper">
+	<insert id="insertCommute" parameterType="org.studentcrm.crm.command.CommuteVO">
+		insert into commute(s_id, zip_code, address, address_detail, b_location)
+		values(#{s_id}, #{zip_code}, #{address}, #{address_detail}, #{b_location})
+	</insert>
+	<select id="getCommute" resultType="org.studentcrm.crm.command.CommuteVO" parameterType="java.lang.Integer">
+		select * from commute where s_id=#{s_id}
+	</select>
+	<update id="updateCommute" parameterType="org.studentcrm.crm.command.CommuteVO">
+		update commute set zip_code=#{zip_code}, address=#{address}, address_detail=#{address_detail}, b_location=#{b_location}
+		where s_id=#{s_id}
+	</update>
+	<delete id="deleteCommute" parameterType="java.lang.Integer">
+		delete from commute where s_id=#{s_id}
+	</delete>
+</mapper>

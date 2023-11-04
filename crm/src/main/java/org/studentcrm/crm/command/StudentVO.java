@@ -1,7 +1,5 @@
 package org.studentcrm.crm.command;
 
-import java.sql.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +20,7 @@ public class StudentVO {
    private String s_family_phone1;
    private String s_family_phone2;
    private String s_sibling;
-   private Timestamp reg_date;
-   private Timestamp first_date;
+   private String reg_date;
+   private String first_date;
    private String s_filename;
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.studentcrm.crm.mapper.StudentMapper">
+	<!-- 학생 id 검색 -->
+	<select id="getStudent" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
+		select * from student where s_id = #{s_id}
+	</select>
+	<!-- 학생 정보 등록 -->
+	<insert id="insertStudent" parameterType="org.studentcrm.crm.command.StudentVO">
+		insert into student(s_name, s_school, s_grade, s_birth, s_gender, s_phone, 
+			s_family, s_relation, s_family_phone1, s_family_phone2, s_sibling,
+			reg_date, first_date, s_filename)
+		values(#{s_name}, #{s_school}, #{s_grade}, #{s_birth}, #{s_gender}, #{s_phone}, 
+			#{s_family}, #{s_relation}, #{s_family_phone1}, #{s_family_phone2}, #{s_sibling},
+			#{reg_date}, #{first_date}, #{s_filename})
+	</insert>
+	<!-- 학생 정보 수정 -->
+	<update id="updateStudent" parameterType="org.studentcrm.crm.command.StudentVO">
+		update student set s_name=#{s_name}, s_school=#{s_school}, s_grade=#{s_grade}, s_birth=#{s_birth}, s_gender=#{s_gender}, s_phone=#{s_phone}, 
+			s_family=#{s_family}, s_relation=#{s_relation}, s_family_phone1=#{s_family_phone1}, s_family_phone2=#{s_family_phone2}, s_sibling=#{s_sibling},
+			reg_date=#{reg_date}, first_date=#{first_date}, s_filename=#{s_filename}
+		where s_id=#{s_id}
+	</update>
+	<!-- 학생 정보 삭제 -->
+	<delete id="deleteStudent" parameterType="java.lang.Integer">
+		delete from student where s_id=#{s_id}
+	</delete>
+</mapper>

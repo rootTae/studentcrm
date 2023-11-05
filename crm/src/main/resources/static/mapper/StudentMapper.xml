@@ -27,4 +27,4 @@
 	<delete id="deleteStudent" parameterType="java.lang.Integer">
 		delete from student where s_id=#{s_id}
 	</delete>
-</mapper>
+	</mapper>

@@ -1,5 +1,8 @@
 package org.studentcrm.crm.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import org.studentcrm.crm.command.StudentVO;
@@ -15,4 +18,7 @@ public interface StudentMapper {
 	public boolean updateStudent(StudentVO vo);
 	//학생 정보 삭제
 	public void deleteStudent(int s_id);
+	
+	//검색어 자동완성
+	public List<Map<String, Object>> autocomplete(Map<String, Object> paramMap) throws Exception;
 }

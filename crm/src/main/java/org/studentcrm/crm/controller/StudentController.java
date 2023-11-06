@@ -9,15 +9,15 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
-@RequestMapping("/student/*")
+@RequestMapping("/student")
 @Log4j2
 public class StudentController {
 	@Setter(onMethod_ = {@Autowired})
 	StudentService sService;
 	
-	@RequestMapping("")
+	@RequestMapping("/studentInfo")
 	public String student() {
-		return "student/student";
+		return "student/studentInfo";
 	}
 
 	

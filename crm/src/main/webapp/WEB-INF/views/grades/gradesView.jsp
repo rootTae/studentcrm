@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<form action="studentList"  method="post" >            
+    <input type="text" placeholder="이름" name="s_name">
+                 
+                  
+                  	
+                 
+	</form>
 </body>
 </html>

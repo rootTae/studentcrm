@@ -36,4 +36,6 @@ public class StudentController {
 		return new ResponseEntity<StudentVO>(sService.getStudent(s_id), HttpStatus.OK);
 	}
 	
+	
+	
 }

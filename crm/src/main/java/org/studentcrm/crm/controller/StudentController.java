@@ -4,18 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+//import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.service.StudentService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
-@Controller
+//@Controller
+@RestController
 @RequestMapping("/student/")
 @Log4j2
 public class StudentController {

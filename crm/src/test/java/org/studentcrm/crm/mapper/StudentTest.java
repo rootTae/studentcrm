@@ -1,5 +1,7 @@
 package org.studentcrm.crm.mapper;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,14 +23,14 @@ public class StudentTest {
 	
 	@Test
 	public void insert() {
-		for(int i=1; i<=10; i++) {
+		for(int i=1; i<=5; i++) {
 			StudentVO vo = new StudentVO();
-			vo.setS_name("김학생"+i);
+			vo.setS_name("김학생");
 			vo.setS_school("세모중학교");
 			vo.setS_grade("2학년");
 			vo.setS_birth("2009-10-22");
 			vo.setS_gender("여");
-			vo.setS_family("김아빠"+i);
+			vo.setS_family("김아빠");
 			vo.setS_relation("부");
 			mapper.insertStudent(vo);
 //			log.info(vo);
@@ -58,5 +60,11 @@ public class StudentTest {
 		vo.setS_relation("모");
 		log.info(vo);
 		mapper.updateStudent(vo);
+	}
+	
+	@Test
+	public void getName() {
+		List<StudentVO> list = mapper.getStudentName("김학생");
+		log.info(list);
 	}
 }

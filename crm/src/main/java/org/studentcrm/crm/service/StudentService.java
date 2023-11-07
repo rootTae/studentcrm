@@ -1,7 +1,6 @@
 package org.studentcrm.crm.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.studentcrm.crm.command.StudentVO;
 
@@ -14,6 +13,6 @@ public interface StudentService {
 	public boolean updateStudent(StudentVO vo);
 	//학생 정보 삭제
 	public void deleteStudent(int s_id);
-	//검색어 자동완성
-	List<Map<String, Object>>autocomplete(Map<String, Object> paramMap) throws Exception;
+	//학생 이름 검색
+	public List<StudentVO> getStudentName(String s_name);
 }

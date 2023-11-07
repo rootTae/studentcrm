@@ -27,11 +27,8 @@
 	<delete id="deleteStudent" parameterType="java.lang.Integer">
 		delete from student where s_id=#{s_id}
 	</delete>
-	
-	<!-- 검색어 자동 완성 -->
-	<select id="autocomplete" parameterType="map" resultType="map">
-		SELECT s_id, s_name
-		FROM student
-		WHERE s_name LIKE '%' || #{value} || '%'
+	<!-- 학생 이름 검색 -->
+	<select id="getStudentName" parameterType="org.studentcrm.crm.command.StudentVO">
+		select s_id, s_name from student where s_name=#{s_name}
 	</select>
 </mapper>

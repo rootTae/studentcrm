@@ -14,12 +14,6 @@ import lombok.extern.log4j.Log4j2;
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class MyBatisTest {
 	
-	@Setter(onMethod_ = {@Autowired})
-	private AttendanceTest mapper;
 	
-	@Test
-	public void testMapper() {
-		log.info(mapper);
-	}
 	
 }

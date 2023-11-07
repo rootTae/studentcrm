@@ -16,7 +16,7 @@
 				}		
 			}).fail(function(xhr, status, err){
 				if(error){
-					error();
+					error(); 
 				}
 			});
 	}
@@ -27,8 +27,14 @@
 		$.getJSON("/studentRest/name/"+s_name,
 			function(data){
 				if(callback){
-					callback(data);
-					console.log("검색한 정보 : "+data.s_id);
+					let s_idArray = [];
+					$.each(data, function(index, item) {
+						console.log("출력할 id : "+item.s_id);
+						s_idArray.push(item.s_id);
+					});
+						
+					callback(s_idArray);
+					console.log("출력할 data id : "+s_idArray);
 				}
 			}).fail(function(xhr, status, err) {
 				if(error){

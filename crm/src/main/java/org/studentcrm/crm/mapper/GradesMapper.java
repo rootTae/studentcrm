@@ -25,6 +25,6 @@ public interface GradesMapper {
 	//public AvgVO mathAvg(List<Exam_ScoreVO> list);	//수학 평균 값
 	
 	public List<StudentVO> getStudentList(String s_name); //학생이름으로 검색
-	public List<Exam_ScoreVO> getScoreList(int s_id); //학생번호로 점수 조회
+	public List<Exam_ScoreVO> getScoreList(int s_id, String name); //학생번호로 점수 조회
 	
 }

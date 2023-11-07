@@ -21,7 +21,7 @@ public interface GradesService {
 
 	
 	public List<StudentVO> getStudentList(String s_name);//학생 이름으로 학생 리스트 가져오기
-	public List<Exam_ScoreVO> getScoreList(int s_id); //학생아이디로 검색 점수리스트 가져오기
+	public List<Exam_ScoreVO> getScoreList(int s_id, String s_name); //학생아이디로 검색 점수리스트 가져오기
 	
 	
 	

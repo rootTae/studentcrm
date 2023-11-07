@@ -31,9 +31,9 @@
       function getStudentList(param, callback, error) {
         var s_name = param.s_name;
 
-        $.getJSON("/gradesF/" + s_name, function(data) {
+        $.getJSON("/gradesF/" + s_name, function(list) {
             if (callback) {
-                callback(data);
+                callback(list);
             }
         }).fail(function(xhr, status, err) {
             if (error) {
@@ -44,11 +44,12 @@
     
     //학생아이디로 검색 점수리스트 가져오기
     function getScoreList(param, callback, error) {
+        var s_name = param.s_name;
         var s_id = param.s_id;
 
-        $.getJSON("/gradesF/" + s_id, function(data) {
+        $.getJSON("/gradesF/" +s_name + s_id, function(List) {
             if (callback) {
-                callback(data);
+                callback(List);
             }
         }).fail(function(xhr, status, err) {
             if (error) {

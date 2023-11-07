@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,8 +42,10 @@ public class GradesController {
 	//학생아이디로 검색 점수리스트 가져오기
 	@GetMapping(value = "/{s_name}/{s_id}",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<Exam_ScoreVO>> getScoreList(@PathVariable("s_id")int s_id){
-		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(s_id), HttpStatus.OK);
+	public ResponseEntity<List<Exam_ScoreVO>> getScoreList(
+			@PathVariable("s_name")String s_name,
+			@PathVariable("s_id")int s_id){
+		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(s_id,s_name), HttpStatus.OK);
 	}
 
 	//시험 점수 생성

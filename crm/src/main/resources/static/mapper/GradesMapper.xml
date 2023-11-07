@@ -57,12 +57,15 @@ resultType="org.studentcrm.crm.command.AvgVO">
 <!-- 학생이름으로 조회 -->
 <select id="getStudentList" parameterType="java.lang.String" 
 resultType="org.studentcrm.crm.command.StudentVO">
-	select s_id, s_name, gender, s_phone, school from student where s_name = #{s_name}
+	select s_id, s_name, s_gender, s_phone, s_school from student where s_name = #{s_name}
 </select>
 
 <!-- 학생번호로 학생시험점수 리스트  -->
 <select id="getScoreList" resultType="org.studentcrm.crm.command.Exam_ScoreVO">
-		select * from exam_score where s_id = #{s_id} order by e_date
+		select * from exam_score es
+		join exam e on es.e_id =e.e_id
+		where s_id = #{s_id} 
+		order by e_date
 	</select>
 
 

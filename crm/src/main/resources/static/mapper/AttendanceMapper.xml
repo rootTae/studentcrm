@@ -6,14 +6,22 @@
 <mapper namespace="org.studentcrm.crm.mapper.AttendanceMapper">
 	<!-- 학생id로 학생의 학교이름, 전번 받아오기 -->
 	<select id="read" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
-		select school, s_phone from student where s_id = #{s_id}
+		select s_school, s_phone from student where s_id = #{s_id}
 	</select>
-	<!--  -->
+	<!-- 메모 삽입 -->
 	<insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
-		insert into attendance(a_comment) values(#{a_comment})
+   		insert into attendance(s_id,a_date,a_comment)
+   		values(#{s_id},#{a_date},#{a_comment})
 	</insert>
+	<!-- 메모 읽기 -->
+	<select id="readMemo" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
+  		select a_comment, a_date from attendance
+   		where s_id = #{s_id} and a_date = #{a_date}
+	</select>
+	
+	<!-- 출결 상황 업데이트 -->
     <update id="updateStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
         update attendance set a_status = #{a_status}
-        where s_id = #{a_id}
+        where s_id = #{s_id} and a_date = #{a_date}
     </update>
 </mapper>

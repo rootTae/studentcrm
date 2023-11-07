@@ -1,5 +1,8 @@
 package org.studentcrm.crm.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.service.StudentService;
@@ -42,14 +46,35 @@ public class StudentRestController {
 //		return new ResponseEntity<StudentVO>(sService.getStudent(s_search), HttpStatus.OK);
 //	}
 //	
-	@PostMapping("/s_search")
-    public String s_search(@RequestParam("s_search") String input) {
-        try {
-            int intValue = Integer.parseInt(input);
-            return "입력된 값은 정수입니다: " + intValue;
-        } catch (NumberFormatException e) {
-            return "입력된 값은 문자열입니다: " + input;
-        }
-    }
+	
+//	@PostMapping("/s_search")
+//    public String s_search(@RequestParam("s_search") String input) {
+//        try {
+//            int intValue = Integer.parseInt(input);
+//            return "입력된 값은 정수입니다: " + intValue;
+//        } catch (NumberFormatException e) {
+//            return "입력된 값은 문자열입니다: " + input;
+//        }
+//    }
+	
+	@PostMapping(value="/{s_search}",
+	produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<StudentVO> getStudent(@PathVariable("s_id") String s_search) {
+		log.info("s_id : "+s_search);
+		return null;
+		
+//		return new ResponseEntity<StudentVO>(sService.getStudent(s_search), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/autocomplete")
+	public @ResponseBody Map<String, Object> autocomplete
+    						(@RequestParam Map<String, Object> paramMap) throws Exception{
+
+		List<Map<String, Object>> resultList = sService.autocomplete(paramMap);
+		paramMap.put("resultList", resultList);
+		log.info(paramMap);
+		return paramMap;
+	}
+
 	
 }

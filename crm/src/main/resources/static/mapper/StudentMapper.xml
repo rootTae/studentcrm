@@ -27,4 +27,11 @@
 	<delete id="deleteStudent" parameterType="java.lang.Integer">
 		delete from student where s_id=#{s_id}
 	</delete>
-	</mapper>
+	
+	<!-- 검색어 자동 완성 -->
+	<select id="autocomplete" parameterType="map" resultType="map">
+		SELECT s_id, s_name
+		FROM student
+		WHERE s_name LIKE '%' || #{value} || '%'
+	</select>
+</mapper>

@@ -44,19 +44,20 @@
     
     //학생아이디로 검색 점수리스트 가져오기
     function getScoreList(param, callback, error) {
-        var s_name = param.s_name;
-        var s_id = param.s_id;
+    var s_name = param.s_name;
+    var s_id = param.s_id;
 
-        $.getJSON("/gradesF/" +s_name + s_id, function(List) {
-            if (callback) {
-                callback(List);
-            }
-        }).fail(function(xhr, status, err) {
-            if (error) {
-                error(err);
-            }
-        });
-    }
+    // GET 요청 URL을 수정합니다.
+    $.getJSON("/gradesF/" + s_name + "/" + s_id, function(list) {
+        if (callback) {
+            callback(list);
+        }
+    }).fail(function(xhr, status, err) {
+        if (error) {
+            error(err);
+        }
+    });
+}
     
     // 댓글 삭제와 갱신 처리... 
   function remove(rno, callback, error){

@@ -70,29 +70,29 @@
                         row.append($('<td>').text(student.s_phone)); 
                         tableBody.append(row);
                     });
-                    
-                    $('#studentTableBody').on('click', 'tr', function() {
-                            var s_idValue = parseInt($(this).find('td:first').text(), 10);
-                            var s_name = $(this).find('td:nth-child(2)').text();
-                        console.log(s_idValue);
+                });
+            });
 
-                        GradesService.getScoreList({s_name: s_nameValue},{s_id: s_idValue}, function(examList) {
-                            console.log(examList);
-                            var examList = $('#examList');
-                            scoreList.empty();
+            $(document).on('click', '#studentTableBody tr', function() {
+                var s_id = $(this).find('td:first').text();
+                var s_name = $(this).find('td:nth-child(2)').text();
+                console.log(s_id);
+                console.log(s_name);
 
-                            examList.forEach(function(exam) {
-                                var examRow = $('<tr>');
-                                examRow.append($('<td>').text(s_idValue));
-                                examRow.append($('<td>').text(student.s_name)); // Here you might need another way to fetch student name, e.g., from the response
-                                examRow.append($('<td>').text(exam.e_name));
-                                examRow.append($('<td>').text(exam.e_date));
-                                examRow.append($('<td>').text(exam.e_subject));
-                                examRow.append($('<td>').text(exam.e_score));
-                                scoreList.append(examRow);
-           
-                            });
-                        });
+                GradesService.getScoreList({s_id: s_id, s_name: s_name}, function(List) {
+                    console.log(List);
+                    var exam = $('#List');
+                    exam.empty();
+
+                      List.forEach(function(exam) {
+                        var examRow = $('<tr>');
+                        examRow.append($('<td>').text(s_id));
+                        examRow.append($('<td>').text(s_name)); 
+                        examRow.append($('<td>').text(exam.e_name));
+                        examRow.append($('<td>').text(exam.e_date));
+                        examRow.append($('<td>').text(exam.e_subject));
+                        examRow.append($('<td>').text(exam.e_score));
+                        scoreList.append(examRow);
                     });
                 });
             });

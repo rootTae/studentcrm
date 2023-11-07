@@ -43,9 +43,9 @@ public class GradesController {
 	@GetMapping(value = "/{s_name}/{s_id}",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<Exam_ScoreVO>> getScoreList(
-			@PathVariable("s_name")String s_name,
+			@PathVariable("s_name") String s_name,
 			@PathVariable("s_id")int s_id){
-		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(s_id,s_name), HttpStatus.OK);
+		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(s_id, s_name), HttpStatus.OK);
 	}
 
 	//시험 점수 생성

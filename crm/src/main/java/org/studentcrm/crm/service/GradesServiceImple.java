@@ -57,9 +57,9 @@ public class GradesServiceImple implements GradesService {
 	}
 
 	@Override//학생아이디로 검색 점수리스트 가져오기
-	public List<Exam_ScoreVO> getScoreList(int s_id , String s_name) {
+	public List<Exam_ScoreVO> getScoreList(int s_id, String s_name) {
 		log.info("학생아이디로 검색 점수리스트 가져오기" + s_id);
-		return mapper.getScoreList(s_id, s_name);
+		return mapper.getScoreList(s_id);
 	}
 
 }

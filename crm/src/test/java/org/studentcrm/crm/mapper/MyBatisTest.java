@@ -15,18 +15,11 @@ import lombok.extern.log4j.Log4j2;
 public class MyBatisTest {
 	
 	@Setter(onMethod_ = {@Autowired})
-	private AttendanceMapper mapper;
+	private AttendanceTest mapper;
 	
 	@Test
 	public void testMapper() {
 		log.info(mapper);
-	}
-	
-	@Test
-	public void read() {
-		int targetNum = 5;
-		StudentVO vo = mapper.read(targetNum);
-		log.info(vo);
 	}
 	
 }

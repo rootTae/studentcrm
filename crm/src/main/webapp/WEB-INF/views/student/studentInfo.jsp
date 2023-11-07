@@ -56,7 +56,7 @@
 				/* srchName("학생이름", function(studentId) {
 				    console.log("학번: " + studentId);
 				}); */
-				let s_id = srchName(searchVal);
+				srchName(searchVal);
 				//console.log("s_id : "+s_id);
 				//getInfo(s_id);
 				//이름으로 해당하는 id 값 list로 가져오고 클릭하면 id 값으로 학생 정보 가져오기
@@ -69,24 +69,37 @@
 			function(data) {
 				let str = "";
 			//console.log("data.s_name : "+data.s_name);
+				//학번으로 검색했을 때
+				//일치하는 정보가 없음
 				if(data == null || data.length == 0){
 					searchList.html("");
 					return;
+				}else if(data.length === 1){//일치하는 정보 있음
+					str += "<li data-s_id='"+data.s_id+"'>";
+		            str += "<p>"+data.s_name+"</p></li>";
+					
+				}else { //이름으로 검색한 경우 + 동명이인이 있는 경우
+					data.forEach(function(item) {
+						str += "<li data-s_id='"+item.s_id+"'>";
+			            str += "<p>"+item.s_name+"</p></li>";						
+					});				
 				}
-				str += "<li data-s_id='"+data.s_id+"'>";
-	            str += "<p>"+data.s_name+"</p></li>";
 				searchList.html(str);
 			});
 		}
 		//이름으로 학생 id 가져오기
-		function srchName(searchVal, callback) {
+		function srchName(searchVal) {
 			StudentService.getName({s_name:searchVal},
 				function(data){
-					if(callback) {
-						console.log("s_ids_ids_ids_ids_id : "+data.s_id);
-						searchVal = data.s_id;
-						
+					if(data == null || data.length == 0){
+						searchList.html("");
+						return;
 					}
+					console.log("s_ids_ids_ids_ids_id : "+data);
+					//searchVal = data;
+					data.forEach(function(s_id){
+						getInfo(s_id);
+					})
 			});
 		}
 		

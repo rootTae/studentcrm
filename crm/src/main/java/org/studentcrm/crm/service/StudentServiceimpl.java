@@ -36,6 +36,8 @@ public class StudentServiceimpl implements StudentService {
 	
 	@Override
 	public List<StudentVO> getStudentName(String s_name) {
-		return sMapper.getStudentName(s_name);
+		//System.out.print("service s_name---------- : " +s_name);
+		List<StudentVO> list = sMapper.getStudentName(s_name);
+		return list;
 	}
 }

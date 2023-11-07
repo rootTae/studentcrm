@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -6,7 +7,7 @@
 <mapper namespace="org.studentcrm.crm.mapper.AttendanceMapper">
 	<!-- 학생id로 학생의 학교이름, 전번 받아오기 -->
 	<select id="read" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
-		select s_school, s_phone from student where s_id = #{s_id}
+		select s_id, s_school, s_phone from student where s_id = #{s_id}
 	</select>
 	<!-- 메모 삽입 -->
 	<insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
@@ -15,7 +16,7 @@
 	</insert>
 	<!-- 메모 읽기 -->
 	<select id="readMemo" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
-  		select a_comment, a_date from attendance
+  		select s_id, a_date, a_comment from attendance
    		where s_id = #{s_id} and a_date = #{a_date}
 	</select>
 	
@@ -24,4 +25,11 @@
         update attendance set a_status = #{a_status}
         where s_id = #{s_id} and a_date = #{a_date}
     </update>
+    
+    <!-- 검색을 위한 날짜 시간 받아오기 -->
+	<select id="getTime" resultType="java.sql.Timestamp">
+	    select a_date from attendance
+	    where s_id = #{s_id}	
+	</select>	   
+    
 </mapper>

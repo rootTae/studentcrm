@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttendanceVO {
+	
 	String a_status;
 	String a_comment;
 	Timestamp a_date;

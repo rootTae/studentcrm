@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,10 +39,23 @@ public class StudentRestController {
 	//학생 이름으로 검색(리스트로 출력)
 	@GetMapping(value = "/name/{s_name}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<StudentVO>> getStudent(@PathVariable("s_name") String s_name) {
-	    log.info("s_name---------- : " +s_name);
+	    //log.info("s_name---------- : " +s_name);
 	    //System.out.print("fffffffffffffffffffffffffffff");
 	    return new ResponseEntity<List<StudentVO>>(sService.getStudentName(s_name), HttpStatus.OK);
 	}
+	
+	//학생 정보 추가
+	@PostMapping(value="/insert",
+			consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public void insertStudent(@RequestBody StudentVO vo){
+		log.info("학생 정보 추가~~~ "+vo);
+		sService.insertStudent(vo);
+	}
+	
+	//
+//	@PostMapping("/studentForm")
+//	public void studentForm
 		
 	
 	//학번을 입력하면 해당 학생 정보를 화면에 출력

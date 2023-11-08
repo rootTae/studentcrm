@@ -1,11 +1,12 @@
 package org.studentcrm.crm.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import org.studentcrm.crm.command.AvgVO;
+import org.studentcrm.crm.command.ScoreVO;
 import org.studentcrm.crm.command.Exam_ScoreVO;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.mapper.GradesMapper;
@@ -39,13 +40,13 @@ public class GradesServiceImple implements GradesService {
 	}
 
 	@Override//전체인원 과목 평균
-	public AvgVO getSubjectsTotalAvg(List<Exam_ScoreVO> list) {
+	public ScoreVO getSubjectsTotalAvg(List<Exam_ScoreVO> list) {
 		log.info("전체인원 해당과목에대한 평균"+ list );
 		return mapper.SubjectsAvg(list);
 	}
 
 	@Override //국영수 평균 값
-	public AvgVO getAvgScore(Exam_ScoreVO vo) {
+	public ScoreVO getAvgScore(Exam_ScoreVO vo) {
 		log.info("세과목 평균 " + vo);
 		return mapper.avgScore(vo);
 	}
@@ -59,7 +60,12 @@ public class GradesServiceImple implements GradesService {
 	@Override//학생아이디로 검색 점수리스트 가져오기
 	public List<Exam_ScoreVO> getScoreList(int s_id, String s_name) {
 		log.info("학생아이디로 검색 점수리스트 가져오기" + s_id);
+		mapper.getScoreList(s_id);
 		return mapper.getScoreList(s_id);
 	}
+	
+	
+	
+
 
 }

@@ -43,7 +43,7 @@
                     <th>점수</th>
                 </tr>
             </thead>
-            <tbody class="scoreList" id="scoreList">
+            <tbody class="scoreList" id="scoreBody">
             </tbody>
         </table>
     </div>
@@ -81,19 +81,12 @@
 
                 GradesService.getScoreList({s_id: s_id, s_name: s_name}, function(List) {
                     console.log(List);
-                    var exam = $('#List');
-                    exam.empty();
+                    var examList = $('#scoreBody');
+                    examList.empty();
+                    
+                    
 
-                      List.forEach(function(exam) {
-                        var examRow = $('<tr>');
-                        examRow.append($('<td>').text(s_id));
-                        examRow.append($('<td>').text(s_name)); 
-                        examRow.append($('<td>').text(exam.e_name));
-                        examRow.append($('<td>').text(exam.e_date));
-                        examRow.append($('<td>').text(exam.e_subject));
-                        examRow.append($('<td>').text(exam.e_score));
-                        scoreList.append(examRow);
-                    });
+                      
                 });
             });
         });

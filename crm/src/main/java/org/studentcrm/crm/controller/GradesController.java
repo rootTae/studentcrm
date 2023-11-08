@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.studentcrm.crm.command.AvgVO;
+import org.studentcrm.crm.command.ScoreVO;
 import org.studentcrm.crm.command.Exam_ScoreVO;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.service.GradesService;
@@ -92,22 +92,22 @@ public class GradesController {
 		@PostMapping(value = "/{s_id}/avg",
 				consumes = "application/json",
 				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<AvgVO> getAvgScore(@RequestBody Exam_ScoreVO vo,@PathVariable ("s_id") int s_id){
+		public ResponseEntity<ScoreVO> getAvgScore(@RequestBody Exam_ScoreVO vo,@PathVariable ("s_id") int s_id){
 			log.info("Exam_ScoreVO" +vo);
-			return new ResponseEntity<AvgVO>(gservice.getAvgScore(vo),HttpStatus.OK);
+			return new ResponseEntity<ScoreVO>(gservice.getAvgScore(vo),HttpStatus.OK);
 		}
 		
 		//전체인원 과목 평균
 		@PostMapping(value = "/subAvg/{e_id}/{e_name}",
 				consumes = "application/json",
 				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<AvgVO> getSubjectsTotalAvg(
+		public ResponseEntity<ScoreVO> getSubjectsTotalAvg(
 				@PathVariable("e_id")int e_id,
 				@PathVariable("e_name")String e_name,
 				@RequestBody List<Exam_ScoreVO> list){
 			log.info("getSubjectsTotalAvg" +e_id);
 			log.info("getSubjectsTotalAvg" +e_name);
-			return new ResponseEntity<AvgVO>(gservice.getSubjectsTotalAvg(list), HttpStatus.OK);
+			return new ResponseEntity<ScoreVO>(gservice.getSubjectsTotalAvg(list), HttpStatus.OK);
 		}
 		
 }

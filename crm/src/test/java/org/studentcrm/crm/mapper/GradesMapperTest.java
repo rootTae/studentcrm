@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.studentcrm.crm.command.AvgVO;
+import org.studentcrm.crm.command.ScoreVO;
 import org.studentcrm.crm.command.Exam_ScoreVO;
 
 import lombok.Setter;
@@ -60,7 +60,7 @@ public class GradesMapperTest {
 		 Exam_ScoreVO vo = new Exam_ScoreVO();
 		 vo.setS_id(2);
 		 vo.setE_name("시험");
-		AvgVO avo=mapper.avgScore(vo);
+		ScoreVO avo=mapper.avgScore(vo);
 		log.info(avo.toString());
 	}
 	

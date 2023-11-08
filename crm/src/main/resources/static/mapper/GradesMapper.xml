@@ -6,7 +6,7 @@
 
 <!-- 성적입력 -->
 <insert id="insertScore" parameterType="org.studentcrm.crm.command.Exam_ScoreVO">
-	 insert into exam_score (s_id, e_id, e_score) values(#{s_id}, #{e_id}, #{e_score})
+	 insert into exam_score (s_id, e_id, e_score, e_type) values(#{s_id}, #{e_id}, #{e_score},#{e_type})
 </insert>
 
 <!-- 성적 삭제 -->
@@ -29,7 +29,7 @@
 
 <!--국영수 평균 구하기 -->
 <select id="avgScore" parameterType="org.studentcrm.crm.command.Exam_ScoreVO" 
-resultType="org.studentcrm.crm.command.AvgVO">
+resultType="org.studentcrm.crm.command.ScoreVO">
     select s_id,
         avg(case when e.e_subject = '국어' then es.e_score else null end) as korScore,
         avg(case when e.e_subject = '영어' then es.e_score else null end) as engScore,
@@ -37,6 +37,7 @@ resultType="org.studentcrm.crm.command.AvgVO">
         avg(es.e_score) as avgScore
     from exam_score es
     join exam e on es.e_id = e.e_id
+    join student s on es.s_id = s.s_id
     where es.s_id = #{s_id} and e.e_name = #{e_name}
     group by es.s_id;
 </select>
@@ -44,13 +45,14 @@ resultType="org.studentcrm.crm.command.AvgVO">
 
 <!-- 평균 구하는 메서드 -->
 <select id="SubjectsAvg" parameterType="org.studentcrm.crm.command.Exam_ScoreVO"
-        resultType="org.studentcrm.crm.command.AvgVO">
+        resultType="org.studentcrm.crm.command.ScoreVO">
     select
         avg(case when e.e_subject = '국어' then es.e_score else null end) as korAvg,
         avg(case when e.e_subject = '영어' then es.e_score else null end) as engAvg,
         avg(case when e.e_subject = '수학' then es.e_score else null end) as mathAvg
     from exam_score es
     join exam e on es.e_id = e.e_id
+    join student s on es.s_id = s.s_id
     where e.e_id = #{e_id} and e.e_name = #{e_name}
 </select>
 
@@ -64,9 +66,11 @@ resultType="org.studentcrm.crm.command.StudentVO">
 <select id="getScoreList" resultType="org.studentcrm.crm.command.Exam_ScoreVO">
 		select * from exam_score es
 		join exam e on es.e_id =e.e_id
+		join student s on es.s_id = s.s_id
 		where s_id = #{s_id} 
 		order by e_date
 	</select>
+
 
 
 <!-- 

@@ -1,6 +1,9 @@
 package org.studentcrm.crm.controller;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +38,16 @@ public class AttendanceRestController {
 				
 		return new ResponseEntity<StudentVO>(service.readInfo(s_id),HttpStatus.OK);
 	}
+	
+	// s_list
+	@GetMapping(value="/list/{class_name}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	
+	public ResponseEntity<List<StudentVO>> s_list(@PathVariable("class_name") String class_name){
+		log.info("s_class: " + class_name);
+		List<StudentVO> studentsList = service.s_list(class_name);
+		return new ResponseEntity<List<StudentVO>>(studentsList, HttpStatus.OK);
+	}
+	
 	// putMemo
 	@PostMapping(value = "/new",
 			consumes = "application/json",
@@ -51,7 +64,7 @@ public class AttendanceRestController {
 	@GetMapping(value="/{s_id}/{a_date}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<AttendanceVO> viewMemo(
 			@PathVariable("s_id") int s_id,
-			@PathVariable("a_date") Timestamp a_date,
+			@PathVariable("a_date") LocalDate a_date,
 			@RequestBody AttendanceVO vo
 			){
 		vo.setS_id(s_id);

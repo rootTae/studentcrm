@@ -16,5 +16,4 @@ public class AttendanceController {
 	public String attendanceView() {
 		return "attendance/attendanceView";
 	}
-	
 }

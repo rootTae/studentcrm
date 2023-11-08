@@ -9,6 +9,15 @@
 	<select id="read" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
 		select s_id, s_school, s_phone from student where s_id = #{s_id}
 	</select>
+	
+	<!-- class 테이블의 c_class와 student 테이블의 s_id, s_school, s_phone을 JOIN하여 가져오는 쿼리 -->
+	<select id="s_listByClass" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.String">
+	    select s.s_id, s.s_name, s.s_school, s.s_phone
+	    from student s
+	    inner join register r on s.s_id = r.s_id
+	    where r.class_name = #{class_name}
+	</select>
+	
 	<!-- 메모 삽입 -->
 	<insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
    		insert into attendance(s_id,a_date,a_comment)
@@ -27,7 +36,7 @@
     </update>
     
     <!-- 검색을 위한 날짜 시간 받아오기 -->
-	<select id="getTime" resultType="java.sql.Timestamp">
+	<select id="getTime" resultType="java.time.LocalDate">
 	    select a_date from attendance
 	    where s_id = #{s_id}	
 	</select>	   

@@ -21,14 +21,13 @@ public class ScoreVO {
 	
 	private double korAvg;//전체 국어 평균점수
 	private double engAvg;//전체 영어 평균점수
-	private double mathAvg;//전체 수학 평균점수A
+	private double mathAvg;//전체 수학 평균점수
 	
 	private double examPercentage; //시험백분율
 
 	
 	public ScoreVO(Exam_ScoreVO esvo) {
 		this.esvo = esvo;
-		this.alltotal = alltotal;
 		this.korScore = korScore;
 		this.engScore = engScore;
 		this.mathScore = mathScore;
@@ -37,6 +36,7 @@ public class ScoreVO {
 		this.korAvg = korAvg;
 		this.engAvg = engAvg;
 		this.mathAvg = mathAvg;
+		this.alltotal = alltotal;
 		this.examPercentage = examPercentage;
 	}
 

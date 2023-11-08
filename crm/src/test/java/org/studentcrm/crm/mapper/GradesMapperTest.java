@@ -42,7 +42,6 @@ public class GradesMapperTest {
 	@Test
 	public void updateScore() {
 		Exam_ScoreVO vo = new Exam_ScoreVO();
-		vo.setE_score(90);
 		vo.setScore_id(2);
 		mapper.updateScore(vo);
 		log.info(vo);
@@ -60,8 +59,7 @@ public class GradesMapperTest {
 		 Exam_ScoreVO vo = new Exam_ScoreVO();
 		 vo.setS_id(2);
 		 vo.setE_name("시험");
-		ScoreVO avo=mapper.avgScore(vo);
-		log.info(avo.toString());
+
 	}
 	
 }

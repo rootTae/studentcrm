@@ -88,26 +88,27 @@ public class GradesController {
 			:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 		
-		//국영수 평균 값
-		@PostMapping(value = "/{s_id}/avg",
-				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<ScoreVO> getAvgScore(@RequestBody Exam_ScoreVO vo,@PathVariable ("s_id") int s_id){
-			log.info("Exam_ScoreVO" +vo);
-			return new ResponseEntity<ScoreVO>(gservice.getAvgScore(vo),HttpStatus.OK);
-		}
 		
-		//전체인원 과목 평균
-		@PostMapping(value = "/subAvg/{e_id}/{e_name}",
-				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<ScoreVO> getSubjectsTotalAvg(
-				@PathVariable("e_id")int e_id,
-				@PathVariable("e_name")String e_name,
-				@RequestBody List<Exam_ScoreVO> list){
-			log.info("getSubjectsTotalAvg" +e_id);
-			log.info("getSubjectsTotalAvg" +e_name);
-			return new ResponseEntity<ScoreVO>(gservice.getSubjectsTotalAvg(list), HttpStatus.OK);
-		}
+//		//전체인원 과목 평균
+//		@PostMapping(value = "/subAvg/{e_id}/{e_name}",
+//				consumes = "application/json",
+//				produces = {MediaType.TEXT_PLAIN_VALUE})
+//		public ResponseEntity<ScoreVO> getSubjectsTotalAvg(
+//				@PathVariable("e_id")int e_id,
+//				@PathVariable("e_name")String e_name,
+//				@RequestBody List<Exam_ScoreVO> list){
+//			log.info("getSubjectsTotalAvg" +e_id);
+//			log.info("getSubjectsTotalAvg" +e_name);
+//			return new ResponseEntity<ScoreVO>(gservice.getSubjectsTotalAvg(list), HttpStatus.OK);
+//		}
+//		
+//		//국영수 평균 값
+//		@PostMapping(value = "/{s_id}/avg",
+//				consumes = "application/json",
+//				produces = {MediaType.TEXT_PLAIN_VALUE})
+//		public ResponseEntity<ScoreVO> getAvgScore(@RequestBody Exam_ScoreVO vo,@PathVariable ("s_id") int s_id){
+//			log.info("Exam_ScoreVO" +vo);
+//			return new ResponseEntity<ScoreVO>(gservice.getAvgScore(vo),HttpStatus.OK);
+//		}
 		
 }

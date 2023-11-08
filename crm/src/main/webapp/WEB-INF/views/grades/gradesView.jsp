@@ -39,8 +39,10 @@
                     <th>학생 이름</th>
                     <th>시험 명</th>
                     <th>시험 날짜</th>
-                    <th>과목</th>
-                    <th>점수</th>
+                    <th>국어</th>
+                    <th>영어</th>
+                    <th>수학</th>
+                    <th>평균</th>
                 </tr>
             </thead>
             <tbody class="scoreList" id="scoreBody">

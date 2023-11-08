@@ -98,7 +98,7 @@
    });
    }
    
-    function AvgScore(grades, callback, error) {
+   /* function AvgScore(grades, callback, error) {
         console.log("grades ......... ");
 
         $.ajax({
@@ -117,7 +117,7 @@
                 }
             }
         });
-    }
+    }*/
    
    function SubjectsTotalAvg(grades, callback, error) {
         console.log("grades ......... ");
@@ -147,7 +147,7 @@
         getScoreList : getScoreList,
         remove : remove,
         update : update,
-        AvgScore : AvgScore,
+        //AvgScore : AvgScore,
         SubjectsTotalAvg:SubjectsTotalAvg
         
     };

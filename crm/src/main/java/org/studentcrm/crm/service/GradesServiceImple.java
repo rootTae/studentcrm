@@ -39,13 +39,6 @@ public class GradesServiceImple implements GradesService {
 		return mapper.deleteScore(score_id);
 	}
 
-//	@Override//전체인원 과목 평균
-//	public ScoreVO getSubjectsTotalAvg(List<Exam_ScoreVO> list) {
-//		log.info("전체인원 해당과목에대한 평균"+ list );
-//		return mapper.SubjectsAvg(list);
-//	}
-
-
 	@Override//학생 이름으로 학생 리스트 가져오기
 	public List<StudentVO> getStudentList(String s_name) {
 		log.info("학생 이름으로 학생 리스트 가져오기" + s_name);
@@ -53,10 +46,20 @@ public class GradesServiceImple implements GradesService {
 	}
 
 	@Override//학생아이디로 검색 점수리스트 가져오기
-	public List<Exam_ScoreVO> getScoreList(int s_id, String s_name) {
-		log.info("학생아이디로 검색 점수리스트 가져오기" + s_id);
-		mapper.getScoreList(s_id);
-		return mapper.getScoreList(s_id);
+	public List<Exam_ScoreVO> getScoreList(Exam_ScoreVO vo) {
+		log.info("학생아이디로 검색 점수리스트 가져오기" + vo.getS_id());
+		mapper.getScoreList(vo.getS_id());
+		return mapper.getScoreList(vo.getS_id());
+	}
+	@Override //평균
+	public Exam_ScoreVO avgScore(Exam_ScoreVO vo) {
+		return mapper.avgScore(vo);
+	}
+	
+	@Override //각 과목당 평균 전체 평균
+	public ScoreVO getsubjectAvg(Exam_ScoreVO vo) {
+		List<Exam_ScoreVO> list =mapper.getScoreList(vo.getS_id());
+		return mapper.subjectAvg(list);
 	}
 	
 //	@Override //국영수 평균 값
@@ -65,6 +68,11 @@ public class GradesServiceImple implements GradesService {
 //		return mapper.avgScore(vo);
 //	}
 	
+//	@Override//전체인원 과목 평균
+//	public ScoreVO getSubjectsTotalAvg(List<Exam_ScoreVO> list) {
+//		log.info("전체인원 해당과목에대한 평균"+ list );
+//		return mapper.SubjectsAvg(list);
+//	}
 
 
 }

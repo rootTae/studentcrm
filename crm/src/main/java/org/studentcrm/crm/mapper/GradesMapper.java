@@ -21,9 +21,15 @@ public interface GradesMapper {
 	public List<Exam_ScoreVO> getScoreList(int s_id); //학생번호로 점수 조회
 	
 	
+	public Exam_ScoreVO avgScore(Exam_ScoreVO vo); //국영수 평균 구하기	
+	
+	public ScoreVO subjectAvg(List<Exam_ScoreVO> list); //과목당 평균 구하기
+	
+	
+	
 	//public AvgVO korAvg(List<Exam_ScoreVO> list);	//국어 평균 값
 	//public AvgVO engAvg(List<Exam_ScoreVO> list);	//영어 평균 값
-	//public AvgVO mathAvg(List<Exam_ScoreVO> list);	//수학 평균 값
-	//public ScoreVO avgScore(Exam_ScoreVO vo); 	  	//국영수 평균 값 구하기
+	//public AvgVO mathAvg(List<Exam_ScoreVO> list);//수학 평균 값
+	//public ScoreVO avgScore(Exam_ScoreVO vo); 	//국영수 평균 값 구하기
 	
 }

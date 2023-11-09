@@ -31,7 +31,7 @@
 <!-- 학생이름으로 조회 -->
 <select id="getStudentList" parameterType="java.lang.String" 
 resultType="org.studentcrm.crm.command.StudentVO">
-	select s_id, s_name, s_gender, s_phone, s_school from student where s_name = #{s_name}
+	select * from student where s_name = #{s_name}
 </select>
 
 <!-- 학생번호로 학생시험점수 리스트  -->
@@ -43,9 +43,24 @@ resultType="org.studentcrm.crm.command.StudentVO">
 		order by e_date
 	</select>
 
+<!-- 국영수 평균 -->
+<select id="avgScore" parameterType="org.studentcrm.crm.command.Exam_ScoreVO"
+resultType="org.studentcrm.crm.command.Exam_ScoreVO">
+		select round((avg(korScore)+ avg(engScore)+ avg(mathScore))/ 3 ,1) as avgScore from exam_score;
+</select>
 
-
-
+<!-- 전체 과목 평균 -->
+<select id="subjectAvg" parameterType="org.studentcrm.crm.command.Exam_ScoreVO"
+resultType="org.studentcrm.crm.command.ScoreVO">
+		 select 
+      	round(avg(case when korScore then es.korScore else null end),1) as korAvg,
+        round(avg(case when engScore then es.engScore else null end),1) as engAvg,
+        round(avg(case when mathScore then es.mathScore else null end),1) as mathAvg,
+        round(avg((es.korScore + es.engScore + es.mathScore)/3),1)as totalAvgScore
+    from exam_score es
+    join exam e on es.e_id = e.e_id
+    where es.e_id = #{e_id} and e.e_grade =#{e_e_grade}		
+</select>
 
 
 <!--국영수 평균 구하기 -->

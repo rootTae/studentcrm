@@ -43,9 +43,9 @@ public class GradesController {
 	@GetMapping(value = "/{s_name}/{s_id}",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<Exam_ScoreVO>> getScoreList(
-			@PathVariable("s_name") String s_name,
-			@PathVariable("s_id")int s_id){
-		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(s_id, s_name), HttpStatus.OK);
+			@PathVariable("es_vo") Exam_ScoreVO es_vo)
+			{
+		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(es_vo), HttpStatus.OK);
 	}
 
 	//시험 점수 생성
@@ -89,26 +89,26 @@ public class GradesController {
 		}
 		
 		
-//		//전체인원 과목 평균
-//		@PostMapping(value = "/subAvg/{e_id}/{e_name}",
-//				consumes = "application/json",
-//				produces = {MediaType.TEXT_PLAIN_VALUE})
-//		public ResponseEntity<ScoreVO> getSubjectsTotalAvg(
-//				@PathVariable("e_id")int e_id,
-//				@PathVariable("e_name")String e_name,
-//				@RequestBody List<Exam_ScoreVO> list){
-//			log.info("getSubjectsTotalAvg" +e_id);
-//			log.info("getSubjectsTotalAvg" +e_name);
-//			return new ResponseEntity<ScoreVO>(gservice.getSubjectsTotalAvg(list), HttpStatus.OK);
-//		}
-//		
-//		//국영수 평균 값
-//		@PostMapping(value = "/{s_id}/avg",
-//				consumes = "application/json",
-//				produces = {MediaType.TEXT_PLAIN_VALUE})
-//		public ResponseEntity<ScoreVO> getAvgScore(@RequestBody Exam_ScoreVO vo,@PathVariable ("s_id") int s_id){
-//			log.info("Exam_ScoreVO" +vo);
-//			return new ResponseEntity<ScoreVO>(gservice.getAvgScore(vo),HttpStatus.OK);
-//		}
+		//전체인원 과목 평균
+		@PostMapping(value = "/subAvg/{e_id}/{e_grade}",
+				consumes = "application/json",
+				produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<ScoreVO> getSubjectsTotalAvg(
+				@PathVariable("e_id")int e_id,
+				@PathVariable("e_grade")String e_grade,
+				@RequestBody Exam_ScoreVO vo){
+			log.info("getSubjectsTotalAvg" +e_id);
+			log.info("getSubjectsTotalAvg" +e_grade);
+			return new ResponseEntity<ScoreVO>(gservice.getsubjectAvg(vo), HttpStatus.OK);
+		}
+		
+		//국영수 평균 값
+		@PostMapping(value = "/{s_id}/avg",
+				consumes = "application/json",
+				produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<Exam_ScoreVO> getAvgScore(@RequestBody Exam_ScoreVO vo, @PathVariable ("s_id") int s_id){
+			log.info("Exam_ScoreVO" +vo);
+			return new ResponseEntity<Exam_ScoreVO>(gservice.avgScore(vo), HttpStatus.OK);
+		}
 		
 }

@@ -21,13 +21,16 @@
                     <th>학생 번호</th>
                     <th>학생 이름</th>
                     <th>성별</th>
-                    <th>학교</th>
                     <th>전화번호</th>
+                    <th>학교</th>
+                    <th>학년</th>                   
                 </tr>
             </thead>
-            <tbody class="studentsList" id="studentTableBody">
-            </tbody>
-        </table>
+			<tbody class="studentList">
+
+			
+			</tbody>
+        </table>   
     </div>
     
     <div>
@@ -45,53 +48,56 @@
                     <th>평균</th>
                 </tr>
             </thead>
-            <tbody class="scoreList" id="scoreBody">
-            </tbody>
+            	<tbody class="">
+
+			
+			</tbody>
         </table>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="/js/demo/grades.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+        	
             $('#searchForm').submit(function(event){
                 event.preventDefault();
                 var s_nameValue = $('#s_name').val();
                 console.log(s_nameValue);
                 
-                GradesService.getStudentList({s_name: s_nameValue}, function(list){
-                    console.log(list);
-                    var tableBody = $('#studentTableBody');
-                    tableBody.empty();
-                    
-                    list.forEach(function(student) {
-                        var row = $('<tr>');
-                        row.append($('<td>').text(student.s_id));
-                        row.append($('<td>').text(student.s_name));
-                        row.append($('<td>').text(student.s_gender));
-                        row.append($('<td>').text(student.s_school));
-                        row.append($('<td>').text(student.s_phone)); 
-                        tableBody.append(row);
-                    });
+                GradesService.getStudentList({s_name: s_nameValue}, function(student){
+                    console.log(student);
+                    var studentList = $('.studentList');
+                    studentList.empty();
+                                                                            
+                    student.forEach(function (student) {
+                        var str = '<tr>' +
+                            '<td>' + student.s_id + '</td>' +
+                            '<td>' + student.s_name + '</td>' +
+                            '<td>' + student.s_gender + '</td>' +
+                            '<td>' + student.s_phone + '</td>' +
+                            '<td>' + student.s_school + '</td>' +
+                            '<td>' + student.s_grade + '</td>' +
+                            '</tr>';                   
+                        studentList.append(str);//ul태그는 li을 여러개 받기때문에 사용
+        		});     
                 });
             });
+            
+        });
+
 
             $(document).on('click', '#studentTableBody tr', function() {
-                var s_id = $(this).find('td:first').text();
-                var s_name = $(this).find('td:nth-child(2)').text();
-                console.log(s_id);
-                console.log(s_name);
 
                 GradesService.getScoreList({s_id: s_id, s_name: s_name}, function(List) {
                     console.log(List);
+             
+                    
                     var examList = $('#scoreBody');
                     examList.empty();
-                    
-                    
-
                       
                 });
             });
-        });
+
     </script>
 </body>
 </html>

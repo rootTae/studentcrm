@@ -98,7 +98,7 @@
    });
    }
    
-   /* function AvgScore(grades, callback, error) {
+    function AvgScore(grades, callback, error) {
         console.log("grades ......... ");
 
         $.ajax({
@@ -117,14 +117,14 @@
                 }
             }
         });
-    }*/
+    }
    
    function SubjectsTotalAvg(grades, callback, error) {
         console.log("grades ......... ");
 
         $.ajax({
             type: 'post',
-            url: '../gradesF/subAvg'+e_id +'/'+e_name,
+            url: '../gradesF/subAvg'+e_id +'/'+e_grade,
             data: JSON.stringify(grades),
             contentType: "application/json; charset=utf-8",
             success: function (result, status, xhr) {
@@ -147,7 +147,7 @@
         getScoreList : getScoreList,
         remove : remove,
         update : update,
-        //AvgScore : AvgScore,
+        AvgScore : AvgScore,
         SubjectsTotalAvg:SubjectsTotalAvg
         
     };

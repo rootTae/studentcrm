@@ -18,6 +18,11 @@
 	    where r.class_name = #{class_name}
 	</select>
 	
+	<!-- 로그인 때 받은 t_id로 학생들 이름을 띄울 수 있는 반 리스트들을 나열 -->
+	<select id="classListByTeacher" resultType="org.studentcrm.crm.command.ClassVO" parameterType="java.lang.Integer">
+		select t_id, class_name from class where t_id = #{t_id}
+	</select>
+	
 	<!-- 메모 삽입 -->
 	<insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
    		insert into attendance(s_id,a_date,a_comment)

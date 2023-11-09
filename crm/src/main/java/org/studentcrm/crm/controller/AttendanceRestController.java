@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.AttendanceVO;
+import org.studentcrm.crm.command.ClassVO;
 import org.studentcrm.crm.command.StudentVO;
+import org.studentcrm.crm.command.TeacherVO;
 import org.studentcrm.crm.service.AttendanceService;
 
 import lombok.extern.log4j.Log4j2;
@@ -35,17 +37,23 @@ public class AttendanceRestController {
 	@GetMapping(value="/{s_id}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<StudentVO> get(@PathVariable("s_id") int s_id){
 		log.info("get: " + s_id);
-				
 		return new ResponseEntity<StudentVO>(service.readInfo(s_id),HttpStatus.OK);
 	}
 	
 	// s_list
-	@GetMapping(value="/list/{class_name}", produces= {MediaType.APPLICATION_JSON_VALUE})
-	
+	@GetMapping(value="/studentlist/{class_name}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<StudentVO>> s_list(@PathVariable("class_name") String class_name){
 		log.info("s_class: " + class_name);
 		List<StudentVO> studentsList = service.s_list(class_name);
 		return new ResponseEntity<List<StudentVO>>(studentsList, HttpStatus.OK);
+	}
+	
+	// classlistByt_id
+	@GetMapping(value="/classlist/{t_id}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<ClassVO>> c_list(@PathVariable("t_id") int t_id){
+		log.info("t_id: " + t_id);
+		List<ClassVO> classList = service.c_list(t_id);
+		return new ResponseEntity<List<ClassVO>>(classList, HttpStatus.OK);
 	}
 	
 	// putMemo

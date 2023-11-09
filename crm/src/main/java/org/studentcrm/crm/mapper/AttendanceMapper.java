@@ -8,13 +8,14 @@ import org.springframework.stereotype.Repository;
 import org.studentcrm.crm.command.AttendanceVO;
 import org.studentcrm.crm.command.ClassVO;
 import org.studentcrm.crm.command.StudentVO;
+import org.studentcrm.crm.command.TeacherVO;
 
 @Mapper
 @Repository
 public interface AttendanceMapper {
    public StudentVO read(int s_id); //학생 반, 전번 불러오기
    public List<StudentVO> s_listByClass(String class_name); //반이름으로 애들 목록+정보 불러오기
-   public List<ClassVO> class_listByTeacher(int t_id);
+   public List<ClassVO> classListByTeacher(int t_id);
    
    public int updateStatus(AttendanceVO a_vo); //출석, 지각, 결석...
    

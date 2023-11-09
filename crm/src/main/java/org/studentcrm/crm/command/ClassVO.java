@@ -3,10 +3,12 @@ package org.studentcrm.crm.command;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ClassVO {
 
 	String class_name;

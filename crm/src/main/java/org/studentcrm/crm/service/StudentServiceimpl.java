@@ -20,18 +20,18 @@ public class StudentServiceimpl implements StudentService {
 	}
 
 	@Override
-	public void insertStudent(StudentVO vo) {
-		sMapper.insertStudent(vo);
+	public int insertStudent(StudentVO vo) {
+		return sMapper.insertStudent(vo);
 	}
 
 	@Override
-	public boolean updateStudent(StudentVO vo) {
+	public int updateStudent(StudentVO vo) {
 		return sMapper.updateStudent(vo);
 	}
 
 	@Override
-	public void deleteStudent(int s_id) {
-		sMapper.deleteStudent(s_id);
+	public int deleteStudent(int s_id) {
+		return sMapper.deleteStudent(s_id);
 	}
 	
 	@Override

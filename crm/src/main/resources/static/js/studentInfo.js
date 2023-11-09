@@ -4,6 +4,9 @@
  
  
  let StudentService = (function() { //서비스 이름이랑 같게 했더니 오류가 안남
+ 
+ 	//============== 학생 정보 검색 ===============
+ 	
 	//학생 학번으로 검색(1개만 출력)
 	function getSearchList(srch, callback, error) {
 		let s_id = srch.s_id;
@@ -43,9 +46,12 @@
 			});
 	}
 	
+	
+	//============== 학생 정보 수정 ===============
+	
 	//학생 정보 추가
 	function insertStudent(student, callback) {
-		console.log("js 실행");
+		//console.log("js 실행");
 		$.ajax({
 			type:'POST',
 			url:'/studentRest/insert',
@@ -64,10 +70,50 @@
 		});
 	}
 	
+	//학생 정보 삭제
+	function deleteStudent(s_id, callback, error){
+		$.ajax({
+			type:'delete',
+			url:'/studentRest/'+s_id,
+			success : function(delResult, status, xhr){
+				if(callback){
+					callback(delResult);
+				}
+			},
+			error : function(xhr, status, er) {
+				if(error){
+					error(er);
+				}
+			} 
+		});
+	}
+	
+	//학생 정보 수정
+	function updateStudent(student, callback){
+		$.ajax({
+			type:'POST',
+			url:'/studentRest/update/'+student.s_id,
+			data:JSON.stringify(student),
+			contentType:'application/json;charset=utf-8',
+			success:function(result, status, xhr){
+				if(callback){
+					callback(result);
+				}
+			},
+			error:function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+		});
+	}
+	
 	return{
 		getSearchList:getSearchList,
 		getName:getName,
-		insertStudent:insertStudent
+		insertStudent:insertStudent,
+		deleteStudent:deleteStudent,
+		updateStudent:updateStudent
 	}
 	
 })();

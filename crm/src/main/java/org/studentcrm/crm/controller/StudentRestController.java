@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,9 +49,38 @@ public class StudentRestController {
 	@PostMapping(value="/insert",
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
-	public void insertStudent(@RequestBody StudentVO vo){
-		log.info("학생 정보 추가~~~ "+vo);
-		sService.insertStudent(vo);
+	public ResponseEntity<String> insertStudent(@RequestBody StudentVO vo){
+		//log.info("학생 정보 추가~~~ "+vo);
+		int result = sService.insertStudent(vo);
+		//log.info("저장하자마자 가져오는 s_id"+vo.getS_id());
+		return result == 1 ?
+				new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//학생 정보 삭제
+	@DeleteMapping(value="/{s_id}",
+			produces={MediaType.TEXT_PLAIN_VALUE}) //숫자를 넘길거라서 plain_value
+	public ResponseEntity<String> deleteStudent(@PathVariable("s_id") int s_id){
+		//log.info("delete : "+s_id);
+		return sService.deleteStudent(s_id) == 1
+				?new ResponseEntity<String>("success", HttpStatus.OK)
+				:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//학생 정보 수정
+	@PostMapping(value="/update/{s_id}",
+			consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateStudent(
+			@RequestBody StudentVO vo,
+			@PathVariable("s_id") int s_id){
+		vo.setS_id(s_id);
+		int result = sService.updateStudent(vo);
+		//log.info("update : "+vo);
+		return result == 1
+				?new ResponseEntity<String>("success", HttpStatus.OK)
+				:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//

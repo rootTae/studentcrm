@@ -5,29 +5,6 @@
 
 <div>
 	<h2>신상정보 페이지</h2>
-	<!-- <label for="s_search">학생 정보 검색</label>
-    <input type="text" id="s_search" name="s_search" maxlength="15" placeholder="학생명 혹은 학번을 입력하세요." required>
-    <button onclick="s_search()">검색</button>
-    <div id="result"></div>
-
-    <script>
-    	//학생 이름 검색 ajax
-        function s_search() {
-            var input = document.getElementById("s_search").value;
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("POST", "/studentInfo/s_search?s_search=" + input, true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    document.getElementById("result").innerText = xhr.responseText;
-                }
-            };
-
-            xhr.send();
-        }
-    </script> -->
     <form>
    	 <input type="text" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 혹은 학번을 입력하세요.">
    	 <button type="submit" id="searchBtn">검색</button>
@@ -39,8 +16,8 @@
    	<button class="s_del_Btn" style="display:none">삭제</button>
    	
    	<button class="s_save_Btn" >저장</button>
-   	<button class="s_init_Btn" >초기화</button>
-   	<button class="s_cancel_Btn" style="display:none">취소</button>
+   	<!-- <button class="s_init_Btn" >초기화</button> -->
+   	<button class="s_cancel_Btn">취소</button>
    	
     <div class="form_box">
 	    <form action="" method="POST">
@@ -73,7 +50,9 @@
 		let studentForm = $(".form_box > form");
 		
 		//취소 버든 클릭시 데이터를 되돌리기 위한 s_id
-		let beforeSId = "";
+		let nowSid = "";
+		//어떤 버튼을 눌렀는지 확인 후 수정, 취소 기능 구별용
+		let nowBtn = "";
 		
 		//검색 버튼
 		$("#searchBtn").on("click", function(e) {
@@ -137,10 +116,11 @@
 			//console.log($(this).data("s_id"));
 			
 			//버튼 토글
-			btnTogle($(this));
+			//btnTogle($(this));
+			btnShow3();
 			//처음엔 저장, 초기화 버튼만 보이다가 검색한 데이터를 클릭하면 수정, 삭제, 추가 버튼으로 변경
 			
-			beforeSId = $(this).data("s_id");//취소 버튼 되돌리기용인데 이렇게 따로 안해도 될거 같은데? 헷갈리니까 걍 냅두기
+			//nowSid = $(this).data("s_id");//취소 버튼 되돌리기용인데 이렇게 따로 안해도 될거 같은데? 헷갈리니까 걍 냅두기
 			
 			let studentId = $(this).data("s_id");
 			getStudent(studentId);
@@ -164,6 +144,7 @@
 					$("#reg_date").val(data.reg_date);
 					$("#first_date").val(data.first_date);
 					$("#s_filename").val(data.s_filename);
+					
 					if(data.s_gender == "남") {
 						$("#s_gender_m").prop('disabled', false).prop('checked', true);
 						$("#s_gender_f").prop('disabled', true);
@@ -171,6 +152,8 @@
 						$("#s_gender_f").prop('disabled', false).prop('checked', true);
 						$("#s_gender_m").prop('disabled', true);
 					}
+					
+					nowSid = data.s_id;//취소 버튼 되돌리기, 삭제, 수정용 s_id
 			});
 			//학생 정보 출력 후 수정 막기 - 출력된 학생 정보를 수정하려면 수정 버튼을 눌러야 함
 			studentForm.find("input").prop('readonly', true);
@@ -182,29 +165,33 @@
 		let delBtn = $(".s_del_Btn");
 		let saveBtn = $(".s_save_Btn");
 		let cancelBtn = $(".s_cancel_Btn");
-		let initBtn = $(".s_init_Btn");
+		//let initBtn = $(".s_init_Btn");
+		//취소 버튼이랑 초기화 버튼 통합
 		
 		//추가 버튼
 		//- 추가 버튼을 누르면 보던 학생 정보가 사라지면서 입력 할 수 있도록 변경
 		//- 내용 작성중 취소 버튼을 누르면 보던 학생 정보 다시 보여줌
-		addBtn.on("click", function(e) {
-			btnTogle($(this));
-			
+		addBtn.on("click", function() {
 			//초기화 - 입력 할 수 있도록 보던 정보 비우고 readonly 제거
-			studentInit();			
+			studentInit();
+			studentEdit();
+			//btnTogle($(this));
+			btnShow2();
+			//DB에 저장은 여기가 아니라 입력 후 저장 버튼을 누르면 한다.
+			nowBtn = addBtn;
+			console.log("nowBtn : "+ nowBtn.html());
 		});
 		
 		//학생 정보 등록
-		function setStudent(e){			
-			//console.log($("input[name='s_gender']:checked").next().text());
+		function setStudent(callback){ 
+			//callback : 이 작업이 끝나고 성공 판단 후 다른 메서드(버튼 토글)를 실행하기 위해 넣음
 			
+			//console.log(clickBtn);
 			//필수 입력 정보 확인
-			//이름
 			if($("#s_name").val() == ""){
 				alert("이름은 필수 입력 항목입니다.");
 				return;
-			}
-			
+			}			
 			
 			//입력할 데이터
 			let student = {
@@ -225,97 +212,159 @@
 			}
 			
 			StudentService.insertStudent(student, function(result){
-				console.log("정보 추가 결과 :"+result);
-				console.log(e.target);
-				btnTogle(e);
+				if(result == "success") {
+					alert(result);
+					callback();
+				}
 			});
+		}
+		//학생 정보 수정 - 어떻게 위에거랑 합치지?? 못합치나...?
+		function upStudent(callback){ 
 			
+			//필수 입력 정보 확인
+			if($("#s_name").val() == ""){
+				alert("이름은 필수 입력 항목입니다.");
+				return;
+			}			
+			
+			//입력할 데이터
+			let student = {
+				s_id : $("#s_id").val(),
+				s_name : $("#s_name").val(),
+				s_school : $("#s_school").val(),
+				s_grade : $("#s_grade").val(),
+				s_birth : $("#s_birth").val(),
+				s_gender : $("input[name='s_gender']:checked").next().text(),
+				s_phone : $("#s_phone").val(),
+				s_family : $("#s_family").val(),
+				s_relation : $("#s_relation").val(),
+				s_family_phone1 : $("#s_family_phone1").val(),
+				s_family_phone2 : $("#s_family_phone2").val(),
+				s_sibling : $("#s_sibling").val(),
+				reg_date : $("#reg_date").val(),
+				first_date : $("#first_date").val(),
+				s_filename : $("#s_filename").val()
+			}
+			StudentService.updateStudent(student, function(result){
+				if(result == "success") {
+					alert(result);
+					callback();
+				}
+			});
 		}
 		
-		
-		
 		//수정 버튼
-		modifyBtn.on("click", function(e) {
-			btnTogle($(this));
+		modifyBtn.on("click", function() {
+			//저장을 누르면 nowSid로 추가, 수정, 삭제 버튼 보임
+			btnShow2();
 			
-			
+			//수정 버튼을 누르면 보고있던 데이터가 수정가능하게 바뀌어야함
+			studentEdit()
+			nowBtn = modifyBtn;
 		});
 		
 		//삭제 버튼
-		delBtn.on("click", function(e) {
-			btnTogle($(this));
+		delBtn.on("click", function() {
+			
+			//학생 정보 삭제
+			if(nowSid == "") {
+				alert("삭제할 데이터가 없습니다.");
+				return;
+			}else {
+				StudentService.deleteStudent(nowSid, function(result) {
+					alert(result);
+					studentInit();
+					//btnTogle(delBtn);
+					btnShow3();
+					nowSid == "";
+				});
+			}
+			
 		});
 		
 		//저장 버튼
-		saveBtn.on("click", function(e) {
-			//btnTogle($(this));
-			
-			//학생 정보 등록
-			/* setStudent().then(() => {
-				console.log("");
-				btnTogle($(this));//화살표 함수를 사용하면 이 함수 외부의 this를 가리킬 수 있다.
-			}); */
-			/* setStudent().then(function() {
-				btnTogle($(this));//화살표 함수를 사용하면 이 함수 외부의 this를 가리킬 수 있다.
+		saveBtn.on("click", function() {
+			//초기 -> 저장, 추가 -> 저장 = 새 데이터 추가
+			if((nowSid == "" && nowBtn == "") || nowBtn == addBtn) {
+				//btnTogle($(this));
+				btnShow2();
+				//학생 정보 저장
+				setStudent(function() {
+					//저장하고 지워줘야 계속 입력할 수 있다.
+					studentInit();
+					studentEdit();
+				});
+			}else if(nowBtn == modifyBtn) {
+				//수정 -> 저장
+				//수정 버튼을 누른 다음 저장을 누르면 추가, 수정, 삭제 버튼이 보임 
+				btnShow3();
 				
-			}); */
-			setStudent();
+				//학생 정보 수정
+				upStudent(function() {
+					//수정한 데이터 불러와서 보여주기
+					getStudent(nowSid);
+					//다시 수정 불가능하게 수정
+					studentDisable();
+				});
+			}
 		});
 		
 		//취소 버튼
-		cancelBtn.on("click", function() {
-			btnTogle($(this));
-			
+		cancelBtn.on("click", function() {			
 			//기존에 보던 학생정보 페이지 보여주기
-			console.log("이전에 보던 번호 : "+beforeSId);
-			getStudent(beforeSId);
+			console.log("이전에 보던 번호 : "+nowSid);
+			
+			//첫 화면일땐 그냥 지우기만 해야 한다.
+			if(nowSid == "") {
+				//console.log("이전에 보던 데이터 없음");
+				studentInit();
+				studentEdit();
+			}else {
+				getStudent(nowSid);
+				btnShow3();
+				//btnTogle($(this));
+			}
+			
 		});
 		
-		//버튼 show, hide
-		function btnTogle(clickBtn) {
-			//처음 화면에 들어왔을 때 : 저장, 초기화 버튼만 보임
+		//버튼 show, hide	
+		function btnShow2(){
+			saveBtn.show();
+			cancelBtn.show();
 			
-			//검색 결과로 나온 학생을 클릭 : 저장, (취소), 초기화 버튼 숨김 / 수정, 삭제, 추가 버튼 보임
-			//취소 버튼을 클릭 : 저장, 취소, (초기화) 버튼 숨김 / 수정, 삭제, 추가 버튼 보임
-			//저장 버튼을 클릭 : 저장, 취소, 초기화 버튼 숨김 / 수정, 삭제, 추가 버튼 보임
-			if(clickBtn.is(searchList.find("li a")) || clickBtn.is(cancelBtn) || clickBtn.is(saveBtn)) {
-				saveBtn.hide();
-				cancelBtn.hide();
-				initBtn.hide();
-				
-				addBtn.show();
-				modifyBtn.show();
-				delBtn.show();
+			addBtn.hide();
+			modifyBtn.hide();
+			delBtn.hide();
+		}
+		function btnShow3(){
+			saveBtn.hide();
+			cancelBtn.hide();
 			
-			//추가 버튼을 클릭 : 수정, 삭제, 추가 버튼 숨김 / 저장, 취소 버튼 보임
-			}else if(clickBtn.is(addBtn)) {
-				addBtn.hide();
-				modifyBtn.hide();
-				delBtn.hide();
-				
-				saveBtn.show();
-				cancelBtn.show();
-			} 
-			/* else if(clickBtn.is(cancelBtn) || clickBtn.is(saveBtn)) {
-				addBtn.show();
-				modifyBtn.show();
-				delBtn.show();
-				
-				cancelBtn.hide();
-				saveBtn.hide();
-				
-			} */
+			addBtn.show();
+			modifyBtn.show();
+			delBtn.show();
 		}
 		
-		//학생 정보 초기화
+		//데이터 비우기
 		function studentInit() {
 			//input - readonly 제거, value 값 삭제
-			studentForm.find("input:not('#s_id')").prop('readonly', false).val('');
-			$("#s_id").val('');
-			//radio - disabled, checked 제거
-			studentForm.find("input[type='radio']").prop('disabled', false).prop('checked', false);
+			studentForm.find("input").val('');
 		}
-			
+		
+		//입력 가능 변경 - 학생 정보 입력창 데이터 삭제 후 입력 가능하게 변경
+		function studentEdit() {
+			studentForm.find("input:not('#s_id')").prop('readonly', false);
+			studentForm.find("input[type='radio']").prop('disabled', false);
+		}
+		
+		//입력 불가 변경 - 저장, 취소 완료 후 원래 데이터가 보여질 때 입력 불가능하게 변경
+		function studentDisable() {
+			console.log("수정금지 실행");
+			studentForm.find("input:not('#s_id')").prop('readonly', true);
+			studentForm.find("input[type='radio']").prop('disabled', true);
+		}
+		
+		//학생 사진 올리기
 			
 	});
 	

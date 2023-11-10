@@ -5,5 +5,5 @@
 	<div>
 		<h2>index 화면 입니다.</h2>
 	</div>
-
+	
 <%@include file="include/footer.jsp" %>

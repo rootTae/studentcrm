@@ -20,8 +20,9 @@
 	</head>
 	<body>
 	<div>
-		<ul class="classList">
 		
+		<ul class="classList">
+
 		
 		</ul>
 	</div>
@@ -30,6 +31,7 @@
     <!-- 나머지 내용 -->
 
 <script type="text/javascript">
+
     $(document).ready(function(){
         var classListUL = $(".classList");
         var t_id = 1;
@@ -38,13 +40,18 @@
         
        /*  attendanceService.getList({t_id: 't_id'}, */
     		attendanceService.getList({t_id: t_id },
-            function(list){
-                console.log("list: " + list);
+            function(list){       
                 var str = "";
                 for(var i = 0, len = list.length || 0; i < len; i++){
-                    str += "<li class='left' data-list='"+list[i].class_name+"'>" + list[i].class_name + "</li>";
+                    str += "<li data-list='"+list[i].class_name+"'>" + list[i].class_name + "</li>";
                 }
                 classListUL.html(str);
+                
+                $(".classList").on("click", "li", function(){
+                	var clickedClassName = $(this).data("list");
+                	console.log(clickedClassName);
+                	window.location.href = 'attendance/attendanceView.jsp?class_name=' + clickedClassName;
+                })   
             },
             function(){
                 console.log("Error fetching class list:");
@@ -54,7 +61,4 @@
 </script>
 </body>
 
-	
-	
-	
 </html>

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
-<%
-	int t_id = 2;
-	System.out.println(t_id);
+<%	
+	//231110 - 21:02 - ssy 테스트를 위해 임시 주석 처리함
+	//int t_id = 2;
+	//System.out.println(t_id);
 %>
 <!DOCTYPE html>
 <html>
@@ -31,14 +32,14 @@
     <!-- 나머지 내용 -->
 
 <script type="text/javascript">
-
-    $(document).ready(function(){
+	//231110 - 21:02 - ssy 테스트를 위해 임시 주석 처리함
+    /* $(document).ready(function(){
         var classListUL = $(".classList");
         var t_id = 1;
-		/* var t_id = $('#t_id').val( );*/ 
+		//var t_id = $('#t_id').val( );
 		console.log(t_id);
         
-       /*  attendanceService.getList({t_id: 't_id'}, */
+      		//attendanceService.getList({t_id: 't_id'},
     		attendanceService.getList({t_id: t_id },
             function(list){       
                 var str = "";
@@ -57,7 +58,7 @@
                 console.log("Error fetching class list:");
             }
         );
-    });
+    }); */
 </script>
 </body>
 

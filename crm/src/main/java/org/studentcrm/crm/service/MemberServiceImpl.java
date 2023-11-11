@@ -3,13 +3,13 @@ package org.studentcrm.crm.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.studentcrm.crm.command.TeacherVO;
-import org.studentcrm.crm.mapper.RegistMapper;
+import org.studentcrm.crm.mapper.MemberMapper;
 
 @Service
-public class RegistServiceImpl implements RegistService {
+public class MemberServiceImpl implements MemberService {
 
 	@Autowired
-	RegistMapper mapper;
+	MemberMapper mapper;
 	
 	@Override
 	public int regist(TeacherVO vo) {
@@ -22,13 +22,13 @@ public class RegistServiceImpl implements RegistService {
 	}
 
 	@Override
-	public int login(String t_loginid) {
-		return mapper.login(t_loginid);
+	public TeacherVO login(String t_loginid, String t_pw) {
+		return mapper.login(t_loginid, t_pw);
 	}
 
 	@Override
-	public void delete(String t_loginid) {
-		mapper.delete(t_loginid);
+	public void delete(int t_id) {
+		mapper.delete(t_id);
 	}
 
 	@Override
@@ -36,6 +36,9 @@ public class RegistServiceImpl implements RegistService {
 		return mapper.idCheck(t_loginid);
 	}
 
-
+	@Override
+	public TeacherVO select(int t_id) {
+		return mapper.select(t_id);
+	}
 
 }

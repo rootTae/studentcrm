@@ -15,6 +15,7 @@ import lombok.ToString;
 @Setter
 public class TeacherVO {
    int t_id;
+   String t_loginid;
    String t_name;
    String t_subject;
    String t_class;

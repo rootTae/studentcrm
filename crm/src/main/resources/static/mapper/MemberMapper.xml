@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.studentcrm.crm.mapper.MemberMapper"> 
+	<!-- regist -->
+	<insert id="regist">
+		insert into teacher(t_loginid, t_name, t_subject, t_class, t_pw, t_phone, t_email)
+		values(#{t_loginid}, #{t_name}, #{t_subject}, #{t_class}, #{t_pw}, #{t_phone}, #{t_email})
+	</insert>
+	
+	<!-- update -->
+	<update id="update" parameterType="org.studentcrm.crm.command.TeacherVO">
+		update teacher set t_loginid = #{t_loginid}, t_name = #{t_name}, t_subject = #{t_subject}, 
+		t_class=#{t_class}, t_pw=#{t_pw}, t_phone=#{t_phone}, t_email=#{t_email}
+		where t_id = #{t_id}
+	</update>
+	
+	<!-- login -->
+	<select id="login" parameterType="org.studentcrm.crm.command.TeacherVO" resultType="org.studentcrm.crm.command.TeacherVO">
+		select * from teacher where t_loginid=#{t_loginid} and t_pw=#{t_pw} 
+	</select>
+	
+	<!-- id 확인 -->
+	<select id="idCheck" resultType="int">
+		select count(*) as result from teacher where t_loginid = #{t_loginid}
+	</select>
+	
+	<!-- delete -->
+	<delete id="delete">
+		delete from teacher where  t_id = #{t_id}
+	</delete>
+	
+	<!-- select -->
+	<select id="select" parameterType="int" resultType="org.studentcrm.crm.command.TeacherVO">
+		select * from teacher where t_id = #{t_id}
+	</select>
+
+</mapper>

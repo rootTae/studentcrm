@@ -122,6 +122,7 @@ public class MemberController {
 		@GetMapping("/delete")
 		public String delete(HttpSession session) {
 			memberService.delete((int)session.getAttribute("t_id"));
+			session.invalidate();
 			return "member/login";
 		}
 		

@@ -31,4 +31,9 @@
 	<select id="getStudentName" parameterType="org.studentcrm.crm.command.StudentVO">
 		select s_id, s_name from student where s_name=#{s_name}
 	</select>
+	
+	<!-- 최근 추가된 s_id 가져오기 -->
+	<select id="getLastId">
+        select last_insert_id() as s_id
+    </select>
 </mapper>

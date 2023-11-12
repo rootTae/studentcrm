@@ -19,4 +19,6 @@ public interface StudentMapper {
 	public int deleteStudent(int s_id);
 	//학생 이름 검색
 	public List<StudentVO> getStudentName(String s_name);
+	//최근 추가된 s_id 가져오기
+	public int getLastId();
 }

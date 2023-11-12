@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class CommuteVO {
 	private int s_id;
 	private String zip_code;
-	private String address;
-	private String address_detail;
-	private String b_location;
+	private String address1;
+	private String address2;
+	private String location;
 }

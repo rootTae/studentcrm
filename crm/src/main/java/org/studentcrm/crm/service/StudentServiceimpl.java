@@ -40,4 +40,8 @@ public class StudentServiceimpl implements StudentService {
 		List<StudentVO> list = sMapper.getStudentName(s_name);
 		return list;
 	}
+	@Override
+	public int getLastId() {
+		return sMapper.getLastId();
+	}
 }

@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.studentcrm.crm.command.CommuteVO;
 import org.studentcrm.crm.command.StudentVO;
+import org.studentcrm.crm.service.CommuteService;
 import org.studentcrm.crm.service.StudentService;
 
 import lombok.Setter;
@@ -29,12 +31,16 @@ public class StudentRestController {
 	@Setter(onMethod_ = {@Autowired})
 	StudentService sService;
 	
+	@Setter(onMethod_ = {@Autowired})
+	CommuteService cService;
+	
+	//============== 학생 정보 검색 ===============
+	
 	//학생 학번으로 검색(1개만 출력)
 	@GetMapping(value = "/id/{s_id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<StudentVO> getStudent(@PathVariable("s_id") int s_id) {
-	    //log.info("s_id---------- : " + s_id);
-	    //System.out.print("fffffffffffffffffffffffffffff");
-	    return new ResponseEntity<StudentVO>(sService.getStudent(s_id), HttpStatus.OK);
+		StudentVO vo = sService.getStudent(s_id);
+		return new ResponseEntity<StudentVO>(vo, HttpStatus.OK);
 	}
 	
 	//학생 이름으로 검색(리스트로 출력)
@@ -44,6 +50,10 @@ public class StudentRestController {
 	    //System.out.print("fffffffffffffffffffffffffffff");
 	    return new ResponseEntity<List<StudentVO>>(sService.getStudentName(s_name), HttpStatus.OK);
 	}
+
+	
+	
+	//============== 학생 정보 수정 ===============
 	
 	//학생 정보 추가
 	@PostMapping(value="/insert",
@@ -53,13 +63,21 @@ public class StudentRestController {
 		//log.info("학생 정보 추가~~~ "+vo);
 		int result = sService.insertStudent(vo);
 		//log.info("저장하자마자 가져오는 s_id"+vo.getS_id());
+//		return result == 1 ?
+//				new ResponseEntity<>("success", HttpStatus.OK)
+//				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+		//자동증가된 s_id 반환(통학 정보에서 사용)
+		int s_id = sService.getLastId();
+		log.info(s_id);
+		
 		return result == 1 ?
-				new ResponseEntity<>("success", HttpStatus.OK)
+				new ResponseEntity<>(String.valueOf(s_id), HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//학생 정보 삭제
-	@DeleteMapping(value="/{s_id}",
+	@DeleteMapping(value="/delete/{s_id}",
 			produces={MediaType.TEXT_PLAIN_VALUE}) //숫자를 넘길거라서 plain_value
 	public ResponseEntity<String> deleteStudent(@PathVariable("s_id") int s_id){
 		//log.info("delete : "+s_id);
@@ -83,43 +101,49 @@ public class StudentRestController {
 				:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	//
-//	@PostMapping("/studentForm")
-//	public void studentForm
-		
+	//============== 학생 통학 정보 ===============
 	
-	//학번을 입력하면 해당 학생 정보를 화면에 출력
-	//학번은 이름 검색 후 선택 할 수 있도록 만들기. (동명이인일 경우)
-	//이름 검색
-//	@GetMapping(value="/{s_search}",
-//			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-//	public ResponseEntity<StudentVO> getStudent(@PathVariable("s_search") String s_search) {
-//		log.info("s_search : "+s_search);
-//		return null;
-//		return new ResponseEntity<StudentVO>(sService.getStudent(s_search), HttpStatus.OK);
-//	}
+	//통학 정보 출력
+	@GetMapping(value = "/commute/{s_id}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<CommuteVO> getCommute(@PathVariable("s_id") int s_id) {
+		CommuteVO vo = cService.getCommute(s_id);
+		return new ResponseEntity<CommuteVO>(vo, HttpStatus.OK);
+	}
 	
-	//학번 검색
-//	@PostMapping(value="/{s_search}",
-//			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-//	public ResponseEntity<StudentVO> getStudent(@PathVariable("s_id") int s_search) {
-//		log.info("s_id : "+s_search);
-//		return new ResponseEntity<StudentVO>(sService.getStudent(s_search), HttpStatus.OK);
-//	}
-//	
+	//통학 정보 추가
+	@PostMapping(value="/insertC",
+			consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> insertCommute(@RequestBody CommuteVO vo){
+		int result = cService.insertCommute(vo);
+		return result == 1 ?
+				new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
-//	@PostMapping("/s_search")
-//    public String s_search(@RequestParam("s_search") String input) {
-//        try {
-//            int intValue = Integer.parseInt(input);
-//            return "입력된 값은 정수입니다: " + intValue;
-//        } catch (NumberFormatException e) {
-//            return "입력된 값은 문자열입니다: " + input;
-//        }
-//    }
+	//통학 정보 수정
+	@PostMapping(value="/updateC/{s_id}",
+			consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateCommute(
+			@RequestBody CommuteVO vo,
+			@PathVariable("s_id") int s_id){
+		//vo.setS_id(s_id);
+		int result = cService.updateCommute(vo);
+		return result == 1
+				?new ResponseEntity<String>("success", HttpStatus.OK)
+				:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
-	
-	
+	//통학 정보 삭제
+	@DeleteMapping(value="/deleteC/{s_id}",
+			produces={MediaType.TEXT_PLAIN_VALUE}) //숫자를 넘길거라서 plain_value
+	public ResponseEntity<String> deleteCommute(@PathVariable("s_id") int s_id){
+		//log.info("delete : "+s_id);
+		return cService.deleteCommute(s_id) == 1
+				?new ResponseEntity<String>("success", HttpStatus.OK)
+				:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 
 	

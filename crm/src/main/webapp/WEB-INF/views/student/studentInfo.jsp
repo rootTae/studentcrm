@@ -5,22 +5,23 @@
 
 <div>
 	<h2>신상정보 페이지</h2>
-    <form>
-   	 <input type="text" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 혹은 학번을 입력하세요.">
-   	 <button type="submit" id="searchBtn">검색</button>
-    </form>
-    <ul class="search_list"></ul>
+	<!-- ============== 신상 정보 =============== -->
+    <div>
+	    <form>
+	   	 <input type="text" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 혹은 학번을 입력하세요.">
+	   	 <button type="submit" id="searchBtn">검색</button>
+	    </form>
+	    <ul class="search_list"></ul>
     
-   	<button class="s_add_Btn" style="display:none">추가</button>
-   	<button class="s_modify_Btn" style="display:none">수정</button>
-   	<button class="s_del_Btn" style="display:none">삭제</button>
+	   	<button class="s_add_Btn" style="display:none">추가</button>
+	   	<button class="s_modify_Btn" style="display:none">수정</button>
+	   	<button class="s_del_Btn" style="display:none">삭제</button>
+	   	
+	   	<button class="s_save_Btn" >저장</button>
+	   	<!-- <button class="s_init_Btn" >초기화</button> -->
+	   	<button class="s_cancel_Btn">취소</button>
    	
-   	<button class="s_save_Btn" >저장</button>
-   	<!-- <button class="s_init_Btn" >초기화</button> -->
-   	<button class="s_cancel_Btn">취소</button>
-   	
-    <div class="form_box">
-	    <form action="" method="POST">
+	    <form id="studentForm">
 	    	<label for="s_name">이름</label><input type='text' name='s_name' id='s_name'><br>
 	    	<label for="s_id">학번</label><input type='text' name='s_id' id='s_id' readonly><br><!-- 자동으로 정해지는거라 입력할 수 없다는 안내하기 -->
 	    	<label for="s_school">학교</label><input type='text' name='s_school' id='s_school'><br>
@@ -40,6 +41,47 @@
 	    </form>
     </div>
     
+    <hr>
+    <!-- ============== 통학 정보 =============== -->
+    <div id="commuteInfo">
+    	<label for="zip_code">우편번호</label><input type='text' name='zip_code' id='zip_code'><br>
+    	<label for="address1">주소</label><input type='text' name='address1' id='address1'><br>
+    	<label for="address2">상세주소</label><input type='text' name='address2' id='address2'><br>
+    	<label for="location">승차위치</label><input type='text' name='location' id='location'><br>
+    </div>
+    
+    <hr>
+    <!-- ============== 학급 정보 =============== -->
+    <div>
+    	<div id="classSearch"><!-- 처음 출력은 지금 월에 해당하는 정보 출력 -->
+	    	<form action="">
+	    		<select id="classYear" name="classYear" >
+	    			<option value="" disabled selected>년도</option>
+	    			<option value="2023">2023</option>
+	    			<option value="2022">2022</option>
+	    			<option value="2021">2021</option>
+	    			<option value="2020">2020</option>
+	    		</select>
+	    		<select id="classMonth" name="classMonth">
+	    			<option value="" disabled selected>월</option>
+	    			<option value="1">1월</option>
+	    			<option value="2">2월</option>
+	    			<option value="3">3월</option>
+	    			<option value="4">4월</option>
+	    			<option value="5">5월</option>
+	    			<option value="6">6월</option>
+	    			<option value="7">7월</option>
+	    			<option value="8">8월</option>
+	    			<option value="9">9월</option>
+	    			<option value="10">10월</option>
+	    			<option value="11">11월</option>
+	    			<option value="12">12월</option>
+    			</select>
+				<input type="submit">
+	    	</form>
+    	</div>
+    </div>
+    
 </div>
 <script type="text/javascript" src="/js/studentInfo.js"></script>
 <script type="text/javascript">
@@ -47,9 +89,9 @@
 		
 		//============== 학생 정보 검색 ===============
 		let searchList = $(".search_list");
-		let studentForm = $(".form_box > form");
+		let studentForm = $("#studentForm");
 		
-		//취소 버든 클릭시 데이터를 되돌리기 위한 s_id
+		//취소 버든 클릭시 데이터를 되돌리기 위한 s_id, 통학 정보 수정을 위함
 		let nowSid = "";
 		//어떤 버튼을 눌렀는지 확인 후 수정, 취소 기능 구별용
 		let nowBtn = "";
@@ -76,22 +118,23 @@
 		//id로 학생 정보 가져오기
 		function getInfo(searchVal) {
 			StudentService.getSearchList({s_id:searchVal},
-			function(data) {
-				let currentHTML = searchList.html();
-				let str = "";
-				//학번으로 검색했을 때
-				//일치하는 정보가 없음
-				if(data == null || data.length == 0){
-					//searchList.html("");
-					$("#sSearch").val("");
-					alert("일치하는 정보가 없습니다.");
-					return;
+				function(data) {
+					let currentHTML = searchList.html();
+					let str = "";
+					//학번으로 검색했을 때
+					//일치하는 정보가 없음
+					if(data == null){
+						//searchList.html("");
+						$("#sSearch").val("");
+						alert("일치하는 정보가 없습니다.");
+						return;
+					}
+					str += "<li>";
+		            str += "<a href='#' data-s_id='"+data.s_id+"'>"+data.s_name+"</a></li>";
+						
+					searchList.html(currentHTML + str);
 				}
-				str += "<li>";
-	            str += "<a href='#' data-s_id='"+data.s_id+"'>"+data.s_name+"</a></li>";
-					
-				searchList.html(currentHTML + str);
-			});
+			);
 		}
 		//이름으로 학생 id 가져오기
 		function srchName(searchVal) {
@@ -107,7 +150,8 @@
 					data.forEach(function(s_id){
 						getInfo(s_id);
 					})
-			});
+				}
+			);
 		}
 		
 		//검색한 학생정보 선택해서 DB 상세정보 form에 출력하기
@@ -124,6 +168,9 @@
 			
 			let studentId = $(this).data("s_id");
 			getStudent(studentId);
+			getCommute(studentId);
+			
+			studentDisable();//수정 버튼을 눌렀을 때만 수정 가능하게 입력 막기
 		});
 		
 		//학생 정보 출력
@@ -132,7 +179,7 @@
 				function(data){
 					$("#s_name").val(data.s_name);
 					$("#s_id").val(data.s_id);
-					$("#s_school").val(data.s_chool);
+					$("#s_school").val(data.s_school);
 					$("#s_grade").val(data.s_grade);
 					$("#s_birth").val(data.s_birth);
 					$("#s_phone").val(data.s_phone);
@@ -153,11 +200,13 @@
 						$("#s_gender_m").prop('disabled', true);
 					}
 					
-					nowSid = data.s_id;//취소 버튼 되돌리기, 삭제, 수정용 s_id
+					nowSid = data.s_id;//취소 버튼 되돌리기, 삭제, 수정용 s_id, 통학정보 수정용
 			});
 			//학생 정보 출력 후 수정 막기 - 출력된 학생 정보를 수정하려면 수정 버튼을 눌러야 함
 			studentForm.find("input").prop('readonly', true);
 		}
+		
+		
 			
 		//============== 학생 정보 수정 ===============
 		let addBtn = $(".s_add_Btn");
@@ -175,11 +224,13 @@
 			//초기화 - 입력 할 수 있도록 보던 정보 비우고 readonly 제거
 			studentInit();
 			studentEdit();
-			//btnTogle($(this));
+			
+			//버튼
 			btnShow2();
+			
 			//DB에 저장은 여기가 아니라 입력 후 저장 버튼을 누르면 한다.
 			nowBtn = addBtn;
-			console.log("nowBtn : "+ nowBtn.html());
+			//console.log("nowBtn : "+ nowBtn.html());
 		});
 		
 		//학생 정보 등록
@@ -212,12 +263,24 @@
 			}
 			
 			StudentService.insertStudent(student, function(result){
-				if(result == "success") {
-					alert(result);
-					callback();
+				//if(result == "success") {
+				if(result > 0) {
+					alert("success");
+					console.log("jsp : "+result);
+					callback(result);
 				}
 			});
 		}
+
+		//수정 버튼
+		modifyBtn.on("click", function() {
+			//저장을 누르면 nowSid로 추가, 수정, 삭제 버튼 보임
+			btnShow2();
+			
+			//수정 버튼을 누르면 보고있던 데이터가 수정가능하게 바뀌어야함
+			studentEdit()
+			nowBtn = modifyBtn;
+		});
 		//학생 정보 수정 - 어떻게 위에거랑 합치지?? 못합치나...?
 		function upStudent(callback){ 
 			
@@ -253,15 +316,6 @@
 			});
 		}
 		
-		//수정 버튼
-		modifyBtn.on("click", function() {
-			//저장을 누르면 nowSid로 추가, 수정, 삭제 버튼 보임
-			btnShow2();
-			
-			//수정 버튼을 누르면 보고있던 데이터가 수정가능하게 바뀌어야함
-			studentEdit()
-			nowBtn = modifyBtn;
-		});
 		
 		//삭제 버튼
 		delBtn.on("click", function() {
@@ -271,16 +325,25 @@
 				alert("삭제할 데이터가 없습니다.");
 				return;
 			}else {
-				StudentService.deleteStudent(nowSid, function(result) {
-					alert(result);
+				delStudent(nowSid, function() {
 					studentInit();
-					//btnTogle(delBtn);
 					btnShow3();
 					nowSid == "";
 				});
+				delCommute(nowSid);//통학 정보 삭제
 			}
 			
 		});
+		
+		//학생 정보 삭제
+		function delStudent(nowSid, callback){
+			StudentService.deleteStudent(nowSid, function(result) {
+				if(result == "success"){
+					alert("학생 정보 삭제 성공");
+					callback();
+				}
+			});
+		}
 		
 		//저장 버튼
 		saveBtn.on("click", function() {
@@ -289,7 +352,9 @@
 				//btnTogle($(this));
 				btnShow2();
 				//학생 정보 저장
-				setStudent(function() {
+				setStudent(function(callback) {
+					//console.log("ddd : "+callback);
+					setCommute(callback); //통학
 					//저장하고 지워줘야 계속 입력할 수 있다.
 					studentInit();
 					studentEdit();
@@ -300,6 +365,7 @@
 				btnShow3();
 				
 				//학생 정보 수정
+				upCommute(nowSid); //통학
 				upStudent(function() {
 					//수정한 데이터 불러와서 보여주기
 					getStudent(nowSid);
@@ -320,7 +386,9 @@
 				studentInit();
 				studentEdit();
 			}else {
+				//취소하면 보던걸 다시 보여줘야 함
 				getStudent(nowSid);
+				upCommute(nowSid);
 				btnShow3();
 				//btnTogle($(this));
 			}
@@ -348,23 +416,111 @@
 		//데이터 비우기
 		function studentInit() {
 			//input - readonly 제거, value 값 삭제
-			studentForm.find("input").val('');
+			studentForm.find("input").val(''); //학생 정보 비우기
+			//console.log("지우기 실행");
+			$("#commuteInfo").find("input").val(''); //통학 정보 비우기
 		}
 		
 		//입력 가능 변경 - 학생 정보 입력창 데이터 삭제 후 입력 가능하게 변경
 		function studentEdit() {
 			studentForm.find("input:not('#s_id')").prop('readonly', false);
 			studentForm.find("input[type='radio']").prop('disabled', false);
+			
+			$("#commuteInfo").find("input").prop('readonly', false);
 		}
 		
 		//입력 불가 변경 - 저장, 취소 완료 후 원래 데이터가 보여질 때 입력 불가능하게 변경
 		function studentDisable() {
-			console.log("수정금지 실행");
+			//console.log("수정금지 실행");
 			studentForm.find("input:not('#s_id')").prop('readonly', true);
 			studentForm.find("input[type='radio']").prop('disabled', true);
+			
+			$("#commuteInfo").find("input").prop('readonly', true);
 		}
 		
 		//학생 사진 올리기
+		//- 	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//============== 학생 통학 정보 ===============
+		//통학 정보 출력
+		function getCommute(studentId){
+			StudentService.getCommute({s_id : studentId},
+				function(data){
+					if(data == null) {
+						$("#commuteInfo").find("input").val('');
+						//return;
+					}else {
+						$("#zip_code").val(data.zip_code);
+						$("#address1").val(data.address1);
+						$("#address2").val(data.address2);
+						$("#location").val(data.location);
+					}
+				}
+			);
+		};
+		
+		//통학 정보 추가
+		function setCommute(studentId){ 
+			//console.log('studentId : '+studentId);
+			let commute = {
+				s_id :studentId,
+				zip_code : $("#zip_code").val(),
+				address1 : $("#address1").val(),
+				address2 : $("#address2").val(),
+				location : $("#location").val()
+			}
+			
+			StudentService.insertCommute(commute, function(result){
+				if(result == "success") {
+					alert("통학정보 추가 성공");
+				}
+			});
+		}
+		
+		//통학 정보 수정
+		function upCommute(nowSid){ //nowSid : 수정할 c_id
+			//console.log("nowSid : "+nowSid);
+			//입력할 데이터
+			let student = {
+				s_id : nowSid, //update 위치 파악용
+				zip_code : $("#zip_code").val(),
+				address1 : $("#address1").val(),
+				address2 : $("#address2").val(),
+				location : $("#location").val()
+			}
+			StudentService.updateCommute(student, function(result){
+				if(result == "success") {
+					alert("통학 정보 수정 성공");
+				}
+			});
+		}
+		
+		//통학 정보 삭제
+		function delCommute(nowSid){
+			StudentService.deleteCommute(nowSid, function(result) {
+				if(result == "success"){
+					alert("통학 정보 삭제 성공");
+				}
+			});
+		}
+		
+		
+		<!-- ============== 학급 정보 =============== -->	
+			
+			
+		//셀렉트 선택시 첫번째 꺼 선택 해제	
+		//document.getElementById("monthSelect").options[0].removeAttribute("selected");	
+		
+			
+			
 			
 	});
 	

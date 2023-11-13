@@ -16,9 +16,7 @@
 				}
 			});
 	}
-	
 
-	
 	return{
 		getList: getList
 		

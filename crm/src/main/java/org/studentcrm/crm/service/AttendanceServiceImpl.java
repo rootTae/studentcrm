@@ -46,8 +46,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	@Override
 	public List<StudentVO> s_list(String class_name) {
-		log.info("class_name for s_list: " + class_name);		 
-		return mapper.s_listByClass(class_name);
+		List<StudentVO> studentsList = mapper.s_listByClass(class_name);
+	    return studentsList;
 	}
 
 	@Override

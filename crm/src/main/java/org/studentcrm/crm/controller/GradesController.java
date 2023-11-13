@@ -43,9 +43,10 @@ public class GradesController {
 	@GetMapping(value = "/{s_name}/{s_id}",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<Exam_ScoreVO>> getScoreList(
-			@PathVariable("es_vo") Exam_ScoreVO es_vo)
+			@PathVariable("s_name") String s_name,
+			@PathVariable("s_id") int s_id)
 			{
-		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(es_vo), HttpStatus.OK);
+		return new ResponseEntity<List<Exam_ScoreVO>>(gservice.getScoreList(s_id), HttpStatus.OK);
 	}
 
 	//시험 점수 생성
@@ -103,12 +104,14 @@ public class GradesController {
 		}
 		
 		//국영수 평균 값
-		@PostMapping(value = "/{s_id}/avg",
+		@PostMapping(value = "/avg",
 				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<Exam_ScoreVO> getAvgScore(@RequestBody Exam_ScoreVO vo, @PathVariable ("s_id") int s_id){
-			log.info("Exam_ScoreVO" +vo);
-			return new ResponseEntity<Exam_ScoreVO>(gservice.avgScore(vo), HttpStatus.OK);
+				produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<Exam_ScoreVO> AvgScore(@RequestBody Exam_ScoreVO vo) {
+
+			vo=gservice.avgScore(vo);
+
+			return new ResponseEntity<Exam_ScoreVO>(vo, HttpStatus.OK);
 		}
 		
 }

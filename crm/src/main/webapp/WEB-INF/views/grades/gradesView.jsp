@@ -48,7 +48,7 @@
                     <th>평균</th>
                 </tr>
             </thead>
-            	<tbody class="">
+            	<tbody class="scoreList">
 
 			
 			</tbody>
@@ -79,22 +79,46 @@
                             '<td>' + student.s_grade + '</td>' +
                             '</tr>';                   
                         studentList.append(str);//ul태그는 li을 여러개 받기때문에 사용
-        		});     
+        			});
+                    
                 });
             });
             
         });
 
-
-            $(document).on('click', '#studentTableBody tr', function() {
-
-                GradesService.getScoreList({s_id: s_id, s_name: s_name}, function(List) {
-                    console.log(List);
-             
-                    
-                    var examList = $('#scoreBody');
-                    examList.empty();
-                      
+       
+            $(".studentList").on('click', 'td', function(e) {
+				
+            var s_id = ($(this).parent().find('td:first-child').text());
+            var s_name = ($(this).parent().find('td:nth-child(2)').text());
+            	
+           
+            	
+              GradesService.getScoreList({s_name: s_name, s_id: s_id}, function(score) {
+                  
+            	  score.forEach(function(score){     	
+					 
+            	  score.avgScore=((score.korScore+ score.engScore+score.mathScore)/3).toFixed(1);
+                          		
+                });
+            	  var scoreList = $('.scoreList');
+            	  scoreList.empty();
+            	  
+            	  score.forEach(function (score) {
+                      var str = '<tr>' +
+                          '<td>' + score.s_id + '</td>' +
+                          '<td>' + score.s_name + '</td>' +
+                          '<td>' + score.e_name+ '</td>' +
+                          '<td>' + score.e_date + '</td>' +
+                          '<td>' + score.korScore + '</td>' +
+                          '<td>' + score.engScore + '</td>' +
+                          '<td>' + score.mathScore + '</td>' +
+                          '<td>' + score.avgScore + '</td>' +
+                          '</tr>';                   
+                          scoreList.append(str);//ul태그는 li을 여러개 받기때문에 사용
+      			});
+                	
+           
                 });
             });
 

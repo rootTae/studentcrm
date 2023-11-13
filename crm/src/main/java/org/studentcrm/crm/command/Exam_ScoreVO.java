@@ -25,3 +25,5 @@ public class Exam_ScoreVO {
 	private double mathScore;
 	private double avgScore;	
 }
+
+

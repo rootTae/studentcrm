@@ -39,14 +39,16 @@ resultType="org.studentcrm.crm.command.StudentVO">
 		select * from exam_score es
 		join exam e on es.e_id =e.e_id
 		join student s on es.s_id = s.s_id
-		where s_id = #{s_id} 
-		order by e_date
+		where es.s_id = #{es.s_id} 
+		order by e.e_date
 	</select>
 
 <!-- 국영수 평균 -->
 <select id="avgScore" parameterType="org.studentcrm.crm.command.Exam_ScoreVO"
 resultType="org.studentcrm.crm.command.Exam_ScoreVO">
-		select round((avg(korScore)+ avg(engScore)+ avg(mathScore))/ 3 ,1) as avgScore from exam_score;
+		select round((avg(korScore)+ avg(engScore)+ avg(mathScore))/ 3 ,1) as avgScore 
+		from exam_score
+		where score_id =#{score_id};
 </select>
 
 <!-- 전체 과목 평균 -->

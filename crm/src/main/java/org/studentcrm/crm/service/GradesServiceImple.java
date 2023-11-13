@@ -46,10 +46,9 @@ public class GradesServiceImple implements GradesService {
 	}
 
 	@Override//학생아이디로 검색 점수리스트 가져오기
-	public List<Exam_ScoreVO> getScoreList(Exam_ScoreVO vo) {
-		log.info("학생아이디로 검색 점수리스트 가져오기" + vo.getS_id());
-		mapper.getScoreList(vo.getS_id());
-		return mapper.getScoreList(vo.getS_id());
+	public List<Exam_ScoreVO> getScoreList(int s_id) {
+		log.info("학생아이디로 검색 점수리스트 가져오기" + s_id);
+		return mapper.getScoreList(s_id);
 	}
 	@Override //평균
 	public Exam_ScoreVO avgScore(Exam_ScoreVO vo) {

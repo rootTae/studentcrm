@@ -98,26 +98,27 @@
    });
    }
    
-    function AvgScore(grades, callback, error) {
-        console.log("grades ......... ");
-
-        $.ajax({
-            type: 'post',
-            url: '../gradesF/'+s_id +'/avg',
-            data: JSON.stringify(grades),
-            contentType: "application/json; charset=utf-8",
-            success: function (result, status, xhr) {
-                if (callback) {
-                    callback(result);
-                }
-            },
-            error: function (xhr, status, er) {
-                if (error) {
-                    error(er);
-                }
+    function AvgScore(vo, callback, error) {
+    console.log("grades ......... ");
+	console.log(vo);
+    $.ajax({
+        type: 'POST',  
+        url: '../gradesF/avg',
+        data: JSON.stringify(vo),
+        contentType: "application/json; charset=utf-8",
+        success: function (result, status, xhr) {
+            if (callback) {
+                callback(result);
             }
-        });
-    }
+        },
+        error: function (xhr, status, er) {
+            if (error) {
+                error(er);
+            }
+        }
+    });
+}
+
    
    function SubjectsTotalAvg(grades, callback, error) {
         console.log("grades ......... ");
@@ -147,7 +148,7 @@
         getScoreList : getScoreList,
         remove : remove,
         update : update,
-        AvgScore : AvgScore,
+        AvgScore :AvgScore,
         SubjectsTotalAvg:SubjectsTotalAvg
         
     };

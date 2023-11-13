@@ -94,12 +94,13 @@ public class GradesController {
 		@PostMapping(value = "/subAvg/{e_id}/{e_grade}",
 				consumes = "application/json",
 				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<ScoreVO> getSubjectsTotalAvg(
+		public ResponseEntity<ScoreVO> SubjectsTotalAvg(
 				@PathVariable("e_id")int e_id,
 				@PathVariable("e_grade")String e_grade,
 				@RequestBody Exam_ScoreVO vo){
 			log.info("getSubjectsTotalAvg" +e_id);
 			log.info("getSubjectsTotalAvg" +e_grade);
+			log.info("getSubjectsTotalAvg" +vo);
 			return new ResponseEntity<ScoreVO>(gservice.getsubjectAvg(vo), HttpStatus.OK);
 		}
 		

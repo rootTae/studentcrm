@@ -95,11 +95,16 @@
            
             	
               GradesService.getScoreList({s_name: s_name, s_id: s_id}, function(score) {
-                  
+            	 // console.log(score);
+            	  
             	  score.forEach(function(score){     	
 					 
             	  score.avgScore=((score.korScore+ score.engScore+score.mathScore)/3).toFixed(1);
-                          		
+                 
+            	  GradesService.SubjectsTotalAvg({grades : score},function(e){
+            		  //console.log(grades);
+            	  });
+            	  
                 });
             	  var scoreList = $('.scoreList');
             	  scoreList.empty();
@@ -115,13 +120,29 @@
                           '<td>' + score.mathScore + '</td>' +
                           '<td>' + score.avgScore + '</td>' +
                           '</tr>';                   
-                          scoreList.append(str);//ul태그는 li을 여러개 받기때문에 사용
-      			});
-                	
-           
+                          scoreList.append(str);
+      				});
                 });
             });
-
+            
+            $(".scoreList").on('click', 'tr', function(e) {
+            
+            	var score = $(this)
+            	
+            	 var clickedScore = {
+            		        s_id: score.find('td:first-child').text(),
+            		        s_name: score.find('td:nth-child(2)').text(),
+            		        e_name: score.find('td:nth-child(3)').text(),
+            		        e_date: score.find('td:nth-child(4)').text(),
+            		        korScore: score.find('td:nth-child(5)').text(),
+            		        engScore: score.find('td:nth-child(6)').text(),
+            		        mathScore: score.find('td:nth-child(7)').text(),
+            		        avgScore: score.find('td:nth-child(8)').text()
+            		    };
+            	
+            	
+            	
+            });
     </script>
 </body>
 </html>

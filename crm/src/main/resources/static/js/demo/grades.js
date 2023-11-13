@@ -122,23 +122,30 @@
    
    function SubjectsTotalAvg(grades, callback, error) {
         console.log("grades ......... ");
+		
+		console.log(grades);
+      	
+	    var e_id = grades.grades.e_id;
+    	var e_grade = grades.grades.e_grade;
+		console.log(e_id);
+		console.log(e_grade);
 
-        $.ajax({
-            type: 'post',
-            url: '../gradesF/subAvg'+e_id +'/'+e_grade,
-            data: JSON.stringify(grades),
-            contentType: "application/json; charset=utf-8",
-            success: function (result, status, xhr) {
-                if (callback) {
-                    callback(result);
-                }
-            },
-            error: function (xhr, status, er) {
-                if (error) {
-                    error(er);
-                }
-            }
-        });
+       $.ajax({
+		    type: 'POST',
+		    url: '../gradesF/subAvg/' + e_id + '/' + e_grade,
+		    data: JSON.stringify(grades),
+		    contentType: "application/json; charset=utf-8",
+		    success: function (result, status, xhr) {
+		        if (callback) {
+		            callback(result);
+		        }
+		    },
+		    error: function (xhr, status, er) {
+		        if (error) {
+		            error(er);
+		        }
+		    }
+		});
     }
     
 

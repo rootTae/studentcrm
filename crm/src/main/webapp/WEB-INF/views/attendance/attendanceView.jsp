@@ -36,47 +36,44 @@
         }
 
         .white {
-            background-color: #ffffff;
+            background-color: #fffcf2;
         }
 
         .blue {
-            background-color: #3498db;
+            background-color: #9bf6ff;
             color: #ffffff;
         }
 
         .orange {
-            background-color: #e67e22;
+            background-color: #ffd6a5;
             color: #ffffff;
         }
 
         .red {
-            background-color: #e74c3c;
+            background-color: #ffadad;
             color: #ffffff;
         }
 
         .purple {
-            background-color: #9b59b6;
+            background-color: #bdb2ff;
             color: #ffffff;
         }
-        #cell_student1_12 {position:relative}
-        .aaa {display:none;position:absolute;width:100px;height:100px}
-        .memoBtn{position:absolute;top:0;right:0;width:3px;height:3px;}
-        .memoBtn:hover .aaa {display:block}
+        /* #cell_student1_12 {position:relative} */
+        /* .memo {display:none;position:absolute;right:-101px;top:-101px;width:100px;height:100px;border:1px solid #aaa;background-color:#fff;} */
+        /* .memoTextarea {display:none;position:absolute;right:-101px;top:-108px;width:100px;height:100px;border:2px solid #aaa;background-color:#f1faee;}
+        .memoBtn{display:block;position:absolute;top:0;right:0;width:3px;height:3px;z-index:100} */
     </style>
     
     <script>
         
     </script>
 </head>
-<body>
-		
-		
+<body>		
 	<div>
     	<ul class="classList">
 
 		</ul>
     </div>
-		
 		
 	 <table class="studentsList">
        <tr> 
@@ -86,10 +83,11 @@
             </c:forEach> 
        </tr>
        <tr class="studentsList">
-           <c:forEach var="student" items="${studentsList }">
+           <%-- <c:forEach var="student" items="${studentsList }">
            	   
-           </c:forEach> 
-           <td>${student.s_name}</td>
+           </c:forEach> --%> 
+           <%-- <td>${student.s_name}</td> --%>
+           <td></td>
            <c:forEach var="cellForEachDate" begin="1" end="<%=daysInMonth %>"> 
 	           <td></td>
 	       </c:forEach>
@@ -105,70 +103,40 @@ function statusChange(cell) {
     switch(cell.className) {
 	    case 'white':
 	        cell.className = 'blue';
-	        cell.textContent = 'Attend';
+	        $(cell).children('span').text('Attend');
+	        console.log(cell);
 	        sendStatusToServer(cell, 'Attend');
 	        break;
 	    case 'blue':
 	        cell.className = 'orange';
-	        cell.textContent = 'Late';
+	        $(cell).children('span').text('Late');
 	        sendStatusToServer(cell, 'Late');
 	        break;
 	    case 'orange':
 	        cell.className = 'red';
-	        cell.textContent = 'Absent';
+	        $(cell).children('span').text('Absent');
 	        sendStatusToServer(cell, 'Absent');
 	        break;
 	    case 'red':
 	        cell.className = 'purple';
-	        cell.textContent = 'Early Dismissal';
-	        sendStatusToServer(cell, 'Early Dismissal');
+	        $(cell).children('span').text('Leave early');
+	        sendStatusToServer(cell, 'Leave early');
 	        break;
 	    case 'purple':
 	        cell.className = 'white';
-	        cell.textContent = '';
+	        $(cell).children('span').text('');
 	        sendStatusToServer(cell, ''); 
 	        break;
 	    default:
 	        break;
   }
 };
-    
-function sendStatusToServer(cell, status) {
-    // Get necessary data from the cell, e.g., student id, date, etc.
-    var cellId = cell.id; // Assuming the cell id is in the format "cell_{studentId}_{date}"
-    var studentId = cellId.split('_')[1];
-    var date = cellId.split('_')[2];
-
-    // Prepare the data to be sent to the server
-    var data = {
-        s_id: studentId,
-        a_date: date,
-        a_status: status
-    };
-
-    // Use Ajax to send the data to the server
-    $.ajax({
-        url: '/attendance/' + s_id +'/' + a_date,
-        method: 'PUT', // Assuming you are using a PUT request
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function(response) {
-            console.log('Status sent to server successfully');
-            // Handle the response if needed
-        },
-        error: function(error) {
-            console.error('Error sending status to server:', error);
-            // Handle the error if needed
-        }
-    });
-}
 
 $(document).ready(function () {
     var classListUL = $(".classList");
     var t_id = 1;
     console.log(t_id);
-
-    
+   
     attendanceService.getClassList({ t_id: t_id },
         function (list) {
             var str = "";
@@ -201,7 +169,12 @@ $(document).ready(function () {
                                 	var cellId = "cell_" + studentList[i].s_name + "_" + j;
                                 	//console.log(cellId);
                                     str += "<td id='" + cellId + "' class='white' onclick='statusChange(this)'>";
-                                    str += "<button class='memoBtn'></button><div class='aaa'>텍스트 넣을곳</div></td>";
+                                    /* str += "<td id='" + cellId + "' class='white'>"; */
+                                    /* str += "<button class='memoBtn'></button> ";*/
+                                   /*  str += "<div><textarea class='memoTextarea' placeholder='텍스트 넣을 곳'></textarea>"; */
+                                    /* str += "</div>"; */
+                                    //str += "<button class='memoBtn'></button><div class='memo'>텍스트 넣을곳</div>";
+                                    str += "<span></span>";
                                 }
                                 str += "<td><input type='submit' value='submit'></td></tr>";
                             }
@@ -213,8 +186,24 @@ $(document).ready(function () {
                             }
                             str += "</tr>";
                         }
+						
+                        for (var i = 0; i < studentList.length; i++) {
+                            for (var j = 1; j <= daysInMonth; j++) {
+                                var cellId = "cell_" + studentList[i].s_name + "_" + j;
+                                str += "<style>#" + cellId + "{position:relative;}</style>";
+                            }
+                        }
 
                         $(".studentsList").html(str); // show result
+                        /* $(".memoBtn").on("click", function(e){
+                        	console.log("클릭");
+                        	e.stopPropagation(); // 부모인 <div>태그(child를 감싸고 있는)의 action을 자식인 memobtn이 상속받지 않고 독립적으로 행동하게 함.
+                            $(this).next().find(".memoTextarea").toggle();
+                        	
+                            $(".memoTextarea").on("click", function(e) {
+                                e.stopPropagation(); // .memoTextarea에서의 클릭 이벤트가 전파되지 않도록 함.
+                            });
+                         }); */
                     },
                     error: function () {
                         console.log("Error fetching student list:");
@@ -231,6 +220,7 @@ $(document).ready(function () {
     $(".studentsList td").on("click", function () {
         statusChange(this);
     });
+
     /* $(".studentsList").on("click", "td", function () {
         var clickedCell = $(this);
         
@@ -238,7 +228,6 @@ $(document).ready(function () {
     }); */
    
 });
-
 
 /* document.addEventListener("DOMContentLoaded", function () {
     var cells = document.querySelectorAll('td');

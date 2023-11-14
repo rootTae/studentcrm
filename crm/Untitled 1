@@ -1,0 +1,53 @@
+<script>
+document.addEventListner("DOMContentLoaded", function(){
+	var cells = document.queryselectorall('td');
+	
+	cells.forEach(function(cell){
+		cell.addeventlistener('click', function(){
+			switch(cell.className){
+			
+			case 'white'
+			
+		
+		}
+	
+
+	}
+}
+
+var attendanceService = (function(){
+	function getList(param, callback, error){
+		var t_id = param.t_id;
+		
+		$.getJSON("attendance.classlist/"+ t_id,
+			function(callback)
+			if(callback){
+				callback(data)
+			}
+		}).fail(function(xhr, status, err){
+			if(error){
+			error();
+		
+		)
+	}
+}
+
+$(document).ready(function(){
+	var classListUL= ${".classList"};
+	var t_id = 1;
+	
+	attendanceService.getList({t_id=t_id},
+		function(list){
+			var str = "";
+			for(var i = 0, len = list.length|| 0, i<len; i++){
+				str += <li data-list='"+list[i].class_name+"'>" + list[i].class_name+"</li>";
+			}
+			classListUL.html(str);
+
+
+}
+
+
+
+
+

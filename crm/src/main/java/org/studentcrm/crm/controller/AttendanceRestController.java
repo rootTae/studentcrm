@@ -82,12 +82,16 @@ public class AttendanceRestController {
 		
 		return new ResponseEntity<AttendanceVO>(service.viewMemo(vo), HttpStatus.OK);
 	}
-
 	// updateStat
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-			value="/{s_id}", consumes="application/json", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<String> update(@RequestBody AttendanceVO vo, @PathVariable("s_id") int s_id){
+			value="/{s_id}/{a_date}", consumes="application/json", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<String> update(
+			@RequestBody AttendanceVO vo, 
+			@PathVariable("s_id") int s_id,
+			@PathVariable("a_date") LocalDate a_date
+			){
 		vo.setS_id(s_id);
+		vo.setA_date(a_date);
 		log.info("s_id"+s_id);
 		log.info("AttendanceVO " + vo);
 		return service.updateStat(vo) == 1

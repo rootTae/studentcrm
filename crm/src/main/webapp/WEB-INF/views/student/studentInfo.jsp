@@ -324,7 +324,7 @@
 			btnShow2();
 			
 			//수정 버튼을 누르면 보고있던 데이터가 수정가능하게 바뀌어야함
-			studentEdit()
+			studentEdit();
 			nowBtn = modifyBtn;
 		});
 		//학생 정보 수정 - 어떻게 위에거랑 합치지?? 못합치나...?

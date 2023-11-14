@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.studentcrm.crm.command.ScoreVO;
+import org.studentcrm.crm.command.ExamVO;
 import org.studentcrm.crm.command.Exam_ScoreVO;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.mapper.GradesMapper;
@@ -57,8 +58,31 @@ public class GradesServiceImple implements GradesService {
 	
 	@Override //각 과목당 평균 전체 평균
 	public ScoreVO getsubjectAvg(Exam_ScoreVO vo) {
-		List<Exam_ScoreVO> list =mapper.getScoreList(vo.getS_id());
-		return mapper.subjectAvg(list);
+          
+		return mapper.subjectAvg(vo);
+	}
+	
+	@Override
+	public int examModify(ExamVO vo) {
+		
+		return mapper.updateExam(vo);
+	}
+	
+	@Override
+	public int examRegister(ExamVO vo) {
+		
+		return mapper.insertExam(vo);
+	}
+	
+	@Override
+	public int examRemove(int e_id) {
+		
+		return mapper.deleteExam(e_id);
+	}
+	
+	@Override
+	public List<ExamVO> getexamList(String e_name) {		
+		return mapper.getexamList(e_name);
 	}
 	
 //	@Override //국영수 평균 값

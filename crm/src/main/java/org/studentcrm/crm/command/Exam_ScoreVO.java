@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 public class Exam_ScoreVO {
 	
 	private int score_id;
+	
 	private int s_id;
 	private String s_name;
 	private String s_grade;
 	
 	private int e_id;
 	private String e_name;
+	
 	private String e_grade;
 	private LocalDate e_date;
 

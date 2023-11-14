@@ -22,6 +22,7 @@ public interface StudentMapper {
 	public List<StudentVO> getStudentName(String s_name);
 	//최근 추가된 s_id 가져오기
 	public int getLastId();
-	//
+	
+	//학생 id로 학급 정보 가져오기(class, student를 register로 조인)
 	public List<RegisterVO> getClassInfo(int s_id);
 }

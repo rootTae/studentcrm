@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.studentcrm.crm.command.RegisterVO;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.mapper.StudentMapper;
 
@@ -43,5 +44,14 @@ public class StudentServiceimpl implements StudentService {
 	@Override
 	public int getLastId() {
 		return sMapper.getLastId();
+	}
+	
+	//학생 id로 학급 정보 가져오기(class, student를 register로 조인)
+	@Override
+	public List<RegisterVO> getClassInfo(int s_id) {
+		List<RegisterVO> list = sMapper.getClassInfo(s_id);
+		//System.out.println("-----------------");
+		//System.out.println(list);
+		return list;
 	}
 }

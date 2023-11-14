@@ -59,9 +59,9 @@
             color: #ffffff;
         }
         #cell_student1_12 {position:relative}
-        .aaa {display:none;position:absolute;width:100px;height:100px}
-        .memoBtn{position:absolute;top:0;right:0;width:3px;height:3px;}
-        .memoBtn:hover .aaa {display:block}
+        .aaa {display:none;position:absolute;width:100px;height:100px;border:1px solid #aaa}
+        .memoBtn{display:block;position:absolute;top:0;right:0;width:3px;height:3px;}
+        
     </style>
     
     <script>
@@ -236,6 +236,10 @@ $(document).ready(function () {
         
         statusChange(clickedCell[0]); // 첫 번째 요소를 전달 (JavaScript 객체로 변환)
     }); */
+    
+    $(".memoBtn").on("click", function(){
+    	$(this).next().toggle();
+    });
    
 });
 

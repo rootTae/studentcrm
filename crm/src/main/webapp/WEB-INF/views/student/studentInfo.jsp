@@ -104,10 +104,24 @@
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr>
-			    </tr>
+			  	<!-- <tr class="add_class_info">
+			  		<td></td>
+			  		<td><input type="text" name="c_class"></td>
+			  		<td></td>
+			  		<td><input type="text" name=""></td>
+			  		<td><input type="text" name=""></td>
+			  		<td><input type="text" name=""></td>
+			  		<td><input type="text" name=""></td>
+			  		<td><input type="text" name=""></td>
+			  		<td><input type="text" name=""></td>
+			  	</tr> -->
 			  </tbody>
-			</table>
+			</table>	
+			
+	    	<div>
+	    		<button type="button" id="classAddBtn">추가</button>
+	    		<button type="button" id="classDelBtn">선택삭제</button>
+	    	</div>
     	</div>
     </div>
     
@@ -197,8 +211,9 @@
 			//nowSid = $(this).data("s_id");//취소 버튼 되돌리기용인데 이렇게 따로 안해도 될거 같은데? 헷갈리니까 걍 냅두기
 			
 			studentId = $(this).data("s_id");
-			getStudent(studentId);
-			getCommute(studentId);
+			getStudent(studentId); //해당 학생 정보
+			getCommute(studentId);//해당 학생의 통학 정보
+			getClass(studentId);//해당 학생의 학급 정보
 			
 			studentDisable();//수정 버튼을 눌렀을 때만 수정 가능하게 입력 막기
 		});
@@ -466,6 +481,7 @@
 			studentForm.find("input[type='radio']").prop('checked', false);
 			//console.log("지우기 실행");
 			$("#commuteInfo").find("input").val(''); //통학 정보 비우기
+			$("#classInfo tbody").children().remove();//학급 정보 비우기
 		}
 		
 		//입력 가능 변경 - 학생 정보 입력창 데이터 삭제 후 입력 가능하게 변경
@@ -570,13 +586,49 @@
 		//다른 년도, 월을 조회하면 그 때 그에 해당하는 정보로 교체
 		
 		//일단 검색한 학생 id에 해당하는 모든 학급 정보 가져오기
-		
-		
+		//let classInfo;
+		function getClass(studentId){
+			StudentService.getClassInfoList(studentId,function(classInfoList){
+				$("#classInfo tbody").children().remove(); //비우고 넣기				
+
+				classInfoList.forEach(function(item){
+					//console.log(item);
+					showClass(item);
+				});
+				
+			});
+		};
+		//가져온 학급 정보를 화면에 출력
+		function showClass(classInfo){
+			let str;
+			str += "<tr>";
+			str += "<td>";
+			str += "<input type='checkbox' class='checkThis'>";
+			str += "</td>";
+			str += "<td>"+classInfo.c_class+"</td>";
+			str += "<td>"+classInfo.s_list+"</td>";
+			str += "<td>"+classInfo.t_name+"</td>";
+			str += "<td>"+classInfo.classroom+"</td>";
+			str += "<td>"+classInfo.c_startdate+"</td>";
+			str += "<td>"+classInfo.c_enddate+"</td>";
+			str += "<td>"+classInfo.s_status+"</td>";
+			str += "</tr>";
+			
+			$("#classInfo").append(str);
+		}
+
+		//학급 정보 데이터 추가 버튼
+		//추가 버튼을 누르면 이미 있는 학급 정보에서 골라서 선택하면 해당 학생이 그 학급 정보에 추가된다.
 		
 		
 		
 		//학급 정보 월별 조회 출력
-			
+		let today = new Date();
+		let year = today.getFullYear();
+		let month = today.getMonth()+1;
+		let day = today.getDate();
+		console.log(year+"-"+month+"-"+day);
+		
 		//셀렉트 선택시 첫번째 꺼 선택 해제	
 		//document.getElementById("monthSelect").options[0].removeAttribute("selected");	
 		

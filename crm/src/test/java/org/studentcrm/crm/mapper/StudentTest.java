@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.studentcrm.crm.command.RegisterVO;
 import org.studentcrm.crm.command.StudentVO;
 
 import lombok.Setter;
@@ -15,6 +16,9 @@ import lombok.extern.log4j.Log4j2;
 public class StudentTest {
 	@Setter(onMethod_ = {@Autowired})
 	private StudentMapper mapper;
+	
+//	@Setter(onMethod_ = {@Autowired})
+//	private RegisterMapper rMapper;
 	
 	@Test
 	public void testmapper() {
@@ -65,6 +69,14 @@ public class StudentTest {
 	@Test
 	public void getName() {
 		List<StudentVO> list = mapper.getStudentName("김학생");
+		log.info(list);
+	}
+	
+	@Test
+	public void getCInfo() {
+		//log.info("rMapper : "+rMapper);
+		int s_id = 1;
+		List<RegisterVO> list = mapper.getClassInfo(s_id);
 		log.info(list);
 	}
 }

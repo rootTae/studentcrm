@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import org.studentcrm.crm.command.RegisterVO;
 import org.studentcrm.crm.command.StudentVO;
 
 @Mapper
@@ -21,4 +22,6 @@ public interface StudentMapper {
 	public List<StudentVO> getStudentName(String s_name);
 	//최근 추가된 s_id 가져오기
 	public int getLastId();
+	//
+	public List<RegisterVO> getClassInfo(int s_id);
 }

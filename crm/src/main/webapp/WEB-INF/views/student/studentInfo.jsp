@@ -2,7 +2,11 @@
     pageEncoding="UTF-8"%>
 
 <%@include file="/WEB-INF/views/include/header.jsp"%>
-
+<head>
+	<style>
+		#classInfo th, #classInfo td{border:1px solid #000}
+	</style>
+</head>
 <div>
 	<h2>신상정보 페이지</h2>
 	<!-- ============== 신상 정보 =============== -->
@@ -54,6 +58,7 @@
     <!-- ============== 학급 정보 =============== -->
     <div>
     	<div id="classSearch"><!-- 처음 출력은 지금 월에 해당하는 정보 출력 -->
+	    	<!-- 월별 학급 이력 조회 -->
 	    	<form action="">
 	    		<select id="classYear" name="classYear" >
 	    			<option value="" disabled selected>년도</option>
@@ -77,8 +82,32 @@
 	    			<option value="11">11월</option>
 	    			<option value="12">12월</option>
     			</select>
-				<input type="submit">
+				<input type="submit" value="학급 이력 조회">
 	    	</form>
+	    	<div>
+	    		<button type="button" id="withdrawBtn">휴.퇴원</button>
+	    		<button type="button" id="registBtn">재등록</button>
+	    	</div>
+	    	
+	    	<!-- 학급 상세 정보 출력 -->
+	    	<table id="classInfo">
+			  <thead>
+			    <tr>
+			      <th><input type="checkbox" id="checkAll"></th>
+			      <th>학급명</th>
+			      <th>학생 명단</th>
+			      <th>담당 강사</th>
+			      <th>강의실</th>
+			      <th>시작일</th>
+			      <th>종료일</th>
+			      <th>상태</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			    </tr>
+			  </tbody>
+			</table>
     	</div>
     </div>
     
@@ -93,6 +122,7 @@
 		
 		//취소 버든 클릭시 데이터를 되돌리기 위한 s_id, 통학 정보 수정을 위함
 		let nowSid = "";
+		let studentId = ""; //현재 검색한 학생 s_id
 		//어떤 버튼을 눌렀는지 확인 후 수정, 취소 기능 구별용
 		let nowBtn = "";
 		
@@ -166,7 +196,7 @@
 			
 			//nowSid = $(this).data("s_id");//취소 버튼 되돌리기용인데 이렇게 따로 안해도 될거 같은데? 헷갈리니까 걍 냅두기
 			
-			let studentId = $(this).data("s_id");
+			studentId = $(this).data("s_id");
 			getStudent(studentId);
 			getCommute(studentId);
 			
@@ -200,7 +230,8 @@
 						$("#s_gender_m").prop('disabled', true);
 					}
 					
-					nowSid = data.s_id;//취소 버튼 되돌리기, 삭제, 수정용 s_id, 통학정보 수정용
+					//nowSid = data.s_id;//취소 버튼 되돌리기, 삭제, 수정용 s_id, 통학정보 수정용
+					//studentId = data.s_id;//취소 버튼 되돌리기, 삭제, 수정용 s_id, 통학정보 수정용
 			});
 			//학생 정보 출력 후 수정 막기 - 출력된 학생 정보를 수정하려면 수정 버튼을 눌러야 함
 			studentForm.find("input").prop('readonly', true);
@@ -321,23 +352,28 @@
 		delBtn.on("click", function() {
 			
 			//학생 정보 삭제
-			if(nowSid == "") {
+			//if(nowSid == "") {
+			if(studentId == "") {
 				alert("삭제할 데이터가 없습니다.");
 				return;
 			}else {
 				delStudent(nowSid, function() {
 					studentInit();
 					btnShow3();
-					nowSid == "";
+					//nowSid == "";
+					studentId == "";
 				});
-				delCommute(nowSid);//통학 정보 삭제
+				//delCommute(nowSid);//통학 정보 삭제
+				delCommute(studentId);//통학 정보 삭제
 			}
 			
 		});
 		
 		//학생 정보 삭제
-		function delStudent(nowSid, callback){
-			StudentService.deleteStudent(nowSid, function(result) {
+		//function delStudent(nowSid, callback){
+			//StudentService.deleteStudent(nowSid, function(result) {
+		function delStudent(studentId, callback){
+			StudentService.deleteStudent(studentId, function(result) {
 				if(result == "success"){
 					alert("학생 정보 삭제 성공");
 					callback();
@@ -348,7 +384,8 @@
 		//저장 버튼
 		saveBtn.on("click", function() {
 			//초기 -> 저장, 추가 -> 저장 = 새 데이터 추가
-			if((nowSid == "" && nowBtn == "") || nowBtn == addBtn) {
+			//if((nowSid == "" && nowBtn == "") || nowBtn == addBtn) {
+			if((studentId == "" && nowBtn == "") || nowBtn == addBtn) {
 				//btnTogle($(this));
 				btnShow2();
 				//학생 정보 저장
@@ -358,6 +395,8 @@
 					//저장하고 지워줘야 계속 입력할 수 있다.
 					studentInit();
 					studentEdit();
+					//추가 후 저장하고 나서 또 다른 추가 없이 취소를 누르면 이전 정보가 보이면 안된다.
+					studentId = "";
 				});
 			}else if(nowBtn == modifyBtn) {
 				//수정 -> 저장
@@ -365,10 +404,12 @@
 				btnShow3();
 				
 				//학생 정보 수정
-				upCommute(nowSid); //통학
+				//upCommute(nowSid); //통학
+				upCommute(studentId); //통학
 				upStudent(function() {
 					//수정한 데이터 불러와서 보여주기
-					getStudent(nowSid);
+					//getStudent(nowSid);
+					getStudent(studentId);
 					//다시 수정 불가능하게 수정
 					studentDisable();
 				});
@@ -379,17 +420,22 @@
 		cancelBtn.on("click", function() {			
 			//기존에 보던 학생정보 페이지 보여주기
 			console.log("이전에 보던 번호 : "+nowSid);
+			console.log("이전에 보던 번호 : "+studentId);
 			
 			//첫 화면일땐 그냥 지우기만 해야 한다.
-			if(nowSid == "") {
+			//if(nowSid == "") {
+			if(studentId == "") {
 				//console.log("이전에 보던 데이터 없음");
 				studentInit();
 				studentEdit();
 			}else {
 				//취소하면 보던걸 다시 보여줘야 함
-				getStudent(nowSid);
-				upCommute(nowSid);
+				//getStudent(nowSid);
+				//upCommute(nowSid);
+				getStudent(studentId);
+				getCommute(studentId);
 				btnShow3();
+				studentDisable();
 				//btnTogle($(this));
 			}
 			
@@ -417,6 +463,7 @@
 		function studentInit() {
 			//input - readonly 제거, value 값 삭제
 			studentForm.find("input").val(''); //학생 정보 비우기
+			studentForm.find("input[type='radio']").prop('checked', false);
 			//console.log("지우기 실행");
 			$("#commuteInfo").find("input").val(''); //통학 정보 비우기
 		}
@@ -486,11 +533,13 @@
 		}
 		
 		//통학 정보 수정
-		function upCommute(nowSid){ //nowSid : 수정할 c_id
-			//console.log("nowSid : "+nowSid);
+		//function upCommute(nowSid){ //nowSid : 수정할 c_id
+		function upCommute(studentId){ //nowSid : 수정할 c_id
+			console.log("studentId : "+studentId);
 			//입력할 데이터
 			let student = {
-				s_id : nowSid, //update 위치 파악용
+				//s_id : nowSid, //update 위치 파악용
+				s_id : studentId, //update 위치 파악용
 				zip_code : $("#zip_code").val(),
 				address1 : $("#address1").val(),
 				address2 : $("#address2").val(),
@@ -504,8 +553,10 @@
 		}
 		
 		//통학 정보 삭제
-		function delCommute(nowSid){
-			StudentService.deleteCommute(nowSid, function(result) {
+		//function delCommute(nowSid){
+			//StudentService.deleteCommute(nowSid, function(result) {
+		function delCommute(studentId){
+			StudentService.deleteCommute(studentId, function(result) {
 				if(result == "success"){
 					alert("통학 정보 삭제 성공");
 				}
@@ -514,7 +565,17 @@
 		
 		
 		<!-- ============== 학급 정보 =============== -->	
-			
+		//학생 검색시 현재 월 학급 정보 출력
+		//학생 id로 학급 정보를 모두 가져오고 처음 보여줄 때는 현재 년도, 월의 정보만 보여주기
+		//다른 년도, 월을 조회하면 그 때 그에 해당하는 정보로 교체
+		
+		//일단 검색한 학생 id에 해당하는 모든 학급 정보 가져오기
+		
+		
+		
+		
+		
+		//학급 정보 월별 조회 출력
 			
 		//셀렉트 선택시 첫번째 꺼 선택 해제	
 		//document.getElementById("monthSelect").options[0].removeAttribute("selected");	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.ScoreVO;
+import org.studentcrm.crm.command.ExamVO;
 import org.studentcrm.crm.command.Exam_ScoreVO;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.service.GradesService;
@@ -38,6 +39,15 @@ public class GradesController {
 		
 		return new ResponseEntity<List<StudentVO>>(gservice.getStudentList(s_name), HttpStatus.OK);
 	}
+	
+	//시험 이름으로 학생 리스트 가져오기
+	@GetMapping(value ="/{e_name}", produces = {MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8"})
+	public ResponseEntity<List<ExamVO>> getexamList(@PathVariable("e_name") String e_name) {			
+	    log.info("=====================.");
+	    log.info(e_name);
+	    return new ResponseEntity<List<ExamVO>>(gservice.getexamList(e_name), HttpStatus.OK);
+	}
+
 	
 	//학생아이디로 검색 점수리스트 가져오기
 	@GetMapping(value = "/{s_name}/{s_id}",
@@ -63,6 +73,22 @@ public class GradesController {
 					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 		
+		//시험 생성
+				@PostMapping(value = "/neweaxm",
+						consumes = "application/json",
+						produces = {MediaType.TEXT_PLAIN_VALUE})
+				public ResponseEntity<String> examInsert(@RequestBody ExamVO vo){
+					
+					log.info("exam+scorevo" +vo);
+					int result =gservice.examRegister(vo);
+					log.info("insertScoreResult" + result);
+					return result == 1 ?
+							new ResponseEntity<>("시험등록 성공" , HttpStatus.OK)
+							: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+				}
+				
+		
+		
 	//시험 점수 수정
 		@RequestMapping(method = {RequestMethod.PUT , RequestMethod.PATCH},
 				value ="/{s_id}",
@@ -79,8 +105,24 @@ public class GradesController {
 					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 		
+		//시험 수정
+		@RequestMapping(method = {RequestMethod.PUT , RequestMethod.PATCH},
+				value ="/{e_id}",
+				consumes = "application/json",
+		        produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> examModify(
+				@RequestBody ExamVO vo,
+				@PathVariable("e_id") int e_id){
+			vo.setE_id(e_id);
+			log.info("s_id: "+e_id);
+		    log.info("scoreModify: "+vo);
+			return gservice.examModify(vo)==1
+					? new ResponseEntity<>("success",HttpStatus.OK)
+					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+		
 	//시험점수 삭제
-		@DeleteMapping(value ="/{s_id}",
+		@DeleteMapping(value ="/{s_id}/",
 				produces = {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> scoreRemove(@PathVariable("s_id") int s_id){
 			log.info("scoreRemove" +s_id);
@@ -89,17 +131,23 @@ public class GradesController {
 			:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 		
+		//시험 삭제
+				@DeleteMapping(value ="/{e_id}",
+						produces = {MediaType.TEXT_PLAIN_VALUE})
+				public ResponseEntity<String> examRemove(@PathVariable("e_id") int e_id){
+					log.info("scoreRemove" +e_id);
+					return gservice.scoreRemove(e_id)==1
+					? new ResponseEntity<String>("success",HttpStatus.OK)
+					:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	
+				}
+		
 		
 		//전체인원 과목 평균
-		@PostMapping(value = "/subAvg/{e_id}/{e_grade}",
+		@PostMapping(value = "/subAvg",
 				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
+				produces = {MediaType.APPLICATION_JSON_VALUE})
 		public ResponseEntity<ScoreVO> SubjectsTotalAvg(
-				@PathVariable("e_id")int e_id,
-				@PathVariable("e_grade")String e_grade,
-				@RequestBody Exam_ScoreVO vo){
-			log.info("getSubjectsTotalAvg" +e_id);
-			log.info("getSubjectsTotalAvg" +e_grade);
+				@RequestBody Exam_ScoreVO vo){			
 			log.info("getSubjectsTotalAvg" +vo);
 			return new ResponseEntity<ScoreVO>(gservice.getsubjectAvg(vo), HttpStatus.OK);
 		}

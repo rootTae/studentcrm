@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import org.studentcrm.crm.command.ScoreVO;
+import org.studentcrm.crm.command.ExamVO;
 import org.studentcrm.crm.command.Exam_ScoreVO;
 import org.studentcrm.crm.command.StudentVO;
 
@@ -23,7 +24,14 @@ public interface GradesMapper {
 	
 	public Exam_ScoreVO avgScore(Exam_ScoreVO vo); //국영수 평균 구하기	
 	
-	public ScoreVO subjectAvg(List<Exam_ScoreVO> list); //과목당 평균 구하기
+	public ScoreVO subjectAvg(Exam_ScoreVO vo); //과목당 평균 구하기
+	
+	public int insertExam(ExamVO vo);
+	public int deleteExam(int e_id);	 //시험 삭제
+	public int updateExam(ExamVO vo); //시험 수정
+	
+	public List<ExamVO> getexamList(String e_name);
+	
 	
 	
 	

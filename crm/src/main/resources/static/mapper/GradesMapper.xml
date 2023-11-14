@@ -7,7 +7,7 @@
 <!-- 성적입력 -->
 <insert id="insertScore" parameterType="org.studentcrm.crm.command.Exam_ScoreVO">
 	 insert into exam_score (s_id, e_id, korScore, engScore, mathScore) 
-	 values(#{s_id}, #{e_id},${korScore},${engScore},${mathScore} )
+	 values(#{s_id}, #{e_id},#{korScore},#{engScore},#{mathScore} )
 </insert>
 
 
@@ -48,7 +48,7 @@ resultType="org.studentcrm.crm.command.StudentVO">
 resultType="org.studentcrm.crm.command.Exam_ScoreVO">
 		select round((avg(korScore)+ avg(engScore)+ avg(mathScore))/ 3 ,1) as avgScore 
 		from exam_score
-		where score_id =#{score_id};
+		where score_id =#{score_id}
 </select>
 
 <!-- 전체 과목 평균 -->
@@ -61,7 +61,30 @@ resultType="org.studentcrm.crm.command.ScoreVO">
         round(avg((es.korScore + es.engScore + es.mathScore)/3),1)as totalAvgScore
     from exam_score es
     join exam e on es.e_id = e.e_id
-    where es.e_id = #{e_id} and e.e_grade =#{e_e_grade}		
+    where es.e_id = #{e_id} and e.e_grade =#{e_grade}		
+</select>
+
+<!-- 시험 생성 -->
+<insert id="insertExam" parameterType="org.studentcrm.crm.command.ExamVO">
+	 insert into exam (e_name, e_grade, e_date) 
+	 values( #{e_name},#{e_grade},#{e_date})
+</insert>
+
+<!--시험 수정 -->
+<update id="updateExam" parameterType="org.studentcrm.crm.command.ExamVO">
+        update exam set e_name = #{e_name}, e_grade=${e_grade}, e_date=${e_date}
+        where e_id = #{e_id}
+    </update>
+
+<!-- 성적 삭제 -->
+<delete id="deleteExam" parameterType="java.lang.Integer">
+	delete from exam where e_id = #{e_id}
+</delete>
+
+<!-- 시험이름으로 조회 -->
+<select id="getexamList" parameterType="java.lang.String" 
+resultType="org.studentcrm.crm.command.ExamVO">
+	select * from exam where e_name = #{e_name}
 </select>
 
 

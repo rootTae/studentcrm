@@ -47,9 +47,11 @@
         <table id="examTable" border="1">
             <thead>
                 <tr>
-            <button type="button" class="inserExamtbtn" style="display: none">추가</button>
-        	<button type="button" class="updateExambtn" style="display: none">수정</button>
-        	<button type="button" class="deleteExambtn" style="display: none">삭제</button>
+            <button type="button" class="inserExamtbtn" >추가</button>
+        	<button type="button" class="updateExambtn" >수정</button>
+        	<button type="button" class="deleteExambtn" >삭제</button>
+        	<button type="button" class="saveExambtn" style="display: none">저장</button>
+        	<button type="button" class="cancelExambtn" style="display: none">취소</button>
                     <th>시험명</th>
                     <th>학년</th>
                     <th>시험 날짜</th>  
@@ -122,6 +124,19 @@
             let scoredata = "";
             let escore = $(".escore");
             
+            // 버튼 설정
+            let addbtn = $(".insertbtn");
+            let updatebtn = $(".updatebtn");
+            let deletebtn = $(".deletebtn");
+            let savebtn = $(".savebtn");
+            let cancelbtn = $(".cancelbtn");
+            
+            let inserExamtbtn = $(".inserExamtbtn");
+            let updateExambtn = $(".updateExambtn");
+            let deleteExambtn = $(".deleteExambtn");
+            let saveExambtn = $(".saveExambtn");
+            let cancelExambtn = $(".cancelExambtn");   
+            
             $('#searchForm').submit(function(event){
                 event.preventDefault();
                 var s_nameValue = $('#s_name').val();
@@ -184,33 +199,8 @@
                 });
                 
             });
-            
-            // 버튼 설정
-            let addbtn = $(".insertbtn");
-            let updatebtn = $(".updatebtn");
-            let deletebtn = $(".deletebtn");
-            let savebtn = $(".savebtn");
-            let cancelbtn = $(".cancelbtn");
-            
-            // 버튼 show, hide
-            function btnShow2(){
-                savebtn.show();
-                cancelbtn.show();
-                
-                addbtn.hide();
-                updatebtn.hide();
-                deletebtn.hide();
-            }
-            
-            function btnShow3(){
-                savebtn.hide();
-                cancelbtn.hide();
-                
-                addbtn.show();
-                updatebtn.show();
-                deletebtn.show();
-            }
-            
+         
+         
             // 추가 버튼 
             $(".insertbtn").on('click', function(){
                 console.log(scoredata);
@@ -254,12 +244,16 @@
                 
             }
             
+            
             // 저장 버튼
             savebtn.on("click", function(){
                 if(nowbtn == addbtn){
                     btnShow2();                    
                 }                  
             });
+            
+            
+            
             
             // 시험리스트 
             $('#examsearchForm').on('click',"button", function(e){
@@ -273,15 +267,191 @@
                     exam_List.empty();
                     
                     exams.forEach(function (exams) {
-                        var str = '<tr>' +
-                            '<td>' + exams.e_name + '</td>' +
-                            '<td>' + exams.e_grade + '</td>' +
-                            '<td>' + exams.e_date + '</td>' +                     
+                        var str = '<tr class="addEs">' +
+                            '<td class="ie_e_name">' + exams.e_name + '</td>' +
+                            '<td class="ie_e_grade">' + exams.e_grade + '</td>' +
+                            '<td class="ie_e_date">' + exams.e_date + '</td>' +                     
                             '</tr>';                   
                         exam_List.append(str);
                     });      
                 });
             });
+            
+            // 추가 버튼 
+            $(".insertbtn").on('click', function(){
+
+                let scoreList = {               
+                    s_id : $(".i_s_id").val(),
+                    s_name : $(".i_s_name").val(),
+                    e_name : $("i_e_name").val(),
+                    e_date : $("i_e_date").val(),
+                    koreScore : $("i_korScore").val(),
+                    engeScore : $("i_engScore").val(),
+                    mathScore : $("i_mathScore").val(),
+                    mathScore : $("i_mathScore").val()
+                    
+                }                                  
+            });
+            
+          //시험 생성
+            inserExamtbtn.on('click', function(){
+            	
+            	str = '<tr class="addEs">' +
+                '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name"></td>' +
+                '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade"></td>' +
+                '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date"></td>' +              
+                '</tr>';
+                
+                $('.exam_List').append(str);
+                
+                e_btnShow2();
+                
+                nowbtn=inserExamtbtn;
+                
+            });
+            
+				function setExam(callback){
+                
+					let exam = {                  
+							e_name : $("#ie_e_name").val(),
+						    e_grade : $("#ie_e_grade").val(),
+						    e_date : $("#ie_e_date").val()                   
+						}
+                
+                GradesService.examInsert(exam, function(result){                   
+                    console.log("jsp : " + result);
+                    callback(result);                      
+                }); 
+                
+            }
+				
+       
+            
+            //시험 저장 버튼
+   
+			saveExambtn.on("click", function(){
+			    if(nowbtn == inserExamtbtn) {
+			        
+			        
+			        setExam(function(result){
+			        	
+			        GradesService.getexamList({e_name: $("#ie_e_name").val()}, function(exams){
+	                    var exam_List = $('.exam_List');
+	                    exam_List.empty();
+	                    
+	                    exams.forEach(function (exams) {
+	                        var str = '<tr>' +
+	                            '<td>' + exams.e_name + '</td>' +
+	                            '<td>' + exams.e_grade + '</td>' +
+	                            '<td>' + exams.e_date + '</td>' +                     
+	                            '</tr>';                   
+	                        exam_List.append(str);
+	                    });      
+			            // 결과 처리 코드 작성			            
+			        });
+			        
+			        	
+			        e_btnShow3();
+			        });
+			    }else if(nowbtn ==updateExambtn ){
+			    	e_btnShow3();
+			    	
+			    }                  
+			});
+            //시험 수정 버튼
+            
+            updateExambtn.on("click", function(){
+            	scoreEdit();
+            	e_btnShow2();
+            	
+            	
+            	nowbtn=updateExambtn;
+            	
+            });
+            function upExam(callback){
+            	
+            	let exam  ={
+            	
+            			
+            	}
+            }
+            
+        /*  // 수정 버튼 클릭 이벤트
+            $('.exam_List').on('click', '.editExamBtn', function() {
+                // 선택된 행에서 데이터 가져오기
+                var $row = $(this).closest('tr');
+                var $cells = $row.find('td');
+                // 원하는 형태로 데이터 활용 (여기서는 각 데이터 셀을 수정 가능한 input으로 변경)
+                $cells.each(function() {
+                    var $cell = $(this);
+                    var value = $cell.text();
+                    $cell.html('<input type="text" class="editInput" value="' + value + '">');
+                });
+                // 수정 완료 버튼 추가
+                $row.append('<td><button class="saveEditBtn">저장</button></td>');
+            });
+            // 저장 버튼 클릭 이벤트 (저장 버튼은 동적으로 추가된 버튼이므로 .on() 사용)
+            $('.exam_List').on('click', '.saveEditBtn', function() {
+                // 수정된 데이터를 가져와서 활용 (여기서는 각 input 값을 다시 해당 td에 넣어줌)
+                var $row = $(this).closest('tr');
+                var $cells = $row.find('td');
+                $cells.each(function() {
+                    var $cell = $(this);
+                    var value = $cell.find('.editInput').val();
+                    $cell.html(value);
+                });
+                // 저장 완료 버튼 제거
+                $row.find('.saveEditBtn').remove();
+            }); */
+            
+            
+            
+            // 버튼 show, hide
+            function btnShow2(){
+                savebtn.show();
+                cancelbtn.show();
+                
+                addbtn.hide();
+                updatebtn.hide();
+                deletebtn.hide();
+            }
+            
+            function btnShow3(){
+                savebtn.hide();
+                cancelbtn.hide();
+                
+                addbtn.show();
+                updatebtn.show();
+                deletebtn.show();
+            }
+            
+            function e_btnShow2(){
+            	saveExambtn.show();
+                cancelExambtn.show();
+                
+                inserExamtbtn.hide();
+                updateExambtn.hide();
+                deleteExambtn.hide();
+            }
+            
+            function e_btnShow3(){
+            	saveExambtn.hide();
+            	cancelExambtn.hide();
+                
+                inserExamtbtn.show();
+                updateExambtn.show();
+                deleteExambtn.show();
+            }
+            
+            function scoreEdit() {
+				$(".exam_List").find("input").prop('readonly', false);
+				
+			}
+            
+            
+
+            
+            
         });
     </script>
 </body>

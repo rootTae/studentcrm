@@ -609,9 +609,7 @@
          
         $(".sl_exam_checkbox").on('click', function() {
         	   // 모든 체크박스 해제
-        	   if($(".sl_exam_checkbox")){
-        		   $(".sl_exam_checkbox").prop('checked', false);
-        	   }
+        	   $(".sl_exam_checkbox").prop('checked', false);
 
         	   // 현재 클릭한 체크박스만 선택
         	   $(this).prop('checked', true);

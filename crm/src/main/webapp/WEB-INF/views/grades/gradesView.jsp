@@ -218,7 +218,7 @@
                         '<td><input type="text" name="s_name"  id="s_name"  readonly value="'+ student.s_name +'"></td>' +
                         '<td><input type="text" name="s_gender" id="s_gender"  readonly value="'+ student.s_gender +'"></td>' +
                         '<td><input type="text" name="s_phone"  id="s_phone" readonly value="'+ student.s_phone +'"></td>' +
-                        '<td><input type="text" name="s_school" id ="s_scool readonly value="'+ student.s_school +'"></td>' +
+                        '<td><input type="text" name="s_school" id ="s_school" readonly value="'+ student.s_school +'"></td>' +
                         '<td><input type="text" name="s_grade" readonly value="'+ student.s_grade + '"></td>' +
                         '</tr>';                   
                     studentList.append(str);
@@ -268,7 +268,7 @@
                     } else {
                         // 성적 데이터가 없을 경우 처리 (에러 메시지 출력 등)
                         console.log("No score data available");
-                        
+                        alert("삭제할 데이터가 없습니다.");
                     }
                 });
             }
@@ -553,6 +553,11 @@
     }
 });
 
+        //취소
+        cancelExambtn.on("click", function(){
+        	
+        	
+        });
         
         
         // 버튼 show, hide
@@ -598,33 +603,39 @@
         		$('.el_checkbox:checked').closest("tr").find("input:not('#ie_e_id')").prop('readonly', false);		
         	}
         }
-         //체크 박스 클릭 이벤트
-        $(".el_exam_checkbox").on('click', function() {
-		   // 모든 체크박스 해제
-		   $(".el_exam_checkbox").prop('checked', false);			
-		   // 현재 클릭한 체크박스만 선택
-		   $('.el_checkbox:checked').closest("tr").find("input").prop('checked', true);
-		});
-
-         
-        $(".sl_exam_checkbox").on('click', function() {
-        	   // 모든 체크박스 해제
-        	   $(".sl_exam_checkbox").prop('checked', false);
-
-        	   // 현재 클릭한 체크박스만 선택
-        	   $(this).prop('checked', true);
-        	});
-
         
-        $(".s_exam_checkbox").on('click', function() {
-        	   // 모든 체크박스 해제
-        	   $(".s_exam_checkbox").prop('checked', false);
+        
+      //체크 박스 클릭 이벤트
+        $(document).on('click', '.el_checkbox', function() {
+        	
+        	$(".el_checkbox").prop('checked', false);			
+ 		   // 현재 클릭한 체크박스만 선택       	
+ 		  $(this).prop('checked', true);
+ 		   
+        });
+        
+      
+  	$(document).on('click', '.sl_checkbox', function() {
+        	
+        	$(".sl_checkbox").prop('checked', false);			
+ 		   // 현재 클릭한 체크박스만 선택       	
+ 		 	 $(this).prop('checked', true);
+ 		   
+        });
+         
+  	
+	$(document).on('click', '.s_checkbox', function() {
+    	
+    		$(".s_checkbox").prop('checked', false);			
+		   // 현재 클릭한 체크박스만 선택       	
+		 	 $(this).prop('checked', true);
+		   
+    });
+     
+      
 
-        	   // 현재 클릭한 체크박스만 선택
-        	   $(this).prop('checked', true);
-        	});
-
-
+	
+	
         
     });
     

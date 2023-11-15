@@ -18,6 +18,13 @@ public class GradesViewController {
 		return "index";  //메인으로
 	}
 
+	@RequestMapping("/test")
+	public String test() {
+		return "grades/test";
+	}
+	
+	
+	
 	@RequestMapping("/gradesView")
 	public String gradesView() {
 		return "grades/gradesView";

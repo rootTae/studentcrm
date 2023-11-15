@@ -17,13 +17,7 @@ public class GradesViewController {
 	public String goMain() {
 		return "index";  //메인으로
 	}
-	
-	@RequestMapping(path = "/grades")
-	public String grades(Model model) {
-		return "grades/grades";
-	}
-	
-	
+
 	@RequestMapping("/gradesView")
 	public String gradesView() {
 		return "grades/gradesView";

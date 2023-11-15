@@ -72,13 +72,13 @@ public class StudentTest {
 		log.info(list);
 	}
 	
-	@Test
-	public void getCInfo() {
-		//가져올 테이블의 컬럼보다 vo필드의 갯수가 적어도 된다. 
-		//하지만 불러와서 사용할 mapper 인터페이스와 가져올 xml 파일의 이름이 다르면 안된다.
-		//log.info("rMapper : "+rMapper);
-		int s_id = 1;
-		List<RegisterVO> list = mapper.getClassInfo(s_id);
-		log.info(list);
-	}
+//	@Test
+//	public void getCInfo() {
+//		//가져올 테이블의 컬럼보다 vo필드의 갯수가 적어도 된다. 
+//		//하지만 불러와서 사용할 mapper 인터페이스와 가져올 xml 파일의 이름이 다르면 안된다.
+//		//log.info("rMapper : "+rMapper);
+//		int s_id = 1;
+//		List<RegisterVO> list = mapper.getClassInfo(s_id);
+//		log.info(list);
+//	}
 }

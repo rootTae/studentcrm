@@ -22,59 +22,181 @@
             </div>
             
           	<div class="row">
-	            <div class="col-12 grid-margin stretch-card">
+          	
+              <div class="col-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">학생 정보 검색</h4>
+                    <p class="card-description">학생의 이름 혹은 학번을 입력해 주세요.</p>
+                    <form class="form-inline">
+                      <input type="text" class="form-control mb-2 mr-sm-2" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 or 학번">
+                      <button type="submit" class="btn btn-primary mb-2" id="searchBtn">검색</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">검색 결과</h4>
+                    <p class="card-description">클릭 시 상세 정보 보기</p>
+                    
+					<ul class="search_list" style='padding:0;list-style:none'></ul>
+					
+                  </div>
+                </div>
+              </div>
+              
+	        </div>
+	        
+	        
+	        <div class="row"> 
+	              
+	              <div id="studentForm" class="col-12 grid-margin">
 	                <div class="card">
 	                  <div class="card-body">
-	                    <h4 class="card-title">학생 정보 검색</h4>
-	                    <p class="card-description">학생의 이름 혹은 학번을 입력해 주세요.</p>
-	                    <form class="form-inline">
-	                      <input type="text" class="form-control mb-2 mr-sm-2" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 or 학번">
-	                      <button type="submit" class="btn btn-primary mb-2" id="searchBtn">검색</button>
+	                    <h4 class="card-title">학생 상세 정보</h4>
+	                    <form class="form-sample">
+	                      <p class="card-description">학생 정보를 추가, 수정, 삭제 할 수 있습니다.</p>
+	                      
+	                      <div class="row">
+	                        <div class="col-md-4">
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">학생 사진</label>
+	                            <div class="col-sm-12">
+	                              <img  class="col-sm-12" alt="학생 사진" style="display:block;width:100%;height:300px" src="">
+	                              <input type='file' name='s_filename' id='s_filename'>
+	                            </div>
+	                          </div>
+	                        </div>
+	                        
+	                        <div class="col-md-4">
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">이름</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_name' id='s_name'>
+	                            </div>
+	                          </div>
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">학교</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_school' id='s_school'>
+	                            </div>
+	                          </div>
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">생년월일</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_birth' id='s_birth' placeholder='yyyy-mm-dd'>
+	                            </div>
+	                          </div>
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">전화번호</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_phone' id='s_phone'>
+	                            </div>
+	                          </div>
+	                        </div>
+	                        
+	                        <div class="col-md-4">
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">학번 <code style="font-size:12px">입력, 수정불가</code></label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_id' id='s_id' readonly>
+	                            </div>
+	                          </div>
+	                          
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">학년</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_grade' id='s_grade'>
+	                            </div>
+	                          </div>
+	                          
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">성별</label>	   
+	                            
+	                            <div class="row col-sm-12">
+		                            <div class="col-sm-6">
+		                              <div class="form-check">
+		                                <label class="form-check-label">
+		                                  <input type="radio" class="form-check-input" name="s_gender" id="s_gender_m"> 남자 <i class="input-helper"></i></label>
+		                              </div>
+		                            </div>
+		                            
+		                            <div class="col-sm-6">
+		                              <div class="form-check">
+		                                <label class="form-check-label">
+		                                  <input type="radio" class="form-check-input" name="s_gender" id="s_gender_f"> 여자 <i class="input-helper"></i></label>
+		                              </div>
+		                          	</div>
+		                          	
+	                            </div>                       
+	                          </div>
+	                          
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">추가 연락처</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_family_phone2' id='s_family_phone2'>
+	                            </div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                      
+	                      <div class="row">
+	                        <div class="col-md-4">
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">보호자 이름</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_family' id='s_family'>
+	                            </div>
+	                          </div>
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">형제 정보</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_sibling' id='s_sibling'>
+	                            </div>
+	                          </div>
+	                        </div>
+	                        
+	                        <div class="col-md-4">
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">학생과의 관계</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_relation' id='s_relation'>
+	                            </div>
+	                          </div>
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">최초 등록일</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='reg_date' id='reg_date'>
+	                            </div>
+	                          </div>
+	                        </div>
+	                        
+	                        <div class="col-md-4">
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">보호자 연락처</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='s_family_phone1' id='s_family_phone1'>
+	                            </div>
+	                          </div>
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">최초 수업일</label>
+	                            <div class="col-sm-12">
+	                              <input type='text' class="form-control" name='first_date' id='first_date'>
+	                            </div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                      
+	                     
+	                      
 	                    </form>
 	                  </div>
 	                </div>
 	              </div>
 	              
-	            <div class="col-md-6 grid-margin stretch-card">
-	                <div class="card">
-	                  <div class="card-body">
-	                    <h4 class="card-title">학생 상세 정보</h4>
-	                    <p class="card-description">학생 정보를 추가, 수정, 삭제 할 수 있습니다.</p>
-	                    <div class="form-group">
-	                      <label>Large input</label>
-	                      <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
-	                    </div>
-	                    <div class="form-group">
-	                      <label>Default input</label>
-	                      <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-	                    </div>
-	                    <div class="form-group">
-	                      <label>Small input</label>
-	                      <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username">
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 grid-margin stretch-card">
-	                <div class="card">
-	                  <div class="card-body">
-	                    <h4 class="card-title">학생 상세 정보</h4>
-	                    <p class="card-description">학생 정보를 추가, 수정, 삭제 할 수 있습니다.</p>
-	                    <div class="form-group">
-	                      <label>Large input</label>
-	                      <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
-	                    </div>
-	                    <div class="form-group">
-	                      <label>Default input</label>
-	                      <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-	                    </div>
-	                    <div class="form-group">
-	                      <label>Small input</label>
-	                      <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username">
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
           	   </div><!-- /.row -->
           
           
@@ -271,7 +393,7 @@
 							return;
 						}
 						str += "<li>";
-			            str += "<a href='#' data-s_id='"+data.s_id+"'>"+data.s_name+"</a></li>";
+			            str += "<a href='#' data-s_id='"+data.s_id+"'>"+data.s_name+" - "+data.s_id+"</a></li>";
 							
 						searchList.html(currentHTML + str);
 					}
@@ -332,12 +454,14 @@
 						$("#s_sibling").val(data.s_sibling);
 						$("#reg_date").val(data.reg_date);
 						$("#first_date").val(data.first_date);
-						$("#s_filename").val(data.s_filename);
+						//$("#s_filename").val(data.s_filename);
 						
-						if(data.s_gender == "남") {
+						if(data.s_gender == "남자") {
+							console.log(data.s_gender);
 							$("#s_gender_m").prop('disabled', false).prop('checked', true);
 							$("#s_gender_f").prop('disabled', true);
 						} else {
+							console.log(data.s_gender);
 							$("#s_gender_f").prop('disabled', false).prop('checked', true);
 							$("#s_gender_m").prop('disabled', true);
 						}
@@ -576,6 +700,7 @@
 				//input - readonly 제거, value 값 삭제
 				studentForm.find("input").val(''); //학생 정보 비우기
 				studentForm.find("input[type='radio']").prop('checked', false);
+				
 				//console.log("지우기 실행");
 				$("#commuteInfo").find("input").val(''); //통학 정보 비우기
 				//$("#classInfo tbody").children().remove();//학급 정보 비우기
@@ -599,7 +724,7 @@
 			}
 			
 			//학생 사진 올리기
-			//- 	
+			//
 			
 			
 			

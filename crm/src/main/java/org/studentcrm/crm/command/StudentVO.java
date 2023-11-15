@@ -23,4 +23,6 @@ public class StudentVO {
    private String reg_date;
    private String first_date;
    private String s_filename;
+   private String s_class;
+   private String s_memo;
 }

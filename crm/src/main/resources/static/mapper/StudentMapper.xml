@@ -39,11 +39,11 @@
     
     <!-- register에 student, class 테이블 조인 -->
     <!-- 학급 정보 register 테이블의 s_id로 가져오기  -->
-    <select id="getClassInfo" parameterType="java.lang.Integer" resultType="org.studentcrm.crm.command.RegisterVO">
+    <!-- <select id="getClassInfo" parameterType="java.lang.Integer" resultType="org.studentcrm.crm.command.RegisterVO">
     	SELECT * 
 		FROM register reg
 		JOIN student stu ON reg.s_id = stu.s_id
 		JOIN class cla ON reg.class_name = cla.class_name
 		WHERE reg.s_id = #{s_id}
-    </select>
+    </select> -->
 </mapper>

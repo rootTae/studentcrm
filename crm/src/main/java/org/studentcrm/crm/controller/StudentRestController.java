@@ -146,19 +146,19 @@ public class StudentRestController {
 	
 	//============== 학급 정보 ===============
 	
-	//검색한 학생 id에 해당하는 모든 학급 정보 가져오기
-	@GetMapping(value="/getClassInfo/{s_id}",
-			produces={MediaType.APPLICATION_JSON_VALUE})//produces는 받는 값, 보낼 값의 형식을 설정해준다. 리스트를 넘길 때는 JSON이나 xml로 변환해서 넘겨야 한다.
-	public ResponseEntity<List<RegisterVO>> getClassInfoList(@PathVariable("s_id") int s_id){
-//		log.info("=======");
-//		log.info("studentId : ");
-//		log.info(s_id);
-//		log.info(sService.getClassInfo(s_id));
-//		log.info("=======");
-		//log.info(new ResponseEntity<List<RegisterVO>>(sService.getClassInfo(s_id), HttpStatus.OK));
-		//log.info("=======");
-		return new ResponseEntity<>(sService.getClassInfo(s_id), HttpStatus.OK);
-	}
+//	//검색한 학생 id에 해당하는 모든 학급 정보 가져오기
+//	@GetMapping(value="/getClassInfo/{s_id}",
+//			produces={MediaType.APPLICATION_JSON_VALUE})//produces는 받는 값, 보낼 값의 형식을 설정해준다. 리스트를 넘길 때는 JSON이나 xml로 변환해서 넘겨야 한다.
+//	public ResponseEntity<List<RegisterVO>> getClassInfoList(@PathVariable("s_id") int s_id){
+////		log.info("=======");
+////		log.info("studentId : ");
+////		log.info(s_id);
+////		log.info(sService.getClassInfo(s_id));
+////		log.info("=======");
+//		//log.info(new ResponseEntity<List<RegisterVO>>(sService.getClassInfo(s_id), HttpStatus.OK));
+//		//log.info("=======");
+//		return new ResponseEntity<>(sService.getClassInfo(s_id), HttpStatus.OK);
+//	}
 	
 	
 	

@@ -55,12 +55,13 @@
     	//학생 리스트 목록보기 
       function getStudentList(param, callback, error) {
         var s_name = param.s_name;
-
+		console.log(s_name);
         $.getJSON("/gradesF/" + s_name, function(list) {
             if (callback) {
                 callback(list);
             }
         }).fail(function(xhr, status, err) {
+            console.log("0000");
             if (error) {
                 error(err);
             }
@@ -72,7 +73,7 @@
         var e_name = param.e_name;
 
         $.getJSON({
-    url: "/gradesF/" + e_name,
+    url: "/gradesF/elist/" + e_name,
     dataType: "json",
     success: function(list) {
         if (callback) {
@@ -108,7 +109,7 @@
 }
     
     //삭제
-  function scoreRemove(rno, callback, error){
+  function scoreRemove(s_id, callback, error){
    $.ajax({
       type : 'delete',
       url : '../gradesF/' + s_id,
@@ -125,10 +126,11 @@
    });
    }
    //시험 삭제
-   function examRemove(rno, callback, error){
+   function examRemove(e_id, callback, error){
+  	console.log(e_id);
    $.ajax({
       type : 'delete',
-      url : '../gradesF/' + e_id,
+      url : '../gradesF/elist/' + e_id,
       success : function(deleteResult, status, xhr){
          if(callback){
             callback(deleteResult);
@@ -165,10 +167,12 @@
    
    //시험 수정
    function examModify(grades,callback,error){   
-      
+     console.log(grades);
+      var e_id = grades.e_id;
+      console.log(e_id);
    $.ajax({
       type : 'put',
-      url : '../gradesF/'+e_id,
+      url : '../gradesF/elist/'+e_id,
       data : JSON.stringify(grades),
       contentType : "application/json;charset=utf-8",
       success : function(result, status, xhr){

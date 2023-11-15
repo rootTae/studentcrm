@@ -30,7 +30,7 @@
 			                  <p class="card-description">시험명을 입력해 주세요.</p>
 			                  <form id="examsearchForm" method="post" class="form-inline">
 				                  <input type="text" class="form-control mb-2 mr-sm-2" id="e_name" name="e_name" required placeholder="시험명">
-				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
+				                  <button type="button" class="btn btn-primary mb-2" >검색</button>
                   			  </form>
                 		</div>
               		</div>
@@ -43,8 +43,8 @@
                     <h4 class="card-title">시험 검색 결과</h4>
                     <div class="table-responsive">
 	                    <button type="button" class="inserExamtbtn" >추가</button>
-			        	<button type="button" class="updateExambtn" >수정</button>
-			        	<button type="button" class="deleteExambtn" >삭제</button>
+			        	<button type="button" class="updateExambtn" style="display: none">수정</button>
+			        	<button type="button" class="deleteExambtn" style="display: none">삭제</button>
 			        	<button type="button" class="saveExambtn" style="display: none">저장</button>
 			        	<button type="button" class="cancelExambtn" style="display: none">취소</button>
                       <table class="table" id="examTable">
@@ -53,21 +53,14 @@
                             <th>
               
                             </th>
+                            <th>시험 번호</th>
                             <th>시험명</th>
 		                    <th>학년</th>
 		                    <th>시험 날짜</th> 
                           </tr>
                         </thead>
                         <tbody class="exam_List">
-                          <tr>
-                            <td>
-                              <div class="form-check form-check-muted m-0">
-                                <label class="form-check-label">
-                                  <input type="checkbox" class="form-check-input">
-                                <i class="input-helper"></i></label>
-                              </div>
-                            </td>
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>
@@ -112,15 +105,7 @@
                           </tr>
                         </thead>
                         <tbody class="studentList">
-                          <tr>
-                            <td>
-                              <div class="form-check form-check-muted m-0">
-                                <label class="form-check-label">
-                                  <input type="checkbox" class="form-check-input">
-                                <i class="input-helper"></i></label>
-                              </div>
-                            </td>
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>
@@ -158,16 +143,7 @@
                           </tr>
                         </thead>
                         <tbody class="scoreList">
-                          <tr>
-                            <td>
-                              <div class="form-check form-check-muted m-0">
-                                <label class="form-check-label">
-                                  <input type="checkbox" class="form-check-input">
-                                <i class="input-helper"></i></label>
-                              </div>
-                            </td>
-          
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>
@@ -206,10 +182,10 @@
     <script type="text/javascript" src="/js/demo/grades.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-        
+    	let e_idvalue="";
         let scoredata = "";
         let escore = $(".escore");
-        
+        let exams = "";
         // 버튼 설정
         let addbtn = $(".insertbtn");
         let updatebtn = $(".updatebtn");
@@ -235,56 +211,69 @@
                 
                 student.forEach(function (student) {
                     var str = '<tr>' +
-                        '<td>' + student.s_id + '</td>' +
-                        '<td>' + student.s_name + '</td>' +
-                        '<td>' + student.s_gender + '</td>' +
-                        '<td>' + student.s_phone + '</td>' +
-                        '<td>' + student.s_school + '</td>' +
-                        '<td>' + student.s_grade + '</td>' +
+                    '<td><div class="form-check form-check-muted m-0">'+
+                    '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
+                    '<i class="input-helper"></i></label></div></td>'+  
+                        '<td><input type="text" name="s_id" id="s_id" readonly value="'+ student.s_id +'"></td>' +
+                        '<td><input type="text" name="s_name"  id="s_name"  readonly value="'+ student.s_name +'"></td>' +
+                        '<td><input type="text" name="s_gender" id="s_gender"  readonly value="'+ student.s_gender +'"></td>' +
+                        '<td><input type="text" name="s_phone"  id="s_phone" readonly value="'+ student.s_phone +'"></td>' +
+                        '<td><input type="text" name="s_school" id ="s_scool readonly value="'+ student.s_school +'"></td>' +
+                        '<td><input type="text" name="s_grade" readonly value="'+ student.s_grade + '"></td>' +
                         '</tr>';                   
                     studentList.append(str);
                 });
             });
         });
         
-        $(".studentList").on('click', 'td', function(e) {
-            
-            var s_id = ($(this).parent().find('td:first-child').text());
-            var s_name = ($(this).parent().find('td:nth-child(2)').text());
-            
-            btnShow3();
-            
-            GradesService.getScoreList({s_name: s_name, s_id: s_id}, function(score) {
-                score.forEach(function(score){
+        $(".studentList").on('click', '.s_checkbox', function(e) {
+            let checkedCheckbox = $('.s_checkbox:checked');
+
+            if (checkedCheckbox.length > 0) {
+                var s_id = checkedCheckbox.closest("tr").find("input#s_id").val();
+                var s_name = checkedCheckbox.closest("tr").find("input#s_name").val();
+
+                console.log(s_id);
+                console.log(s_name);
+                btnShow3();
+
+                GradesService.getScoreList({s_name: s_name, s_id: s_id}, function(score) {
+                    // 성적 데이터를 받아오는데 성공한 경우에만 아래 코드 실행
+                    var scoreList = $('.scoreList');
+                        scoreList.empty();
                     
-                    score.avgScore = ((score.korScore + score.engScore + score.mathScore) / 3).toFixed(1);
-                    
-                    GradesService.SubjectsTotalAvg(score);
-                    
-                    scoredata = score;
+                    if (score && score.length > 0) {
+                       
+                        score.forEach(function (score) {
+                            // 평균 점수 계산
+                            score.avgScore = ((score.korScore + score.engScore + score.mathScore) / 3).toFixed(1);
+                            // 과목별 총 평균 갱신
+                            GradesService.SubjectsTotalAvg(score);
+                            
+                            var str = '<tr>' +
+                                '<td><div class="form-check form-check-muted m-0">'+
+                                '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
+                                '<i class="input-helper"></i></label></div></td>'+ 
+                                '<td><input type="text" name="s_id" readonly value="' + score.s_id +'"> </td>' +
+                                '<td><input type="text" name="s_name" readonly value="'+ score.s_name +'"></td>' +
+                                '<td><input type="text" name="e_name" readonly value="'+ score.e_name +'"></td>' +
+                                '<td><input type="text" name="e_date" readonly value="'+ score.e_date +'"></td>' +
+                                '<td><input type="text" name="korScore" readonly value="'+ score.korScore +'"></td>' +
+                                '<td><input type="text" name="engScore" readonly value="'+ score.engScore +'"></td>' +
+                                '<td><input type="text" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
+                                '<td><input type="text" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
+                                '</tr>';                   
+                            scoreList.append(str);
+                        });
+                    } else {
+                        // 성적 데이터가 없을 경우 처리 (에러 메시지 출력 등)
+                        console.log("No score data available");
+                        
+                    }
                 });
-                
-                var scoreList = $('.scoreList');
-                scoreList.empty();
-                scoredata = score;
-                
-                score.forEach(function (score) {
-                    var str = '<tr>' +
-                        '<td>' + score.s_id + '</td>' +
-                        '<td>' + score.s_name + '</td>' +
-                        '<td>' + score.e_name + '</td>' +
-                        '<td>' + score.e_date + '</td>' +
-                        '<td>' + score.korScore + '</td>' +
-                        '<td>' + score.engScore + '</td>' +
-                        '<td>' + score.mathScore + '</td>' +
-                        '<td>' + score.avgScore + '</td>' +
-                        '</tr>';                   
-                    scoreList.append(str);
-                });
-                
-            });
-            
+            }
         });
+
      
      
         // 추가 버튼 
@@ -292,13 +281,16 @@
             console.log(scoredata);
             console.log(scoredata[0].s_id);
             str = '<tr class="escore">' +
-                '<td class="i_s_id">' + scoredata[0].s_id + '</td>' +
-                '<td class="i_s_name">' + scoredata[0].s_name + '</td>' +
-                '<td class="i_e_name"><input type="text" name="e_name"></td>' +
-                '<td class="i_e_date"><input type="text" name="e_date"></td>' +
-                '<td class="i_korScore"><input type="text" name="korScore"></td>' +
-                '<td class="i_engScore"><input type="text" name="engScore"></td>' +
-                '<td class="i_mathScore"><input type="text" name="mathScore"></td>' +
+	            '<td><div class="form-check form-check-muted m-0">'+
+	            '<label class="form-check-label"><input type="checkbox"  class="form-check-input sl_checkbox">'+
+	            '<i class="input-helper"></i></label></div></td>'+ 
+                '<td class="i_s_id"><input type="text" name="s_name" readonly value="'+ scoredata[0].s_id +'"> </td>' +
+                '<td class="i_s_name"><input type="text" name="s_name" readonly value="'+ scoredata[0].s_name +'"></td>' +
+                '<td class="i_e_name"><input type="text" name="e_name" readonly></td>' +
+                '<td class="i_e_date"><input type="text" name="e_date" readonly></td>' +
+                '<td class="i_korScore"><input type="text" name="korScore" readonly></td>' +
+                '<td class="i_engScore"><input type="text" name="engScore" readonly></td>' +
+                '<td class="i_mathScore"><input type="text" name="mathScore" readonly></td>' +
                 '<td class="i_avgScore"></td>' +
                 '</tr>';
                 
@@ -347,19 +339,28 @@
             var e_nameValue = $('#e_name').val();
             console.log(e_nameValue);
             
+            e_btnShow3();
+            
             GradesService.getexamList({e_name: e_nameValue}, function(exams){
                 console.log(exams);
                 var exam_List = $('.exam_List');
                 exam_List.empty();
                 
-                exams.forEach(function (exams) {
-                    var str = '<tr class="addEs">' +
-                        '<td class="ie_e_name">' + exams.e_name + '</td>' +
-                        '<td class="ie_e_grade">' + exams.e_grade + '</td>' +
-                        '<td class="ie_e_date">' + exams.e_date + '</td>' +                     
+                exams.forEach(function (exam) {
+                    var str = '<tr class="addEs" id="'+exam.e_id+'">' +
+	                    '<td><div class="form-check form-check-muted m-0">'+
+	                    '<label class="form-check-label"><input type="checkbox" class="form-check-input el_checkbox">'+
+	                    '<i class="input-helper"></i></label></div></td>'+
+	                    '<td class="ie_e_id"><input type="text" name="ie_e_id" id="ie_e_id" value="' + exam.e_id + '"readonly></td>' +
+                        '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name" value="' + exam.e_name + '"readonly></td>' +
+                        '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade" value="'+ exam.e_grade + '"readonly> </td>' +
+                        '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" value="'+ exam.e_date +'"readonly>  </td>' +                     
                         '</tr>';                   
-                    exam_List.append(str);
-                });      
+                    exam_List.append(str);  
+               
+                    console.log(exam.e_id);
+                });
+         
             });
         });
         
@@ -383,9 +384,13 @@
         inserExamtbtn.on('click', function(){
         	
         	str = '<tr class="addEs">' +
-            '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name"></td>' +
-            '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade"></td>' +
-            '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date"></td>' +              
+        	'<td><div class="form-check form-check-muted m-0">'+
+            '<label class="form-check-label"><input type="checkbox" class="form-check-input el_checkbox">'+
+            '<i class="input-helper"></i></label></div></td>'+ 
+            '<td class="ie_e_id"><input type="text" name="ie_e_id" id="ie_e_id" readonly></td>'+
+            '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name" ></td>' +
+            '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade"  ></td>' +
+            '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" ></td>' +              
             '</tr>';
             
             $('.exam_List').append(str);
@@ -398,7 +403,7 @@
         
 			function setExam(callback){
             
-				let exam = {                  
+				let exam = {    
 						e_name : $("#ie_e_name").val(),
 					    e_grade : $("#ie_e_grade").val(),
 					    e_date : $("#ie_e_date").val()                   
@@ -425,13 +430,20 @@
                     var exam_List = $('.exam_List');
                     exam_List.empty();
                     
-                    exams.forEach(function (exams) {
+                    exams.forEach(function (exam) {
                         var str = '<tr>' +
-                            '<td>' + exams.e_name + '</td>' +
-                            '<td>' + exams.e_grade + '</td>' +
-                            '<td>' + exams.e_date + '</td>' +                     
+	                        '<td><div class="form-check form-check-muted m-0">'+
+	                        '<label class="form-check-label"><input type="checkbox"  class="form-check-input el_checkbox">'+
+	                        '<i class="input-helper"></i></label></div></td>'+ 
+	                        '<td class="ie_e_id"><input type="text" name="ie_e_id" id="ie_e_id" value="' + exam.e_id + '"readonly></td>'+
+	                        '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name" value="' + exam.e_name + '"readonly></td>' +
+	                        '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade" value="'+ exam.e_grade + '"readonly> </td>' +
+	                        '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" value="'+ exam.e_date +'"readonly>  </td>' +                            
                             '</tr>';                   
                         exam_List.append(str);
+                        
+                        
+                        
                     });      
 		            // 결과 처리 코드 작성			            
 		        });
@@ -440,56 +452,107 @@
 		        e_btnShow3();
 		        });
 		    }else if(nowbtn ==updateExambtn ){
-		    	e_btnShow3();
 		    	
-		    }                  
+		    	upExam(function(result){
+		    		
+		    	GradesService.getexamList({e_name: $("#ie_e_name").val()}, function(exams){
+                    var exam_List = $('.exam_List');
+                    exam_List.empty();
+                    
+                    exams.forEach(function (exam) {
+                        var str = '<tr>' +
+	                        '<td><div class="form-check form-check-muted m-0">'+
+	                        '<label class="form-check-label"><input type="checkbox"  class="form-check-input el_checkbox">'+
+	                        '<i class="input-helper"></i></label></div></td>'+ 
+	                        '<td class="ie_e_id"><input type="text" name="ie_e_id" id="ie_e_id" value="' + exam.e_id + '"readonly></td>' +
+	                        '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name" value="' + exam.e_name + '"readonly></td>' +
+	                        '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade" value="'+ exam.e_grade + '"readonly> </td>' +
+	                        '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" value="'+ exam.e_date +'"readonly>  </td>' +                            
+                            '</tr>';                   
+                        exam_List.append(str);
+                          
+                    });      
+		            // 결과 처리 코드 작성			            
+		        });
+		    		
+		    	});	
+		    }
+		    e_btnShow3(); 
 		});
         //시험 수정 버튼
         
         updateExambtn.on("click", function(){
-        	scoreEdit();
-        	e_btnShow2();
         	
+        	scoreEdit();
+        	
+        	e_btnShow2();
         	
         	nowbtn=updateExambtn;
         	
+
+        	
         });
+        
         function upExam(callback){
-        	
+
+        	 
         	let exam  ={
-        	
-        			
+        			e_id : $("#ie_e_id").val(),
+        			e_name : $("#ie_e_name").val(),
+				    e_grade : $("#ie_e_grade").val(),
+				    e_date : $("#ie_e_date").val()  				 
         	}
+        	
+        	
+        	
+        	GradesService.examModify(exam, function(result){
+				if(result == "success") {
+					alert(result);
+					callback();
+				}
+				
+				
+			});
         }
-        
-    /*  // 수정 버튼 클릭 이벤트
-        $('.exam_List').on('click', '.editExamBtn', function() {
-            // 선택된 행에서 데이터 가져오기
-            var $row = $(this).closest('tr');
-            var $cells = $row.find('td');
-            // 원하는 형태로 데이터 활용 (여기서는 각 데이터 셀을 수정 가능한 input으로 변경)
-            $cells.each(function() {
-                var $cell = $(this);
-                var value = $cell.text();
-                $cell.html('<input type="text" class="editInput" value="' + value + '">');
-            });
-            // 수정 완료 버튼 추가
-            $row.append('<td><button class="saveEditBtn">저장</button></td>');
+          
+        //삭제 버튼
+        deleteExambtn.on('click', function(){
+    var checkedCheckbox = $('.el_checkbox:checked');
+    
+    if (checkedCheckbox.length > 0) {
+        var e_id = checkedCheckbox.closest("tr").find("input#ie_e_id").val();
+        console.log("------------");
+        console.log(e_id);
+
+        // GradesService.examRemove 함수 내에서 e_id를 사용하여 삭제 로직을 수행할 수 있도록 전달
+        GradesService.examRemove(e_id, function(){
+        	GradesService.getexamList({e_name: $("#ie_e_name").val()}, function(exams){
+                var exam_List = $('.exam_List');
+                exam_List.empty();
+                
+                exams.forEach(function (exam) {
+                    var str = '<tr>' +
+                        '<td><div class="form-check form-check-muted m-0">'+
+                        '<label class="form-check-label"><input type="checkbox"  class="form-check-input el_checkbox">'+
+                        '<i class="input-helper"></i></label></div></td>'+ 
+                        '<td class="ie_e_id"><input type="text" name="ie_e_id" id="ie_e_id" value="' + exam.e_id + '"readonly></td>'+
+                        '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name" value="' + exam.e_name + '"readonly></td>' +
+                        '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade" value="'+ exam.e_grade + '"readonly> </td>' +
+                        '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" value="'+ exam.e_date +'"readonly>  </td>' +                            
+                        '</tr>';                   
+                    exam_List.append(str);
+                    
+                    
+                    
+                });      
+	            // 결과 처리 코드 작성			            
+	        });
+        	
+        	
         });
-        // 저장 버튼 클릭 이벤트 (저장 버튼은 동적으로 추가된 버튼이므로 .on() 사용)
-        $('.exam_List').on('click', '.saveEditBtn', function() {
-            // 수정된 데이터를 가져와서 활용 (여기서는 각 input 값을 다시 해당 td에 넣어줌)
-            var $row = $(this).closest('tr');
-            var $cells = $row.find('td');
-            $cells.each(function() {
-                var $cell = $(this);
-                var value = $cell.find('.editInput').val();
-                $cell.html(value);
-            });
-            // 저장 완료 버튼 제거
-            $row.find('.saveEditBtn').remove();
-        }); */
-        
+    }
+});
+
         
         
         // 버튼 show, hide
@@ -530,13 +593,40 @@
         }
         
         function scoreEdit() {
-			$(".exam_List").find("input").prop('readonly', false);
-			
-		}
-        
-        
+        	
+        	if($('.el_checkbox:checked')){
+        		$('.el_checkbox:checked').closest("tr").find("input:not('#ie_e_id')").prop('readonly', false);		
+        	}
+        }
+         //체크 박스 클릭 이벤트
+        $(".el_exam_checkbox").on('click', function() {
+		   // 모든 체크박스 해제
+		   $(".el_exam_checkbox").prop('checked', false);			
+		   // 현재 클릭한 체크박스만 선택
+		   $('.el_checkbox:checked').closest("tr").find("input").prop('checked', true);
+		});
+
+         
+        $(".sl_exam_checkbox").on('click', function() {
+        	   // 모든 체크박스 해제
+        	   if($(".sl_exam_checkbox")){
+        		   $(".sl_exam_checkbox").prop('checked', false);
+        	   }
+
+        	   // 현재 클릭한 체크박스만 선택
+        	   $(this).prop('checked', true);
+        	});
 
         
+        $(".s_exam_checkbox").on('click', function() {
+        	   // 모든 체크박스 해제
+        	   $(".s_exam_checkbox").prop('checked', false);
+
+        	   // 현재 클릭한 체크박스만 선택
+        	   $(this).prop('checked', true);
+        	});
+
+
         
     });
     

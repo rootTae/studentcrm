@@ -72,9 +72,10 @@ resultType="org.studentcrm.crm.command.ScoreVO">
 
 <!--시험 수정 -->
 <update id="updateExam" parameterType="org.studentcrm.crm.command.ExamVO">
-        update exam set e_name = #{e_name}, e_grade=${e_grade}, e_date=${e_date}
-        where e_id = #{e_id}
-    </update>
+    update exam set e_name = #{e_name}, e_grade=#{e_grade}, e_date=#{e_date}
+    where e_id = #{e_id}
+</update>
+
 
 <!-- 성적 삭제 -->
 <delete id="deleteExam" parameterType="java.lang.Integer">

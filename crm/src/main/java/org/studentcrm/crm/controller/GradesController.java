@@ -41,7 +41,7 @@ public class GradesController {
 	}
 	
 	//시험 이름으로 학생 리스트 가져오기
-	@GetMapping(value ="/{e_name}", produces = {MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8"})
+	@GetMapping(value ="/elist/{e_name}", produces = {MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8"})
 	public ResponseEntity<List<ExamVO>> getexamList(@PathVariable("e_name") String e_name) {			
 	    log.info("=====================.");
 	    log.info(e_name);
@@ -107,9 +107,9 @@ public class GradesController {
 		
 		//시험 수정
 		@RequestMapping(method = {RequestMethod.PUT , RequestMethod.PATCH},
-				value ="/{e_id}",
+				value ="/elist/{e_id}",
 				consumes = "application/json",
-		        produces = {MediaType.TEXT_PLAIN_VALUE})
+		        produces = {MediaType.APPLICATION_JSON_VALUE})
 		public ResponseEntity<String> examModify(
 				@RequestBody ExamVO vo,
 				@PathVariable("e_id") int e_id){
@@ -132,11 +132,11 @@ public class GradesController {
 		}
 		
 		//시험 삭제
-				@DeleteMapping(value ="/{e_id}",
+				@DeleteMapping(value ="/elist/{e_id}",
 						produces = {MediaType.TEXT_PLAIN_VALUE})
 				public ResponseEntity<String> examRemove(@PathVariable("e_id") int e_id){
-					log.info("scoreRemove" +e_id);
-					return gservice.scoreRemove(e_id)==1
+					log.info("examRemove" +e_id);
+					return gservice.examRemove(e_id)==1
 					? new ResponseEntity<String>("success",HttpStatus.OK)
 					:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	
 				}

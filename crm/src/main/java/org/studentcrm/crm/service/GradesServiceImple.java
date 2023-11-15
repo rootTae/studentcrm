@@ -76,7 +76,8 @@ public class GradesServiceImple implements GradesService {
 	
 	@Override
 	public int examRemove(int e_id) {
-		
+		log.info("++++++++=====++++++");
+		log.info(e_id);
 		return mapper.deleteExam(e_id);
 	}
 	

@@ -1,7 +1,6 @@
 package org.studentcrm.crm.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.CommuteVO;
+import org.studentcrm.crm.command.RegisterVO;
 import org.studentcrm.crm.command.StudentVO;
 import org.studentcrm.crm.service.CommuteService;
 import org.studentcrm.crm.service.StudentService;
@@ -145,6 +143,23 @@ public class StudentRestController {
 				:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-
+	
+	//============== 학급 정보 ===============
+	
+	//검색한 학생 id에 해당하는 모든 학급 정보 가져오기
+	@GetMapping(value="/getClassInfo/{s_id}",
+			produces={MediaType.APPLICATION_JSON_VALUE})//produces는 받는 값, 보낼 값의 형식을 설정해준다. 리스트를 넘길 때는 JSON이나 xml로 변환해서 넘겨야 한다.
+	public ResponseEntity<List<RegisterVO>> getClassInfoList(@PathVariable("s_id") int s_id){
+//		log.info("=======");
+//		log.info("studentId : ");
+//		log.info(s_id);
+//		log.info(sService.getClassInfo(s_id));
+//		log.info("=======");
+		//log.info(new ResponseEntity<List<RegisterVO>>(sService.getClassInfo(s_id), HttpStatus.OK));
+		//log.info("=======");
+		return new ResponseEntity<>(sService.getClassInfo(s_id), HttpStatus.OK);
+	}
+	
+	
 	
 }

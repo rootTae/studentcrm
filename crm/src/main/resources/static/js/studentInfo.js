@@ -116,7 +116,9 @@
 	
 	//통학 정보 출력
 	function getCommute(srch, callback, error){
+		//console.log(srch);
 		let s_id = srch.s_id;
+		//console.log("srch.s_id"+s_id);
 		$.getJSON("/studentRest/commute/"+s_id, 
 			function(data){
 				if(callback){
@@ -187,6 +189,37 @@
 		});
 	}
 	
+	//============== 학급 정보 ===============
+	function getClassInfoList(s_id, callback, error){
+		//console.log(s_id);
+		$.getJSON(
+			"/studentRest/getClassInfo/"+s_id,
+			function(data){
+				console.log("data : ");
+				console.log(data);
+				if(callback){
+					let s_classInfoArray = [];
+					$.each(data, function(index, item) {
+						s_classInfoArray.push(item);
+					});
+						
+					callback(s_classInfoArray);
+				}
+			}
+			
+		).fail(function(xhr, status, err) {
+			console.log(xhr);
+			console.log("학급 정보 에러");
+			if(err){
+				error(er);
+			}
+		});
+	}
+
+	
+	
+	
+	
 	return{
 		getSearchList:getSearchList,
 		getName:getName,
@@ -196,7 +229,8 @@
 		getCommute:getCommute,
 		insertCommute:insertCommute,
 		updateCommute:updateCommute,
-		deleteCommute:deleteCommute
+		deleteCommute:deleteCommute,
+		getClassInfoList:getClassInfoList
 	}
 	
 })();

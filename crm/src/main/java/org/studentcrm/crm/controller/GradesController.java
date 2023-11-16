@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +63,7 @@ public class GradesController {
 	//시험 점수 생성
 		@PostMapping(value = "/new",
 				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
+				produces = {MediaType.APPLICATION_JSON_VALUE+ ";charset=UTF-8"})
 		public ResponseEntity<String> scoreInsert(@RequestBody Exam_ScoreVO vo){
 			
 			log.info("exam+scorevo" +vo);
@@ -96,8 +97,7 @@ public class GradesController {
 		        produces = {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> scoreModify(
 				@RequestBody Exam_ScoreVO vo,
-				@PathVariable("s_id") int s_id){
-			vo.setS_id(s_id);
+				@PathVariable("s_id") int s_id){			
 			log.info("s_id: "+s_id);
 		    log.info("scoreModify: "+vo);
 			return gservice.scoreModify(vo)==1
@@ -122,11 +122,11 @@ public class GradesController {
 		}
 		
 	//시험점수 삭제
-		@DeleteMapping(value ="/{s_id}/",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<String> scoreRemove(@PathVariable("s_id") int s_id){
-			log.info("scoreRemove" +s_id);
-			return gservice.scoreRemove(s_id)==1
+		@DeleteMapping(value ="/{score_id}",
+				produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<String> scoreRemove(@PathVariable("score_id") int score_id){
+			log.info("scoreRemove" +score_id);
+			return gservice.scoreRemove(score_id)==1
 			? new ResponseEntity<String>("success",HttpStatus.OK)
 			:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	
 		}

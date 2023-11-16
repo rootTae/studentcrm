@@ -95,7 +95,7 @@
                         <thead>
                           <tr>
                             <th>                         
-                            </th>
+                            </th>                          
                             <th>학생 번호</th>
 		                    <th>학생 이름</th>
 		                    <th>성별</th>
@@ -132,6 +132,7 @@
                             <th> 
                                                       
                             </th>
+                            <th hidden>성적 관리 번호</th>
                             <th>학생 번호</th>
 		                    <th>학생 이름</th>
 		                    <th>시험 명</th>
@@ -254,6 +255,7 @@
                                 '<td><div class="form-check form-check-muted m-0">'+
                                 '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
                                 '<i class="input-helper"></i></label></div></td>'+ 
+                                '<td hidden class="score_id" name="score_id" id="score_id" value="'+score.score_id+'" ></td>' +
                                 '<td><input type="text" name="s_id" readonly value="' + score.s_id +'"> </td>' +
                                 '<td><input type="text" name="s_name" readonly value="'+ score.s_name +'"></td>' +
                                 '<td><input type="text" name="e_name" readonly value="'+ score.e_name +'"></td>' +
@@ -284,6 +286,7 @@
 	            '<td><div class="form-check form-check-muted m-0">'+
 	            '<label class="form-check-label"><input type="checkbox"  class="form-check-input sl_checkbox">'+
 	            '<i class="input-helper"></i></label></div></td>'+ 
+	            '<td hidden class="i_score_id" name="i_score_id" id="i_score_id"  ></td>' +
                 '<td class="i_s_id"><input type="text" name="s_name" readonly value="'+ scoredata[0].s_id +'"> </td>' +
                 '<td class="i_s_name"><input type="text" name="s_name" readonly value="'+ scoredata[0].s_name +'"></td>' +
                 '<td class="i_e_name"><input type="text" name="e_name" readonly></td>' +

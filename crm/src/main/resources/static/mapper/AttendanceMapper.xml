@@ -41,7 +41,7 @@
     </update>
     
     <!-- 검색을 위한 날짜 시간 받아오기 -->
-	<select id="getTime" resultType="java.time.LocalDate">
+	<select id="getTime" resultType="java.util.Date">
 	    select a_date from attendance
 	    where s_id = #{s_id}	
 	</select>	   

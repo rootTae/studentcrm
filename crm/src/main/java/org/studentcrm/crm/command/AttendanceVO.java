@@ -1,7 +1,7 @@
 package org.studentcrm.crm.command;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +16,7 @@ public class AttendanceVO {
 	String a_comment;
 	LocalDate a_date;
 	String class_name;
+	
 	int s_id;
 	
 }

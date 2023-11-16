@@ -32,9 +32,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public int updateStat(AttendanceVO vo) {
+	public AttendanceVO updateStat(AttendanceVO vo) {
 		log.info("vo for updateStat: " + vo);
-		return mapper.updateStatus(vo);
+		log.info(mapper.updateStatus(vo));
+		return mapper.updateStatus(vo) ? mapper.readMemo(vo) : null;
 
 	}
 

@@ -9,6 +9,8 @@
    LocalDate date = LocalDate.now(); 
    int monthNow = date.getMonthValue();
    int yearNow = date.getYear();
+  /*  int daybefore = date.getDayOfMonth();
+   int dayNow = (daybefore<10) ? '0' + daybefore : daybefore; */
    /* LocalDate date = new LocalDate();
    date. */
 %>
@@ -59,16 +61,16 @@
             color: #ffffff;
         }
         
-        .memoBtn {
+        /* .memoBtn {
           display: none; 
-      }
+     	 }
 
-      .memoBtn.show {
+     	 .memoBtn.show {
           display: block; 
-      }
+     	 } */
         
-        /* #cell_student1_12 {position:relative} */
-        /* .memo {display:none;position:absolute;right:-101px;top:-101px;width:100px;height:100px;border:1px solid #aaa;background-color:#fff;} */
+         .memo {position:relative}
+         .memo > div{display:none; position:absolute;right:-100px; top:-100px;width:100px;height:100px;border:2px solid #aaa;background-color:#f1faee;}
         /* .memoTextarea {display:none;position:absolute;right:-101px;top:-108px;width:100px;height:100px;border:2px solid #aaa;background-color:#f1faee;}
         .memoBtn{display:block;position:absolute;top:0;right:0;width:3px;height:3px;z-index:100} */
     </style>
@@ -101,11 +103,11 @@
                    <div class="card">
                      <div class="card-body">
                        <h4 class="card-title">classes</h4>
-                       <p class="card-description">choose the class of which you want to check the attendance</p>
+                       <p class="card-description">choose the class for which you want to check the attendance</p>
                        <table class="form-inline">
                          <tr class="classList">
 
-                    </tr>
+                   		 </tr>
                          <!-- <button type="submit" class="btn btn-primary mb-2" id="searchBtn">검색</button> -->
                        </table>
                      </div>
@@ -117,19 +119,20 @@
                      <div class="card-body">
                        <h4 class="card-title">Attendance Sheet</h4>
                        <p class="card-description">attend/late/absent/leave early</p>  
-                  <form class="studentsList">
-                      <table>
-                          <tr>
-                             <th>ID</th>
-                              <th>Name</th>
-                              <c:forEach var="day" begin="1" end="<%=daysInMonth %>">
-                                  <th>${day}</th>
-                              </c:forEach>
-                          </tr>
-                          <tr >                              
-                          </tr>
-                      </table>
-                  </form>
+		                  <form>
+		                      <table class="table">
+		                          <tr>
+		                             <th>ID</th>
+		                              <th>Name</th>
+		                              <c:forEach var="day" begin="1" end="<%=daysInMonth %>">
+		                                  <th>${day}</th>
+		                              </c:forEach>
+		                          </tr>
+		                          
+		                          <tbody class="studentsList">
+		                          </tbody>
+		                      </table>
+		                  </form>
                      </div>
                    </div>
                  </div>
@@ -163,11 +166,16 @@ function statusChange(cell) {
    var month = cellParts[2];
    var date = cellParts[3];
    
-   var isoDateString = new Date(year, month - 1, day).toISOString();
-    
-   var a_status = $(cell).children('span').text();
+   /* var isoDateString = new Date(year, month - 1, date).toISOString(); */
+   var isoDateString = year+"-"+month+"-"+date;
    
-   updateStat({
+   var requested = { 
+		    s_id: s_id,
+	        a_date: isoDateString, 
+	        a_status: a_status};
+   
+   attendanceService.updateStat(requested)
+   /* updateStat({
         s_id: studentName,
         a_date: isoDateString, 
         a_status: cell.className
@@ -177,7 +185,7 @@ function statusChange(cell) {
     }, function() {
        alert('update failed');
         console.error('Error updating status');
-    });
+    }); */
 
     switch (cell.className) {
         case 'white':
@@ -204,17 +212,96 @@ function statusChange(cell) {
         default:
             break;
     }
+   
+   var a_status = $(cell).children('span').text();
+   var requested = { 
+		    s_id: s_id,
+	        a_date: isoDateString, 
+	        a_status: a_status};
+   console.log("needed");
+   console.log(a_status);
+   attendanceService.updateStat(requested)
+   console.log(a_status);
+}
+
+function showStudentList(class_nameValue) {
+    console.log("showStudentList");
+    var daysInMonth = <%= daysInMonth %>;
+    var yearNow = <%= yearNow %>;
+    var monthNow = <%= monthNow %>;
+    
+    attendanceService.getStudentList({class_name: class_nameValue}, function(students){
+        var studentsList = $('.studentsList');
+        /* studentsList.empty(); */
+
+        var str = '';
+		console.log(students);
+        students.forEach(function(student){
+            str += '<tr>';
+            str += '<td  class="' + student.s_id + '">'+student.s_id+'</td>';
+            str += '<td class="memo">' + student.s_name+'<div></div></td>';
+
+            for (var i = 1; i <= daysInMonth; i++){
+                var cellId = student.s_id + "_" + yearNow + "_" + monthNow + "_" + ((i<10) ? '0' + i : i);
+                str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"><span class="stat"></span></td>';
+                
+            }
+            str += '</tr>';
+        });
+        studentsList.append(str);
+        memo();
+    });
+    
+    /* $('.studentList').on('click', 'readable', function(e){
+    	e.stopPropagation();
+    	
+    	$('.memoBtn').hide();
+    	var memoBtn = $(this).find('.memoBtn');
+    	memoBtn.show();
+    	
+    }); */
+	function memo() {
+    	
+	    $('.memo').on('click', function(e){
+	        console.log("readable clicked");
+	        e.stopPropagation();
+	        var s_id = $(this).prev().attr('class');
+	        if($(this).find("div").show()){
+	        	$(this).find("div").hide();
+	        }else{
+	      	  $('.memo > div').hide();
+	        	$(this).find("div").show();	
+	        }
+	        
+	        
+	        var sInfoList = $(this).find("div");
+	        sInfoList.empty();
+	
+	        attendanceService.readInfo({s_id: s_id}, function(student){
+	        	console.log(student.s_school);
+	        	console.log(student.s_phone);
+                var str = '<div>'+
+                    '<p>' + student.s_school + '</p>'+
+                    '<p>' + student.s_phone + '</p></div>';
+	        	console.log(str);
+                    
+                sInfoList.append(str);
+	        });
+	    });
+    }
 }
 
 $(document).ready(function () {
     var classListTR = $(".classList");
-    var t_id = 1;
-    console.log(t_id);
+    var t_id = 3;
+    //console.log("classlist");
+   //console.log(t_id);
 
     attendanceService.getClassList({ t_id: t_id },
         function (list) {
             var str = "";
             var daysInMonth = <%= daysInMonth %>;
+            //console.log(daysInMonth);
          var monthNow = <%= monthNow %>;
          var yearNow = <%= yearNow %>;
             for (var i = 0, len = list.length || 0; i < len; i++) {
@@ -222,48 +309,8 @@ $(document).ready(function () {
             }
             classListTR.html(str);
         });
-
-    function showStudentList(class_nameValue) {
-        console.log(class_nameValue);
-        attendanceService.getStudentList({class_name: class_nameValue}, function(students){
-            var studentsList = $('.studentsList');
-            studentsList.empty();
-
-            var str = '';
-
-            students.forEach(function(student){
-                str += '<tr class="' + student.s_id + '">';
-                str += '<td class="readable">' + student.s_name;
-                str += "<button class='memoBtn'></button></td>";
-
-                for (var i = 1; i <= daysInMonth; i++){
-                    var cellId = student.s_id + "_" + yearNow + "_" + monthNow + "_" +i;
-                    str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"></td>';
-                    
-                }
-                str += '</tr>';
-            });
-            studentsList.append(str);
-        });
-
-        $('.readable').on('click', function(e){
-            console.log("readable clicked");
-            e.stopPropagation();
-            var s_id = $(this).closest('tr').attr('class');
-            $(this).find(".memoBtn").toggle();
-            var sInfoList = $(this).next().find(".memoBtn");
-            sInfoList.empty();
-
-            attendanceService.readInfo({s_id: s_id}, function(student){
-                student.forEach(function(student){
-                    var str = '<div>'+
-                        '<div>' + student.s_school + '</div>' +
-                        '<div>' + student.s_phone + '</div></div>';
-                    sInfoList.append(str);
-                });
-            });
-        });
-    }
+	
+    showStudentList
 });
 </script>
       

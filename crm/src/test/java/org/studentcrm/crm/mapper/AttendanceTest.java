@@ -1,6 +1,8 @@
 package org.studentcrm.crm.mapper;
 
-import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,11 @@ public class AttendanceTest {
 	
 	@Test
     public void insertMemo() {
-        LocalDate LocalDateFromDB = LocalDate.now();
+        Date DateFromDB = new Date();
 
 		AttendanceVO attendance = new AttendanceVO();
 		attendance.setS_id(5);
-		attendance.setA_date(LocalDateFromDB);
+		attendance.setA_date(DateFromDB);
 		attendance.setA_comment("ugly_day");
 		mapper.insertMemo(attendance);
     }
@@ -40,14 +42,15 @@ public class AttendanceTest {
 		AttendanceVO attendance = new AttendanceVO();
 		attendance.setS_id(4); // 읽고자 하는 학생의 ID
 		int num = 4;
-		LocalDate timestampFromDB = getTime(num).get(1);
+		Date DateFromDB = new Date();
+		DateFromDB = getTime(num).get(1);
 
-		attendance.setA_date(timestampFromDB);
+		attendance.setA_date(DateFromDB);
 		AttendanceVO memo = mapper.readMemo(attendance);
 
 		if (memo != null) {
 			String memoText = memo.getA_comment();
-			LocalDate memoDate = memo.getA_date();
+			Date memoDate = memo.getA_date();
 			log.info("메모 내용: " + memoText);
 			log.info("메모 날짜: " + memoDate);
 		} else {
@@ -60,15 +63,16 @@ public class AttendanceTest {
 	   AttendanceVO vo = new AttendanceVO();
 	   int num = 4; // 출결 상태를 업데이트할 학생의 ID
 	   vo.setS_id(num);
-	   LocalDate time = getTime(num).get(1);
+	   Date time = getTime(num).get(0);
 	   log.info(time);
 	   vo.setA_date(time);
 	   vo.setA_status("super late");
 	   
 	   log.info(mapper.updateStatus(vo));
+	   assertNotNull(mapper.updateStatus(vo));
     }
 
-	private List<LocalDate> getTime(int s_id) {
+	private List<Date> getTime(int s_id) {
 		AttendanceVO vo = new AttendanceVO();
 		vo.setS_id(s_id);
 		return mapper.getTime(vo);
@@ -78,7 +82,7 @@ public class AttendanceTest {
 	@Test
 	public void getTimeTest() {
 		
-		log.info(getTime(4));
+		log.info(getTime(2));
 	}
 }
 

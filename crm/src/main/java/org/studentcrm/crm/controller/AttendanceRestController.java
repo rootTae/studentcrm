@@ -3,6 +3,7 @@ package org.studentcrm.crm.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ public class AttendanceRestController {
    @GetMapping(value="/{s_id}", produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<StudentVO> get(@PathVariable("s_id") int s_id){
       log.info("get: " + s_id);
-      return new ResponseEntity<StudentVO>(service.readInfo(s_id),HttpStatus.OK);
+      StudentVO result = service.readInfo(s_id);
+      log.info(result.getS_school());
+      return new ResponseEntity<StudentVO>(result,HttpStatus.OK);
    }
    
    // s_list
@@ -72,11 +75,10 @@ public class AttendanceRestController {
    @GetMapping(value="/{s_id}/{a_date}", produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<AttendanceVO> viewMemo(
          @PathVariable("s_id") int s_id,
-         @PathVariable("a_date") LocalDate a_date,
+         @PathVariable("a_date") Date a_date,
          @RequestBody AttendanceVO vo
          ){
-      vo.setS_id(s_id);
-      vo.setA_date(a_date);
+      
       log.info("s_id" + s_id);
       log.info("date" + a_date);
       
@@ -84,19 +86,23 @@ public class AttendanceRestController {
    }
    // updateStat
    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-         value="/{s_id}/{a_date}", consumes="application/json", produces= {MediaType.APPLICATION_JSON_VALUE})
-   public ResponseEntity<String> update(
+         value="/{s_id}/{a_date}", consumes="application/json;charset=UTF-8", produces= {MediaType.APPLICATION_JSON_VALUE})
+   public ResponseEntity<AttendanceVO> update(
          @RequestBody AttendanceVO vo, 
          @PathVariable("s_id") int s_id,
          @PathVariable("a_date") String a_date
          ){
-      vo.setS_id(s_id);
-      vo.setA_date(LocalDate.parse(a_date));
+	  log.info(vo);
+	  
+		/*
+		 * vo.setS_id(s_id); vo.setA_date(a_date);
+		 */
       
+      log.info(vo.getA_status());
       log.info("s_id"+s_id);
       log.info("AttendanceVO " + vo);
-      return service.updateStat(vo) == 1
-            ? new ResponseEntity<String>("success", HttpStatus.OK)
+      return service.updateStat(vo) != null
+            ? new ResponseEntity<>(service.updateStat(vo), HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
    }
 }

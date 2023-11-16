@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <!-- partial:partials/_header.html -->
 <%@include file="/WEB-INF/views/include/_header.jsp" %>
+  <style>
+  	.s_ico.mdi-account-box::before {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);font-size:20rem;color:#2A3038}
+  </style>
 <!-- partial -->
   <body>
     <div class="container-scroller">
@@ -51,25 +54,55 @@
 	        </div>
 	        
 	        
+	        <!-- ============== 신상 정보 =============== -->
 	        <div class="row"> 
-	              
 	              <div id="studentForm" class="col-12 grid-margin">
 	                <div class="card">
 	                  <div class="card-body">
 	                    <h4 class="card-title">학생 상세 정보</h4>
+	                    <div class="row">
+	                    	<div class="col-md-6">
+	                    		<p class="card-description">학생 정보를 추가, 수정, 삭제 할 수 있습니다.</p>
+	                    	</div>
+	                    	<div class="col-md-4 ml-auto text-right">
+	                    		<button class="s_add_Btn btn btn-primary mr-2" style="display:none">추가</button>
+						  		<button class="s_modify_Btn btn btn-secondary mr-2" style="display:none">수정</button>
+						  		<button class="s_del_Btn btn btn-dark" style="display:none">삭제</button>
+						  	
+						  		<button class="s_save_Btn btn btn-primary mr-2" >저장</button>
+						  		<button class="s_cancel_Btn btn btn-dark">취소</button>
+	                    	</div>
+	                    </div>
 	                    <form class="form-sample">
-	                      <p class="card-description">학생 정보를 추가, 수정, 삭제 할 수 있습니다.</p>
-	                      
 	                      <div class="row">
+	                      <!-- ============== 학생 사진 업로드 =============== -->
 	                        <div class="col-md-4">
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">학생 사진</label>
 	                            <div class="col-sm-12">
-	                              <img  class="col-sm-12" alt="학생 사진" style="display:block;width:100%;height:300px" src="">
-	                              <input type='file' name='s_filename' id='s_filename'>
+	                              <div class="col-sm-12 img_box" style="height:263px">
+	                              	<i class="s_ico mdi mdi-account-box"></i>
+	                              	<img  class="img-fluid d-none" alt="학생 사진" src="">
+	                              </div>
+	                              
+	                              <div id="studentImg" class="form-group">
+			                        <input type="file" name='s_filename' id='s_filename' class="file-upload-default">
+			                        <div class="input-group col-xs-12">
+			                          <input type="text" class="form-control file-upload-info" placeholder="Upload Image">
+			                          <span class="input-group-append">
+		                         	 	<label for="s_filename" id="imgBtn"  class="file-upload-browse btn btn-primary mb-0 d-flex align-items-center"> Upload </label>
+			                          </span>
+			                        </div>
+			                      </div>
+			                      
+			                      <div class="uploadResult">
+				      				<ul></ul>
+				      			</div>
+	                              
 	                            </div>
 	                          </div>
 	                        </div>
+	                      <!-- ============== /학생 사진 업로드 =============== -->
 	                        
 	                        <div class="col-md-4">
 	                          <div class="form-group">
@@ -190,22 +223,61 @@
 	                        </div>
 	                      </div>
 	                      
-	                     
-	                      
 	                    </form>
+	                    
+	                    <hr class="my-4">
+	                    
+	              		<!-- ============== 통학 정보 =============== -->
+			              <form class="form-sample" id="commuteInfo">
+				              <div class="row">
+			                     <div class="col-md-6">
+			                       <div class="form-group">
+			                       	<label class="col-sm-12 col-form-label" for="zip_code">우편번호</label>
+			                         <div class="col-sm-12">
+			                       		<input type='text' class="form-control" name='zip_code' id='zip_code'>
+			                         </div>
+			                       </div>
+			                       <div class="form-group">
+			                         <label class="col-sm-12 col-form-label" for="address1">주소</label>
+			                         <div class="col-sm-12">
+			                           <input type='text' class="form-control" name='address1' id='address1'>
+			                         </div>
+			                       </div>
+			                       <div class="form-group">
+			                         <label class="col-sm-12 col-form-label" for="address2">상세 주소</label>
+			                         <div class="col-sm-12">
+			                           <input type='text' class="form-control" name='address2' id='address2'>
+			                         </div>
+			                       </div>
+			                     </div>
+			                     
+			                     <div class="col-md-6">
+			                       <div class="form-group">
+			                         <label class="col-sm-12 col-form-label" for="location">승차 위치</label>
+			                         <div class="col-sm-12">
+			                           <input type='text' class="form-control" name='location' id='location'>
+			                         </div>
+			                       </div>
+			                       <div class="form-group">
+			                         <div class="col-md-12 ml-auto text-right">
+			                      		<button class="btn btn-primary mr-2" style="display:none">승차위치 선택</button>
+									   	<button class="btn btn-secondary mr-2" style="display:none">승차위치 삭제</button>
+			                      	</div>
+			                       </div>
+			                     </div>
+			                   </div>
+		                   </form>
 	                  </div>
 	                </div>
 	              </div>
 	              
           	   </div><!-- /.row -->
+           
           
-          
-          
-          
-         	 <div>
+         	 <div><!-- /content-wrapper -->
 				
 				<!-- ============== 신상 정보 =============== -->
-			    <div>
+			    <!-- <div>
 				    <form>
 				   	 <input type="text" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 혹은 학번을 입력하세요.">
 				   	 <button type="submit" id="searchBtn">검색</button>
@@ -217,12 +289,12 @@
 				   	<button class="s_del_Btn" style="display:none">삭제</button>
 				   	
 				   	<button class="s_save_Btn" >저장</button>
-				   	<!-- <button class="s_init_Btn" >초기화</button> -->
+				   	<button class="s_init_Btn" >초기화</button>
 				   	<button class="s_cancel_Btn">취소</button>
 			   	
 				    <form id="studentForm">
 				    	<label for="s_name">이름</label><input type='text' name='s_name' id='s_name'><br>
-				    	<label for="s_id">학번</label><input type='text' name='s_id' id='s_id' readonly><br><!-- 자동으로 정해지는거라 입력할 수 없다는 안내하기 -->
+				    	<label for="s_id">학번</label><input type='text' name='s_id' id='s_id' readonly><br>자동으로 정해지는거라 입력할 수 없다는 안내하기
 				    	<label for="s_school">학교</label><input type='text' name='s_school' id='s_school'><br>
 				    	<label for="s_grade">학년</label><input type='text' name='s_grade' id='s_grade'><br>
 				    	<label for="s_birth">생일</label><input type='text' name='s_birth' id='s_birth'><br>
@@ -238,10 +310,10 @@
 				    	<label for="first_date">첫 수업일</label><input type='text' name='first_date' id='first_date'><br>
 				    	<label for="s_filename">학생 사진</label><input type='text' name='s_filename' id='s_filename'><br>
 				    </form>
-			    </div>
+			    </div> -->
 			    
-			    <hr>
-			    <!-- ============== 통학 정보 =============== -->
+			   <!--  <hr>
+			    ============== 통학 정보 ===============
 			    <div id="commuteInfo">
 			    	<label for="zip_code">우편번호</label><input type='text' name='zip_code' id='zip_code'><br>
 			    	<label for="address1">주소</label><input type='text' name='address1' id='address1'><br>
@@ -249,7 +321,7 @@
 			    	<label for="location">승차위치</label><input type='text' name='location' id='location'><br>
 			    </div>
 			    
-			    <hr>
+			    <hr> -->
 			    <!-- ============== 학급 정보 =============== -->
 			    <!-- <div>
 			    	<div id="classSearch">처음 출력은 지금 월에 해당하는 정보 출력
@@ -352,6 +424,7 @@
 			//============== 학생 정보 검색 ===============
 			let searchList = $(".search_list");
 			let studentForm = $("#studentForm");
+			let studentImg = $("#studentImg");
 			
 			//취소 버든 클릭시 데이터를 되돌리기 위한 s_id, 통학 정보 수정을 위함
 			let nowSid = "";
@@ -420,14 +493,10 @@
 			//검색한 학생정보 선택해서 DB 상세정보 form에 출력하기
 			searchList.on("click", "li a", function(e) {
 				e.preventDefault();
-				//console.log($(this).data("s_id"));
 				
 				//버튼 토글
-				//btnTogle($(this));
 				btnShow3();
 				//처음엔 저장, 초기화 버튼만 보이다가 검색한 데이터를 클릭하면 수정, 삭제, 추가 버튼으로 변경
-				
-				//nowSid = $(this).data("s_id");//취소 버튼 되돌리기용인데 이렇게 따로 안해도 될거 같은데? 헷갈리니까 걍 냅두기
 				
 				studentId = $(this).data("s_id");
 				getStudent(studentId); //해당 학생 정보
@@ -650,6 +719,8 @@
 						studentDisable();
 					});
 				}
+				
+				sendImgData();//첨부 이미지 데이터 전달
 			});
 			
 			//취소 버튼
@@ -697,6 +768,9 @@
 			
 			//데이터 비우기
 			function studentInit() {
+				//입력 취소시 입력했던 파일 정보 비우기
+				studentImg.find("#s_filename").val();
+				
 				//input - readonly 제거, value 값 삭제
 				studentForm.find("input").val(''); //학생 정보 비우기
 				studentForm.find("input[type='radio']").prop('checked', false);
@@ -708,6 +782,8 @@
 			
 			//입력 가능 변경 - 학생 정보 입력창 데이터 삭제 후 입력 가능하게 변경
 			function studentEdit() {
+				studentImg.show();				
+				
 				studentForm.find("input:not('#s_id')").prop('readonly', false);
 				studentForm.find("input[type='radio']").prop('disabled', false);
 				
@@ -717,15 +793,136 @@
 			//입력 불가 변경 - 저장, 취소 완료 후 원래 데이터가 보여질 때 입력 불가능하게 변경
 			function studentDisable() {
 				//console.log("수정금지 실행");
+				//이미지 첨부 가려서 첨부 못하게 하기
+				studentImg.hide();
+				
 				studentForm.find("input:not('#s_id')").prop('readonly', true);
 				studentForm.find("input[type='radio']").prop('disabled', true);
 				
 				$("#commuteInfo").find("input").prop('readonly', true);
 			}
 			
-			//학생 사진 올리기
-			//
+			//============== 학생 사진 업로드 ===============
+			let formObj = $("form[role='form']");
+			function sendImgData(e) { //저장 버튼을 눌렀을 때 실행할 함수
+				
+			}
+			saveBtn.on("click", function(e) { //저장 버튼을 눌렀을 때
+				e.preventDefault();
+				//console.log($(this));
+				
+				let str = "";
+				
+				$(".uploadResult ul li").each(function(i, obj){
+					let jobj = $(obj);
+					console.dir(jobj);
+					console.log(jobj);
+					
+					str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+					str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+					str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+					str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+					
+				});
+				formObj.append(str);
+				
+			});
 			
+			let regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png)$");
+			let maxSize = 5242880; //5MB
+			let uploadResult = $(".uploadResult ul");
+			
+			//업로드 제한 - 사이즈, 확장자
+			function checkExtenstion(fileName, fileSize){
+				if(fileSize >= maxSize){
+					alert("5MB 이상의 파일은 업로드 할 수 없습니다.");
+					return false;
+				}
+				if(!regex.test(fileName)){
+					alert('jpg, jpeg, gif, png 파일만 업로드 할 수 있습니다.');
+					return false;
+				}
+				return true;
+			}
+			
+			//파일 업로드를 위한 별도의 버튼 없이 <input type='file'>의 내용 변경을 감지하는 이벤트를 처리
+			$("input[type='file']").change(function(e){
+				let formData = new FormData();//폼태그 만들어 줌
+				let inputFile = $('#s_filename');
+				let files = inputFile.files;//multiple 속성이 없으므로 하나만 선택됨. 그래서 하나뿐임
+				
+				//파일 업로드 전 제약 조건 확인
+				if(!checkExtenstion(files.name, files.size)) {
+					return false;
+				}else {
+					formData.append("uploadFile", files);
+				}
+				console.log('formData : '+formData);
+				
+				//데이터 전송을 위한 Ajax 설정
+				$.ajax({
+					url:'/studentRest/uploadAjaxAction',
+					processData:false,
+					contentType:false,
+					data:formData,
+					type:'POST',
+					dataType:'json',
+					success:function(result){
+						console.log(result);
+						
+						//결과값 출력 함수
+						showUploadedResult(result);
+					}
+				});
+			});
+			
+			//업로드 결과를 보여주기 위한 showUploadedResult();
+			function showUploadedResult(result){
+				//출력할 내용이 없으면 더이상 진행하지 않음
+				if(!result || result.length == 0){ //uploadResultArr가 없거나 0인 경우 = 없다
+					return;
+				}
+				let uploadBox = $(".img_box");
+				let str = "";
+				
+				if(result.image) {//이미지 파일
+					let fileCallPath = encodeURIComponent(result.uploadPath+"/s_"+result.uuid+"_"+result.fileName);														
+					
+					str += "<div data-path='"+result.uploadPath+"' data-uuid='"+result.uuid+"' ";
+					str += "data-filename='"+result.fileName+"' data-type='"+result.image+"'>";
+					str += "<span> "+obj.fileName+"</span>";
+					str += "<button type='button' data-file='"+fileCallPath+"' data-type='image' ";
+					str += "class='btn btn-warning btn-circle'>";
+					str += "<i class='mdi mdi-close-box'></i></button><br>";
+					str += "<img class='img-fluid' src='/display?fileName="+fileCallPath+"'>";
+					str += "</div>";
+
+				}
+				uploadBox.append(str);
+			};
+			
+			//첨부파일 변경 처리를 위한 버튼 이벤트
+			$(".img_box").on("click","button",function(e){
+				let targetFile = $(this).data("file");
+				let type = $(this).data("type");
+				
+				console.log("삭제 대상 파일 : "+targetFile);
+				console.log("삭제 대상 파일 타입 : "+type);
+				
+				let targetLi = $(".img_box");
+				
+				$.ajax({
+					url: '/studentRest/deleteFile',
+					data: {fileName: targetFile, type: type},
+					dataType: 'text',
+					type: 'POST',
+					success: function(result){
+						alert(result);
+						targetLi.remove();
+					}
+				});
+				
+			});
 			
 			
 			

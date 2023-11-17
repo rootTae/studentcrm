@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.AttendanceVO;
 import org.studentcrm.crm.command.ClassVO;
@@ -84,6 +87,22 @@ public class AttendanceRestController {
       
       return new ResponseEntity<AttendanceVO>(service.viewMemo(vo), HttpStatus.OK);
    }
+   
+   // insertStat
+   @PostMapping(value = "/initial/{s_id}/{a_date}",
+		   consumes = "application/json;charset=utf-8",
+		   produces = {MediaType.TEXT_PLAIN_VALUE})
+   public ResponseEntity<AttendanceVO> insert(
+		   @RequestBody AttendanceVO vo,
+		   @PathVariable("s_id") int s_id,
+	       @PathVariable("a_date") String a_date
+		   ){
+	   	log.info("vo for insertStat:" + vo);
+	    return (vo.getA_status() == null || vo.getA_status().isEmpty())
+			   ? new ResponseEntity<AttendanceVO>(service.insertStat(vo), HttpStatus.OK) 
+			   : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+   }
+
    // updateStat
    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
          value="/{s_id}/{a_date}", consumes="application/json;charset=UTF-8", produces= {MediaType.APPLICATION_JSON_VALUE})
@@ -105,4 +124,28 @@ public class AttendanceRestController {
             ? new ResponseEntity<>(service.updateStat(vo), HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
    }
+   
+   @RequestMapping(method = RequestMethod.GET,
+	        value="/{s_id}/{firstDayOfMonth}/{lastDayOfMonth}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<AttendanceVO>> getMonthlyAttendance(
+	        @PathVariable("s_id") int s_id,
+	        @PathVariable("firstDayOfMonth") String firstDayOfMonth,
+	        @PathVariable("lastDayOfMonth") String lastDayOfMonth,
+	        @RequestBody AttendanceVO vo
+	        ){
+				/*
+				 * LocalDate firstDayOfMonth = month.withDayOfMonth(1); LocalDate lastDayOfMonth
+				 * = month.withDayOfMonth(month.lengthOfMonth());
+				 */
+	    
+	    List<AttendanceVO> result = service.getMonthlyAttendance(vo);
+
+	    return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+   
+   
+   
+   
+   
+   
 }

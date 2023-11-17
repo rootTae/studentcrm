@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        table {
+       /*  table {
             border-collapse: collapse;
         }
 
@@ -32,10 +32,14 @@
             text-align: center;
             cursor: pointer;
         }
+        
+        td {
+        	background-color: #fffcf2;
+        }
 
         th {
             background-color: #f2f2f2;
-        }
+        } */
 
         .white {
             background-color: #fffcf2;
@@ -69,8 +73,10 @@
           display: block; 
      	 } */
         
-         .memo {position:relative}
-         .memo > div{display:none; position:absolute;right:-100px; top:-100px;width:100px;height:100px;border:2px solid #aaa;background-color:#f1faee;}
+         .memo > div {display:none; width:100px; padding: 10px; padding-bottom: 0px; box-sizing: border-box;} /* 안됨 */
+         .memo div p {line-height: 10px; font-weight:normal;}
+         .memo {font-weight: bold;}
+    
         /* .memoTextarea {display:none;position:absolute;right:-101px;top:-108px;width:100px;height:100px;border:2px solid #aaa;background-color:#f1faee;}
         .memoBtn{display:block;position:absolute;top:0;right:0;width:3px;height:3px;z-index:100} */
     </style>
@@ -99,12 +105,12 @@
             </div>
             
              <div class="row">
-               <div class="col-12 grid-margin stretch-card">
+               <div class="col-7 grid-margin stretch-card">
                    <div class="card">
                      <div class="card-body">
                        <h4 class="card-title">classes</h4>
                        <p class="card-description">choose the class for which you want to check the attendance</p>
-                       <table class="form-inline">
+                       <table class="form-inline table">
                          <tr class="classList">
 
                    		 </tr>
@@ -113,7 +119,14 @@
                      </div>
                    </div>
                  </div>
-                 
+              <div class="col-lg-5 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <h4 class="card-title">Doughnut chart</h4>
+                    <canvas id="doughnutChart" style="height: 222px; display: block; width: 445px;" width="445" height="222" class="chartjs-render-monitor"></canvas>
+                  </div>
+                </div>
+              </div>
                <div class="col-md-6 grid-margin stretch-card">
                    <div class="card">
                      <div class="card-body">
@@ -169,12 +182,15 @@ function statusChange(cell) {
    /* var isoDateString = new Date(year, month - 1, date).toISOString(); */
    var isoDateString = year+"-"+month+"-"+date;
    
-   var requested = { 
+/*    var requested = { 
 		    s_id: s_id,
 	        a_date: isoDateString, 
-	        a_status: a_status};
+	        a_status: a_status}; */
    
-   attendanceService.updateStat(requested)
+   console.log("check"+a_status);
+   
+   let ddd = $(cell).children('span').text();
+   console.log("최초 : "+ddd);
    /* updateStat({
         s_id: studentName,
         a_date: isoDateString, 
@@ -206,22 +222,33 @@ function statusChange(cell) {
             $(cell).children('span').text('Leave early');
             break;
         case 'purple':
-            cell.className = 'white';
-            $(cell).children('span').text('');
+            cell.className = 'blue';
+            $(cell).children('span').text('Attend');
             break;
         default:
             break;
     }
-   
    var a_status = $(cell).children('span').text();
+	console.log("aaaaa:"+a_status);
    var requested = { 
 		    s_id: s_id,
 	        a_date: isoDateString, 
 	        a_status: a_status};
-   console.log("needed");
-   console.log(a_status);
-   attendanceService.updateStat(requested)
-   console.log(a_status);
+    
+if(a_status == 'Attend' && ddd == ''){
+	console.log('인서트 실행');
+	console.log($(cell).find(".stat").text());
+	   attendanceService.insertStat(requested);
+	   //return;
+} else {
+	console.log('업데이트 실행');
+	   attendanceService.updateStat(requested);
+	   //return;
+} 
+    
+   //console.log("needed");
+   //attendanceService.updateStat(requested)
+   //console.log(a_status);
 }
 
 function showStudentList(class_nameValue) {
@@ -233,24 +260,28 @@ function showStudentList(class_nameValue) {
     attendanceService.getStudentList({class_name: class_nameValue}, function(students){
         var studentsList = $('.studentsList');
         /* studentsList.empty(); */
-
+		studentsList.empty();
         var str = '';
 		console.log(students);
         students.forEach(function(student){
             str += '<tr>';
-            str += '<td  class="' + student.s_id + '">'+student.s_id+'</td>';
+            str += '<td  class="' + student.s_id + '">'+student.s_id+'<div id="chart"></div></td>';
             str += '<td class="memo">' + student.s_name+'<div></div></td>';
 
             for (var i = 1; i <= daysInMonth; i++){
                 var cellId = student.s_id + "_" + yearNow + "_" + monthNow + "_" + ((i<10) ? '0' + i : i);
-                str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"><span class="stat"></span></td>';
-                
+                str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"><span class="stat"></span></td>';   
             }
             str += '</tr>';
         });
         studentsList.append(str);
         memo();
+        existedAttendanceSheet();
     });
+    
+    function existedAttendanceSheet() {
+    	
+    }
     
     /* $('.studentList').on('click', 'readable', function(e){
     	e.stopPropagation();
@@ -260,22 +291,44 @@ function showStudentList(class_nameValue) {
     	memoBtn.show();
     	
     }); */
+    
+    $('#chart').on('click',function(e){
+    	console.log("chart");
+    	e.stopPropagation();
+    	var cellId = $(this).next().attr('id');
+    	
+    	var parts = cellId.split("_");
+    	
+    	var s_id = parts[0];
+    	var year = parts[1];
+    	var month = parts[2];
+		var lastDay = new Date(year, month, 0);
+		
+		console.log("마지막 날짜: "+lastDay);
+		
+    	var firstDayOfMonth = year+"-"+month+"-"+"01";
+    	var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
+    	attendanceService.getMonthlyAttendance({
+    		s_id:s_id, 
+    		firstDayOfMonth:firstDayOfMonth, 
+    		lastDayOfMonth:lastDayOfMonth
+    		}, function(statusList){
+    			
+    		})
+    	
+    })
+ 
 	function memo() {
     	
 	    $('.memo').on('click', function(e){
 	        console.log("readable clicked");
 	        e.stopPropagation();
 	        var s_id = $(this).prev().attr('class');
-	        if($(this).find("div").show()){
-	        	$(this).find("div").hide();
-	        }else{
-	      	  $('.memo > div').hide();
-	        	$(this).find("div").show();	
-	        }
 	        
-	        
+	        $(this).find("div").toggle('hidden');
+
 	        var sInfoList = $(this).find("div");
-	        sInfoList.empty();
+	        sInfoList.empty(); 
 	
 	        attendanceService.readInfo({s_id: s_id}, function(student){
 	        	console.log(student.s_school);
@@ -292,6 +345,7 @@ function showStudentList(class_nameValue) {
 }
 
 $(document).ready(function () {
+	var a_status = "";
     var classListTR = $(".classList");
     var t_id = 3;
     //console.log("classlist");
@@ -313,7 +367,22 @@ $(document).ready(function () {
     showStudentList
 });
 </script>
-      
+      <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="../../assets/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script src="../../assets/js/settings.js"></script>
+    <script src="../../assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="../../assets/js/chart.js"></script>
+    <!-- End custom js for this page -->
    </body>
 </html>
 

@@ -64,6 +64,29 @@
          });
       }
     
+   function insertStat(data, callback, error){
+	
+	console.log("insertStat");
+	$.ajax({
+		type:'POST',
+		url:'/attendance/initial/' + data.s_id+'/'+data.a_date,
+        contentType: 'application/JSON;charset=UTF-8',
+        data: JSON.stringify(data),
+        success:function(response){
+			if(callback){
+				callback(response);
+			}
+		},
+		error:function(xhr, status, error){
+			if(error){
+				error();
+			}
+		}
+	});
+	
+	} 
+     
+    
     function updateStat(data, callback, error){
       /*let requestData = {
          s_id : data.s_id,
@@ -80,7 +103,7 @@
          data:JSON.stringify(data),
          success:function(response){
             if(callback){
-               callback(response)
+               callback(response);
             }
          },
          error:function(xhr, status, error){
@@ -90,11 +113,28 @@
          }
       });
    }
+   
+   function getMonthlyAttendance(data, callback, error){
+	console.log("getMonthlyAttendance");
+	console.log(data);
+	$.getJSON("/attendance/" + s_id +'/'+ firstDayOfMonth +'/'+ LastDayOfMonth, 
+		function(data){
+			if(callback){
+				callback(data);
+			}
+		}).fail(function(xhr, status, err){
+			if(error){
+				error();
+			}
+		});
+	}
 
    return{
       readInfo: readInfo,
       getClassList: getClassList,
       getStudentList: getStudentList,
-      updateStat: updateStat
+      insertStat: insertStat,
+      updateStat: updateStat,
+      getMonthlyAttendance: getMonthlyAttendance
    };   
 })();

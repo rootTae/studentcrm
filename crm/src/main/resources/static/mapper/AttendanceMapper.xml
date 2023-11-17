@@ -34,11 +34,39 @@
    		where s_id = #{s_id} and a_date = #{a_date}
 	</select>
 	
+	<!-- 업데이트 vo읽어오기 -->
+	<select id="readForUpdate" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
+  		select * from attendance
+   		where s_id = #{s_id} and a_date = #{a_date}
+	</select>
+	
+	<!-- 출결 최초 입력 -->
+	<insert id="insertStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
+		insert into attendance(s_id, a_date, a_status)
+		values(#{s_id}, #{a_date}, #{a_status})
+	</insert>
+	
 	<!-- 출결 상황 업데이트 -->
     <update id="updateStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
         update attendance set a_status = #{a_status}
         where s_id = #{s_id} and a_date = #{a_date}
     </update>
+    
+    <!-- to visualize student's monthly attendance -->
+    <select id="getMonthlyAttendance" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
+	    select s_id,
+	        case
+	            when a_status = 'Attend' then 'Attend'
+	            when a_status = 'Late' then 'Late'
+	            when a_status = 'Absent' then 'Absent'
+	            when a_status = 'Leave early' then 'Leave early'
+	        end as a_status,
+	        count(a_status) as count
+	    from attendance
+	    where s_id = #{s_id} and a_date between #{firstDayOfMonth} and #{lastDayOfMonth}
+	    group by a_status
+	</select>
+    
     
     <!-- 검색을 위한 날짜 시간 받아오기 -->
 	<select id="getTime" resultType="java.util.Date">

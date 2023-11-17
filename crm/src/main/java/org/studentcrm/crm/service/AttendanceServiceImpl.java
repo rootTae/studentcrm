@@ -1,6 +1,8 @@
 package org.studentcrm.crm.service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +34,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
+	public AttendanceVO insertStat(AttendanceVO vo) {
+		log.info("insertStat" + vo);
+		return mapper.insertStatus(vo) ? mapper.readForUpdate(vo) : null;
+	}
+	
+	@Override
 	public AttendanceVO updateStat(AttendanceVO vo) {
 		log.info("vo for updateStat: " + vo);
 		log.info(mapper.updateStatus(vo));
-		return mapper.updateStatus(vo) ? mapper.readMemo(vo) : null;
+		return mapper.updateStatus(vo) ? mapper.readForUpdate(vo) : null;
 
 	}
 
@@ -55,6 +63,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public List<ClassVO> c_list(int t_id) {
 		log.info("t_id for t_class" + t_id);
 		return mapper.classListByTeacher(t_id);
+	}
+
+	@Override
+	public List<AttendanceVO> getMonthlyAttendance(AttendanceVO vo) {
+		log.info("graphMA" + vo.getS_id());
+		log.info("graphMA 1st day" + vo.getFirstDayOfMonth());
+		List<AttendanceVO> result = mapper.getMonthlyAttendance(vo);
+		return result;
 	}
 
 }

@@ -126,6 +126,7 @@
 				        <button type="button" class="deletebtn" style="display: none">삭제</button>
 				        <button type="button" class="savebtn" style="display: none">저장</button>
 				        <button type="button" class="cancelbtn" style="display: none">취소</button>
+				        <button type="button" class="chartbtn" style="display: none">그래프 생성</button>
                       <table class="table" id="scoreTable">
                         <thead>
                           <tr>
@@ -144,7 +145,7 @@
 		                    <th>평균</th>
                           </tr>
                         </thead>
-                        <tbody class="scoreList">
+                        <tbody class="scoreList" id="scoreList">
                           
                         </tbody>
                       </table>
@@ -154,6 +155,25 @@
               </div>
             </div>
             
+            
+            <div class="row">
+              <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body" id="line"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <h4 class="card-title">Line chart</h4>
+                    <canvas id="linechart-multi" style="height: 181px; display: block; width: 363px;" width="363" height="181" class="chartjs-render-monitor"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body" id ="bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <h4 class="card-title">Bar chart</h4>
+                    <canvas id="barChart" style="height: 181px; display: block; width: 363px;" width="363" height="181" class="chartjs-render-monitor"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
             
             
             
@@ -188,12 +208,13 @@
         let scoredata = "";
         let escore = $(".escore");
         let exams = "";
+        var total = "";
         
         let nowename="";
         let noweid="";
         let nowsid="";
         let nowsname="";
-        
+
         // 버튼 설정
         let addbtn = $(".insertbtn");
         let updatebtn = $(".updatebtn");
@@ -264,14 +285,13 @@
         });
      	   	
      	
-     
 
      // 학생 점수 리스트   
-     function getscore(s_name,s_id){	 
+     function getscore(s_name,s_id){	
+    	 var scoreList = $('.scoreList');
+         scoreList.empty();
         GradesService.getScoreList({s_name: s_name, s_id: s_id}, function(scores) {
             // 성적 데이터를 받아오는데 성공한 경우에만 아래 코드 실행
-            var scoreList = $('.scoreList');
-                scoreList.empty();
             if (scores && scores.length > 0) {
                
             console.log("============");
@@ -279,12 +299,13 @@
                     // 평균 점수 계산
                     score.avgScore = ((score.korScore + score.engScore + score.mathScore) / 3).toFixed(1);
                     // 과목별 총 평균 갱신
-                    GradesService.SubjectsTotalAvg(score);
-                  
+                    GradesService.SubjectsTotalAvg(score, function(result){
+                    	console.log(result);
+                    
                     var str = '<tr>' +
                         '<td><div class="form-check form-check-muted m-0">'+
                         '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
-                        '<i class="input-helper"></i></label></div></td>'+ 
+                        '<i class="input-helper"></i></label></div></td>'+
                         '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" value="'+score.score_id+'" readonly></td>' +
                         '<td><input type="text" class="s_id" id="s_id" name="s_id" readonly value="' + score.s_id +'"> </td>' +
                         '<td><input type="text" class="s_name" id="s_name" name="s_name" readonly value="'+ score.s_name +'"></td>' +
@@ -295,30 +316,41 @@
                         '<td><input type="text" class="engScore" id="engScore" name="engScore" readonly value="'+ score.engScore +'"></td>' +
                         '<td><input type="text" class="mathScore" id="mathScore" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
                         '<td><input type="text" class="avgScore" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
+                        '<td hidden><input type="text" class="korAvg" name="korAvg" id="korAvg" value="'+result.korAvg+'" readonly></td>' +
+                        '<td hidden><input type="text" class="engAvg" name="engAvg" id="engAvg" value="'+result.engAvg+'" readonly></td>' +
+                        '<td hidden><input type="text" class="mathAvg" name="mathAvg" id="mathAvg" value="'+result.mathAvg+'" readonly></td>' +
+                        '<td hidden><input type="text" class="total" name="total" id="total" value="'+result.totalAvgScore +'" readonly></td>' +
                         '</tr>';                   
                     scoreList.append(str);
                     scoredata=(score);
-     
+                   
+                    });
+                    
+                    
                     //console.log(scoredata);
                 });
+                $('.chartbtn').show();
             } else {
                 // 성적 데이터가 없을 경우 처리 (에러 메시지 출력 등)
                 console.log("No score data available");
                 alert("데이터가 없습니다.");
+                $('.chartbtn').hide();
             }
         });  	 
      }
      
-     function renderScoreList(score){
-/*     	 var scoreList = $('.scoreList');
-         scoreList.empty(); */
+     function renderScoreList(scores){
+     	 var scoreList = $('.scoreList');
+        
          
     	 scores.forEach(function (score) {
              // 평균 점수 계산
              score.avgScore = ((score.korScore + score.engScore + score.mathScore) / 3).toFixed(1);
              // 과목별 총 평균 갱신
              GradesService.SubjectsTotalAvg(score);
-           
+           if($('#add_e_id') == null){
+        	   return;
+           }else{
              var str = '<tr>' +
                  '<td><div class="form-check form-check-muted m-0">'+
                  '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
@@ -335,6 +367,8 @@
                  '<td><input type="text" class="avgScore" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
                  '</tr>';                   
              scoreList.append(str);
+        	   
+           }
 
          });
      }
@@ -345,25 +379,38 @@
    
      
   // 성적점수 추가 버튼 
-     $(".insertbtn").on('click', function(){
-        
-    	  
-    	addScore(scoredata[0]);
+		  $(".insertbtn").on('click', function() {
+	  if ($('.s_checkbox:checked').length > 0) {
+	    let nowdata = $('.s_checkbox:checked').closest("tr").find('input');
+
+		 let score={
+	    		 
+	  	 s_id : nowdata.eq(1).val(),
+	     s_name : nowdata.eq(2).val()
+	    
+	     };
+   
+		 nowsid= score.s_id;
+		 nowsname=score.s_name;
+		 
+    	addScore(score);
 		btnShow2();        
         nowbtn = addbtn; 
-    	 
+         
+	  }
+  
      });
 
   //점수 추가 
-     function addScore(studentData) {
+     function addScore(score) {
      
-         var str = '<tr class="escore">' +
+         var str = '<tr class="addscoredata" id="addscoredata" name="addscoredata">' +
              '<td><div class="form-check form-check-muted m-0">' +
              '<label class="form-check-label"><input type="checkbox"  class="form-check-input sl_checkbox">' +
              '<i class="input-helper"></i></label></div></td>' +
              '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" readonly></td>' +
-             '<td class="i_s_id"><input type="text" name="add_s_id" id="add_s_id" readonly value="' + scoredata.s_id + '"> </td>' +
-             '<td class="i_s_name"><input type="text" name="add_s_name" id="add_s_name" readonly value="' + scoredata.s_name + '"></td>' +
+             '<td class="i_s_id"><input type="text" name="add_s_id" id="add_s_id" readonly value="' + score.s_id + '"> </td>' +
+             '<td class="i_s_name"><input type="text" name="add_s_name" id="add_s_name" readonly value="' + score.s_name + '"></td>' +
              '<td class="i_e_id"><input type="text" name="add_e_id" id="add_e_id"></td>' +
              '<td class="i_e_name"><input type="text" name="add_e_name" id="add_e_name" readonly></td>' +
              '<td class="i_e_date"><input type="text" name="add_e_date" id="add_e_date" readonly></td>' +
@@ -489,32 +536,26 @@
 
 		
 	
-	  //시험 취소
-    cancelbtn.on("click", function(){
-    	console.log(scoredata);
-        
-        s_name=scoredata.s_name; 
-        s_id=scoredata.s_id; 	
-    	
-       if(nowbtn==addbtn){
-    	  
-    	   var scoreList = $('.scoreList');
-           scoreList.empty();
-    	   
-           btnShow3();
-           
-           
-           
-    	
-    	     
-       }else {
-    	   btnShow3();
-       	  
-       }
+	// 시험 취소
+	cancelbtn.on("click", function () {
 
-    });
-       
-       
+	    if (nowbtn == addbtn) {
+	        // "addscoredata" 클래스를 가진 행을 삭제합니다.
+	        var scoreList = $('#scoreList');
+	        scoreList.empty();
+
+	        // 점수 목록을 다시 불러옵니다.
+	        GradesService.getScoreList({ s_name: nowsname, s_id: nowsid }, function (scores) {
+	            
+	        	renderScoreList(scores);
+	        });
+
+	        btnShow3();
+	    } else {
+	        btnShow3();
+	    }
+	});
+
         
      // 시험리스트 검색
         $('#examsearchForm').on('click', "button", function (e) {
@@ -557,7 +598,7 @@
             
             e_btnShow2();
             
-          	nowename=$("#ie_e_name").val(),
+          	nowename=$("#ie_e_name").val()
             nowbtn = inserExamtbtn;
         });
         
@@ -649,8 +690,12 @@
         //시험 취소
         cancelExambtn.on("click", function(){
         	
+        	$('#addscoredata').remove();
+        	
            if(nowbtn==inserExamtbtn){
         	  
+        	   
+        	   
         	   var exam_List = $('.exam_List');
         	   exam_List.empty();
         	   
@@ -662,16 +707,25 @@
            }else {
         	   e_btnShow3();
            	
-          	 GradesService.getexamList({ e_name: e_nameValue }, function (exams) {
-                   renderExamList(exams);
-               });
            }
-        	
- 
-        	 
-        	
+  	
         });
         
+        //그래프 생성
+        $('.chartbtn').on('click', function(){
+			
+        	 
+        	
+        	console.info("bbbb");
+            if($('.sl_checkbox:checked').length > 0){	
+
+                console.info("aaa");
+            	
+            } else {
+                alert("체크 박스를 선택하세요.");
+            }
+        });
+
         
         // 버튼 show, hide
         function btnShow2(){
@@ -753,15 +807,27 @@
  		 	 $(this).prop('checked', true);
  		   
         });
-         
-  
      
-      
-        
+  	
+  	
+  	
     });
-    
-    
+ 
     </script>
+    
+    <!-- Plugin js for this page -->
+    <script src="/assets/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/assets/js/off-canvas.js"></script>
+    <script src="/assets/js/hoverable-collapse.js"></script>
+    <script src="/assets/js/misc.js"></script>
+    <script src="/assets/js/settings.js"></script>
+    <script src="/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="/assets/js/chart.js"></script>
+    <!-- End custom js for this page -->
     
   </body>
 </html>

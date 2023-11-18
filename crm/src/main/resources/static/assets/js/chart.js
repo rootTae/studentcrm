@@ -1,13 +1,5 @@
-
-
-$(function() {
-  /* ChartJS
-   * -------
-   * Data and config for chartjs
-   */
-  'use strict';
 function clearChart(chartInstance) {
-  if (chartInstance) {
+  if (chartInstance && chartInstance.data && chartInstance.data.datasets) {
     // 그래프의 데이터를 빈 배열로 설정하여 지우기
     chartInstance.data.datasets.forEach(function(dataset) {
       dataset.data = [];
@@ -18,15 +10,39 @@ function clearChart(chartInstance) {
   }
 }
 
+var getChart=(function(chartData) {
+
+  'use strict';
+
+var barChart; // 변수를 선언하여 차트 인스턴스를 저장할 곳
+var multiLineCanvas; // 변수를 선언하여 차트 인스턴스를 저장할 곳
+
 // clearChart 함수 호출
-clearChart(barChart);
-clearChart(multiLineChart);
+  clearChart(barChart);
+  clearChart(multiLineCanvas);
+  
+  console.log(chartData.korScore);
+   var barChartCanvas = $("#barChart").get(0).getContext("2d");
+  barChart = new Chart(barChartCanvas, {
+    type: 'bar',
+    data: data, // 여기에 적절한 데이터를 설정해야 합니다.
+    options: options // 옵션 설정
+  });
+
+  // lineChartMulti 초기화
+  var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
+  lineChart = new Chart(multiLineCanvas, {
+    type: 'line',
+    data: multiLineData, // 여기에 적절한 데이터를 설정해야 합니다.
+    options: options // 옵션 설정
+  });
+  
 
   var data = {
   	labels: ["국어", "영어", "수학", "평균"],
     datasets: [{
       label: '# of Votes',
-      data: [$('.korScore').val(),$('.engScore').val() , $('.mathScore').val(), $('.avgScore').val()],
+      data: [chartData.korScore, chartData.engScore, chartData.mathScore, chartData.avgScore],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -71,7 +87,7 @@ clearChart(multiLineChart);
     labels: ["평균(국어)", "평균(영어)", "평균(수학)", "평균(전체)"],
     datasets: [{
         label: '학생 성적',
-        data: [$('.korScore').val(),$('.engScore').val() , $('.mathScore').val(), $('.avgScore').val()],
+        data: [chartData.korScore, chartData.engScore, chartData.mathScore, chartData.avgScore],
         borderColor: [
           '#0090E7'
         ],
@@ -80,7 +96,7 @@ clearChart(multiLineChart);
       },
       {
         label: '전체 평균',
-        data: [$('.korAvg').val(), $('.engAvg').val(), $('.mathAvg').val(), $('.total').val()],
+        data: [chartData.korAvg, chartData.engAvg, chartData.mathAvg, chartData.totalAvgScore],
         borderColor: [
           '#007f5f'
         ],
@@ -92,49 +108,48 @@ clearChart(multiLineChart);
   };
   
 
-// 여기에 다른 차트 인스턴스도 초기화할 수 있습니다.
-
 // 새로운 차트 그리기
 var barChartCanvas = $("#barChart").get(0).getContext("2d");
 var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
-
-var barChart = new Chart(barChartCanvas, {
+ barChart = new Chart(barChartCanvas, {
     type: 'bar',
     data: data,
     options: options
 });
 
-var multiLineChart = new Chart(multiLineCanvas, {
+ lineChart = new Chart(multiLineCanvas, {
     type: 'line',
     data: multiLineData,
     options: options
 });
   
-  var options = {
+var options = {
     scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        },
-        gridLines: {
-          color: "rgba(204, 204, 204,0.1)"
-        }
-      }],
-      xAxes: [{
-        gridLines: {
-          color: "rgba(204, 204, 204,0.1)"
-        }
-      }]
+        yAxes: [{
+            ticks: {
+                beginAtZero: true,
+                min: 0, 
+                max: 100  
+            },
+            gridLines: {
+                color: "rgba(204, 204, 204,0.1)"
+            }
+        }],
+        xAxes: [{
+            gridLines: {
+                color: "rgba(204, 204, 204,0.1)"
+            }
+        }]
     },
     legend: {
-      display: false
+        display: false
     },
     elements: {
-      point: {
-        radius: 0
-      }
+        point: {
+            radius: 0
+        }
     }
-  };
+};
 
   
   var doughnutPieData = {
@@ -158,7 +173,7 @@ var multiLineChart = new Chart(multiLineCanvas, {
       ],
     }],
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
+
     labels: [
       'Pink',
       'Blue',
@@ -428,12 +443,5 @@ var multiLineChart = new Chart(multiLineCanvas, {
       options: doughnutPieOptions
     });
   }
-  return {
-    clearChart: clearChart
-    // 다른 함수들도 필요하다면 추가 가능
-  };
   
 })
-
-
-

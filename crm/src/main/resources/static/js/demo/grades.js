@@ -55,7 +55,7 @@
     	//학생 리스트 목록보기 
       function getStudentList(param, callback, error) {
         var s_name = param.s_name;
-		//console.log(s_name);
+		console.log(s_name);
         $.getJSON("/gradesF/" + s_name, function(list) {
             if (callback) {
                 callback(list);

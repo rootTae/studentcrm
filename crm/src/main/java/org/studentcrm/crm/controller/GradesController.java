@@ -123,7 +123,7 @@ public class GradesController {
 		
 	//시험점수 삭제
 		@DeleteMapping(value ="/{score_id}",
-				produces = {MediaType.APPLICATION_JSON_VALUE})
+				produces = {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> scoreRemove(@PathVariable("score_id") int score_id){
 			log.info("scoreRemove" +score_id);
 			return gservice.scoreRemove(score_id)==1

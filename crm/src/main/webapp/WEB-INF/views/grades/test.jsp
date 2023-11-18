@@ -204,12 +204,10 @@
     <script type="text/javascript" src="/js/demo/grades.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-    	let e_idvalue="";
-        let scoredata = "";
-        let escore = $(".escore");
-        let exams = "";
         var total = "";
         
+        
+        //지금 데이터 저장
         let nowename="";
         let noweid="";
         let nowsid="";
@@ -221,18 +219,17 @@
         let deletebtn = $(".deletebtn");
         let savebtn = $(".savebtn");
         let cancelbtn = $(".cancelbtn");
-        
+        //시험 버튼 설정
         let inserExamtbtn = $(".inserExamtbtn");
         let updateExambtn = $(".updateExambtn");
         let deleteExambtn = $(".deleteExambtn");
         let saveExambtn = $(".saveExambtn");
         let cancelExambtn = $(".cancelExambtn");   
         
-     // 학생 이름 검색 
+     	// 학생 이름 검색 
         $('#searchForm').submit(function(event){
             event.preventDefault();
             var s_nameValue = $('#s_name').val();
-            //console.log(s_nameValue);
 
             getStudent(s_nameValue);
         });
@@ -277,8 +274,12 @@
                     var s_id = checkedCheckbox.closest("tr").find("input#is_s_id").val();
                     var s_name = checkedCheckbox.closest("tr").find("input#is_s_name").val();
 					
-                    getscore(s_name, s_id);
-
+                    nowsid=s_id;
+                    nowsname=s_name;
+                    
+                    console.log(nowsid);
+                    
+                    getscore(s_name, s_id);                    
                     btnShow3();                    	                   
                 }
                 
@@ -294,13 +295,11 @@
             // 성적 데이터를 받아오는데 성공한 경우에만 아래 코드 실행
             if (scores && scores.length > 0) {
                
-            console.log("============");
                 scores.forEach(function (score) {
                     // 평균 점수 계산
                     score.avgScore = ((score.korScore + score.engScore + score.mathScore) / 3).toFixed(1);
                     // 과목별 총 평균 갱신
                     GradesService.SubjectsTotalAvg(score, function(result){
-                    	console.log(result);
                     
                     var str = '<tr>' +
                         '<td><div class="form-check form-check-muted m-0">'+
@@ -322,12 +321,8 @@
                         '<td hidden><input type="text" class="total" name="total" id="total" value="'+result.totalAvgScore +'" readonly></td>' +
                         '</tr>';                   
                     scoreList.append(str);
-                    scoredata=(score);
                    
                     });
-                    
-                    
-                    //console.log(scoredata);
                 });
                 $('.chartbtn').show();
             } else {
@@ -339,9 +334,10 @@
         });  	 
      }
      
+     
      function renderScoreList(scores){
      	 var scoreList = $('.scoreList');
-        
+         scoreList.empty();
          
     	 scores.forEach(function (score) {
              // 평균 점수 계산
@@ -371,34 +367,21 @@
            }
 
          });
-     }
+     }     
      
-     
-     
-  //학생 성적 -----부분      
+  //학생 성적 -----부분시작      
    
      
   // 성적점수 추가 버튼 
-		  $(".insertbtn").on('click', function() {
-	  if ($('.s_checkbox:checked').length > 0) {
-	    let nowdata = $('.s_checkbox:checked').closest("tr").find('input');
-
-		 let score={
-	    		 
-	  	 s_id : nowdata.eq(1).val(),
-	     s_name : nowdata.eq(2).val()
+	  $(".insertbtn").on('click', function() {
+  		if ($('.s_checkbox:checked').length > 0) {
 	    
-	     };
-   
-		 nowsid= score.s_id;
-		 nowsname=score.s_name;
+		 let score={s_id : nowsid, s_name :nowsname};
 		 
-    	addScore(score);
-		btnShow2();        
-        nowbtn = addbtn; 
-         
-	  }
-  
+	    	addScore(score);
+			btnShow2();        
+	        nowbtn = addbtn;     
+		 }  
      });
 
   //점수 추가 
@@ -418,17 +401,12 @@
              '<td class="i_engScore"><input type="text" name="add_engScore" id="add_engScore"></td>' +
              '<td class="i_mathScore"><input type="text" name="add_mathScore" id="add_mathScore" ></td>' +
              '<td class="i_avgScore"></td>' +
-             '</tr>';
-             
+             '</tr>';   
          
-         $('.scoreList').append(str);     
-         
-         
+         $('.scoreList').append(str);               
      }
   
-    
-  
-  
+
 
         //성적 입력
         function setScore(callback){
@@ -442,9 +420,7 @@
                 mathScore : $("#add_mathScore").val()
                 
             }  
-           // console.log(scoreList);
             
- 
             GradesService.scoreInsert(scoreList, function(result){                   
                 console.log("jsp : " + result);
                 callback(result);                      
@@ -457,8 +433,7 @@
         savebtn.on("click", function(){
             //성적 입력 저장
         	if(nowbtn == addbtn){
- 				
-              
+ 				      
                 setScore(function (callback) {
                          	
                 });
@@ -472,27 +447,19 @@
                 });
             }
             
-        	
         });
-        
-        
+          
        //성적 수정 버튼 
-     
-
  		updatebtn.on("click", function () {
  			btnShow2();
  			scoreEdit();
-            
-            nowbtn = updatebtn;
-            
+  
+            nowbtn = updatebtn;      
         });
        
        
-       //성적 수정 
-      
+       //성적 수정    
         function upScore(callback) {
-            
-        	
     	   let grade = {
             	s_id : $("#s_id").val(),
             	korScore :	$("#korScore").val(),
@@ -509,32 +476,25 @@
                     callback();
                 }
             });
-        }
-        
-		//삭제 
-		//시험 삭제 버튼
-    // 점수 삭제 버튼
-	deletebtn.on('click', function () {
-	    var checkedCheckbox = $('.sl_checkbox:checked');
-	
-	    if (checkedCheckbox.length > 0) {
-	        var score_id = checkedCheckbox.closest("tr").find("input#score_id").val();
-	        var ds_id = checkedCheckbox.closest("tr").find("input#s_id").val();
-	        var ds_name = checkedCheckbox.closest("tr").find("input#s_name").val();
-	
-	        GradesService.scoreRemove(score_id, function () {
-	            // 점수 삭제 후 업데이트된 점수 목록을 다시 불러와 렌더링
-	        	GradesService.getScoreList({ s_name: ds_name, s_id: ds_id }, function (scores) {
-	                // 업데이트된 점수 목록을 렌더링
-	                renderScoreList(scores);
-	                btnShow3();  // 버튼 상태 조정
-	            });
-	           
-	        }); 
-	    }
-	});
+        }       
 
-		
+     // 점수 삭제 버튼
+        deletebtn.on('click', function () {
+            var checkedCheckbox = $('.sl_checkbox:checked');
+
+            if (checkedCheckbox.length > 0) {
+                var score_id = checkedCheckbox.closest("tr").find("input#score_id").val();
+
+                GradesService.scoreRemove(score_id, function (result) {
+                    // 삭제 요청이 성공한 경우에 실행될 코드
+                    var scoreList = $('#scoreList');
+                    scoreList.empty(); // scoreList를 비워주는 작업
+                    getscore(nowsname, nowsid); // 삭제된 정보를 다시 불러오기
+                    btnShow3(); // 버튼 상태 조정
+
+                });
+            }
+        });	
 	
 	// 시험 취소
 	cancelbtn.on("click", function () {
@@ -561,7 +521,6 @@
         $('#examsearchForm').on('click', "button", function (e) {
             e.preventDefault();
             var e_nameValue = $('#e_name').val();
-            //console.log(e_nameValue);
 
             e_btnShow3();
 
@@ -586,22 +545,19 @@
                     '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" value="' + exam.e_date + '"readonly>  </td>' +
                     '</tr>';
                 exam_List.append(str);
-
-               console.log("aaaa");
             });
         }
 
-
         // 시험 추가 버튼
         inserExamtbtn.on('click', function () {
-            appendExamRow();
+            
+        	appendExamRow();
             
             e_btnShow2();
             
           	nowename=$("#ie_e_name").val()
             nowbtn = inserExamtbtn;
-        });
-        
+        });     
 
         function appendExamRow() {
             let str = '<tr class="addEs">' +
@@ -617,8 +573,7 @@
         }
 		
         //시험 생성.
-        function setExam(callback) {
-        	
+        function setExam(callback) {	
         	let exam = {
                 e_name: $("#add_e_name").val(),
                 e_grade: $("#add_e_grade").val(),
@@ -661,8 +616,7 @@
             if (checkedCheckbox.length > 0) {
                 var e_id = checkedCheckbox.closest("tr").find("input#ie_e_id").val();
                 var e_nameValue = checkedCheckbox.closest("tr").find("input#ie_e_name").val();
-                GradesService.examRemove(e_id, function () {
-                	 
+                GradesService.examRemove(e_id, function () {              	 
                 	GradesService.getexamList({ e_name: e_nameValue }, function (exams) {
                          renderExamList(exams);
                      });
@@ -685,7 +639,6 @@
                 }
             });
         }
-
 			
         //시험 취소
         cancelExambtn.on("click", function(){
@@ -693,9 +646,7 @@
         	$('#addscoredata').remove();
         	
            if(nowbtn==inserExamtbtn){
-        	  
-        	   
-        	   
+        	        	   
         	   var exam_List = $('.exam_List');
         	   exam_List.empty();
         	   
@@ -705,28 +656,33 @@
         	   
         	   e_btnShow3();
            }else {
-        	   e_btnShow3();
-           	
+        	   e_btnShow3();    	
            }
-  	
         });
         
-        //그래프 생성
-        $('.chartbtn').on('click', function(){
-			
-        	 
-        	
-        	console.info("bbbb");
-            if($('.sl_checkbox:checked').length > 0){	
-
-                console.info("aaa");
-            	
+        $('.chartbtn').on('click', function() {
+            var selectedRows = $('.sl_checkbox:checked').closest('tr'); // 선택된 체크박스가 있는 행을 찾습니다.
+            
+            if (selectedRows.length > 0) {
+                var chartData = {
+                    korScore: selectedRows.find('.korScore').val(),
+                    engScore: selectedRows.find('.engScore').val(),
+                    mathScore: selectedRows.find('.mathScore').val(),
+                    avgScore: selectedRows.find('.avgScore').val(),
+                    korAvg: selectedRows.find('.korAvg').val(),
+                    engAvg: selectedRows.find('.engAvg').val(),
+                    mathAvg: selectedRows.find('.mathAvg').val(),
+                    totalAvgScore: selectedRows.find('.total').val()
+                };
+                
+                // 이제 chartData에 선택된 행의 정보가 저장되었습니다.
+                // 이 데이터를 사용하여 원하는 작업을 수행할 수 있습니다.
+                getChart(chartData);
             } else {
                 alert("체크 박스를 선택하세요.");
             }
         });
-
-        
+      
         // 버튼 show, hide
         function btnShow2(){
             savebtn.show();
@@ -783,36 +739,22 @@
         	if($('.sl_checkbox:checked')){
         		$('.sl_checkbox:checked').closest("tr").find("input:not('#score_id, #s_id, #s_name, #e_id, #e_name, #e_date, #avgScore')").prop('readonly', false);
         	}
-        	
-        	//console.log($('.sl_checkbox:checked').closest("tr").find("input:not('#s_id, #s_name, #avgScore')"));
-        	  
-        	
-        }
-        
+        }    
         
       //체크 박스 클릭 이벤트
-        $(document).on('click', '.el_checkbox', function() {
-        	
+        $(document).on('click', '.el_checkbox', function() { 	
         	$(".el_checkbox").prop('checked', false);			
  		   // 현재 클릭한 체크박스만 선택       	
- 		  $(this).prop('checked', true);
- 		   
+ 		  $(this).prop('checked', true);	   
         });
-        
       
-  	$(document).on('click', '.sl_checkbox', function() {
-        	
+  	$(document).on('click', '.sl_checkbox', function() {        	
         	$(".sl_checkbox").prop('checked', false);			
  		   // 현재 클릭한 체크박스만 선택       	
- 		 	 $(this).prop('checked', true);
- 		   
-        });
-     
-  	
-  	
-  	
+ 		 	 $(this).prop('checked', true); 		   
+        });     
+
     });
- 
     </script>
     
     <!-- Plugin js for this page -->
@@ -828,6 +770,5 @@
     <!-- Custom js for this page -->
     <script src="/assets/js/chart.js"></script>
     <!-- End custom js for this page -->
-    
   </body>
 </html>

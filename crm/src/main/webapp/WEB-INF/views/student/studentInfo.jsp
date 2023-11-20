@@ -3,7 +3,11 @@
 <!-- partial:partials/_header.html -->
 <%@include file="/WEB-INF/views/include/_header.jsp" %>
   <style>
+  	.img_box {overflow:hidden;height:253px;margin-bottom:10px;border-radius:2px;}
   	.s_ico.mdi-account-box::before {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);font-size:20rem;color:#2A3038}
+  	.img-fluid {display:block;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);width:100%;height:auto;}
+  	.imgCloseBtn {position:absolute;top:0;right:0;z-index:100;background-color:transparent;border:none;}
+  	.imgCloseBtn .mdi-close-box::before {font-size:25px;}
   </style>
 <!-- partial -->
   <body>
@@ -80,15 +84,14 @@
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">학생 사진</label>
 	                            <div class="col-sm-12">
-	                              <div class="col-sm-12 img_box" style="height:263px">
+	                              <div class="col-sm-12 img_box">
 	                              	<i class="s_ico mdi mdi-account-box"></i>
-	                              	<img  class="img-fluid d-none" alt="학생 사진" src="">
 	                              </div>
 	                              
 	                              <div id="studentImg" class="form-group">
 			                        <input type="file" name='s_filename' id='s_filename' class="file-upload-default">
 			                        <div class="input-group col-xs-12">
-			                          <input type="text" class="form-control file-upload-info" placeholder="Upload Image">
+			                          <input type="text" class="form-control file-upload-info" placeholder="Upload Image" readonly>
 			                          <span class="input-group-append">
 		                         	 	<label for="s_filename" id="imgBtn"  class="file-upload-browse btn btn-primary mb-0 d-flex align-items-center"> Upload </label>
 			                          </span>
@@ -275,122 +278,6 @@
            
           
          	 <div><!-- /content-wrapper -->
-				
-				<!-- ============== 신상 정보 =============== -->
-			    <!-- <div>
-				    <form>
-				   	 <input type="text" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 혹은 학번을 입력하세요.">
-				   	 <button type="submit" id="searchBtn">검색</button>
-				    </form>
-				    <ul class="search_list"></ul>
-			    
-				   	<button class="s_add_Btn" style="display:none">추가</button>
-				   	<button class="s_modify_Btn" style="display:none">수정</button>
-				   	<button class="s_del_Btn" style="display:none">삭제</button>
-				   	
-				   	<button class="s_save_Btn" >저장</button>
-				   	<button class="s_init_Btn" >초기화</button>
-				   	<button class="s_cancel_Btn">취소</button>
-			   	
-				    <form id="studentForm">
-				    	<label for="s_name">이름</label><input type='text' name='s_name' id='s_name'><br>
-				    	<label for="s_id">학번</label><input type='text' name='s_id' id='s_id' readonly><br>자동으로 정해지는거라 입력할 수 없다는 안내하기
-				    	<label for="s_school">학교</label><input type='text' name='s_school' id='s_school'><br>
-				    	<label for="s_grade">학년</label><input type='text' name='s_grade' id='s_grade'><br>
-				    	<label for="s_birth">생일</label><input type='text' name='s_birth' id='s_birth'><br>
-				    	성별<input type='radio' name='s_gender' id='s_gender_m'><label for="s_gender_m">남</label>
-				    	<input type='radio' name='s_gender' id='s_gender_f'><label for="s_gender_f">여</label><br>
-				    	<label for="s_phone">전화번호</label><input type='text' name='s_phone' id='s_phone'><br>
-				    	<label for="s_family">보호자 명</label><input type='text' name='s_family' id='s_family'><br>
-				    	<label for="s_relation">학생과의 관계</label><input type='text' name='s_relation' id='s_relation'><br>
-				    	<label for="s_family_phone1">보호자 연락처</label><input type='text' name='s_family_phone1' id='s_family_phone1'><br>
-				    	<label for="s_family_phone2">추가 연락처</label><input type='text' name='s_family_phone2' id='s_family_phone2'><br>
-				    	<label for="s_sibling">형제 정보</label><input type='text' name='s_sibling' id='s_sibling'><br>
-				    	<label for="reg_date">최초 등록일</label><input type='text' name='reg_date' id='reg_date'><br>
-				    	<label for="first_date">첫 수업일</label><input type='text' name='first_date' id='first_date'><br>
-				    	<label for="s_filename">학생 사진</label><input type='text' name='s_filename' id='s_filename'><br>
-				    </form>
-			    </div> -->
-			    
-			   <!--  <hr>
-			    ============== 통학 정보 ===============
-			    <div id="commuteInfo">
-			    	<label for="zip_code">우편번호</label><input type='text' name='zip_code' id='zip_code'><br>
-			    	<label for="address1">주소</label><input type='text' name='address1' id='address1'><br>
-			    	<label for="address2">상세주소</label><input type='text' name='address2' id='address2'><br>
-			    	<label for="location">승차위치</label><input type='text' name='location' id='location'><br>
-			    </div>
-			    
-			    <hr> -->
-			    <!-- ============== 학급 정보 =============== -->
-			    <!-- <div>
-			    	<div id="classSearch">처음 출력은 지금 월에 해당하는 정보 출력
-				    	월별 학급 이력 조회
-				    	<form action="">
-				    		<select id="classYear" name="classYear" >
-				    			<option value="" disabled selected>년도</option>
-				    			<option value="2023">2023</option>
-				    			<option value="2022">2022</option>
-				    			<option value="2021">2021</option>
-				    			<option value="2020">2020</option>
-				    		</select>
-				    		<select id="classMonth" name="classMonth">
-				    			<option value="" disabled selected>월</option>
-				    			<option value="1">1월</option>
-				    			<option value="2">2월</option>
-				    			<option value="3">3월</option>
-				    			<option value="4">4월</option>
-				    			<option value="5">5월</option>
-				    			<option value="6">6월</option>
-				    			<option value="7">7월</option>
-				    			<option value="8">8월</option>
-				    			<option value="9">9월</option>
-				    			<option value="10">10월</option>
-				    			<option value="11">11월</option>
-				    			<option value="12">12월</option>
-			    			</select>
-							<input type="submit" value="학급 이력 조회">
-				    	</form>
-				    	<div>
-				    		<button type="button" id="withdrawBtn">휴.퇴원</button>
-				    		<button type="button" id="registBtn">재등록</button>
-				    	</div>
-				    	
-				    	학급 상세 정보 출력
-				    	<table id="classInfo">
-						  <thead>
-						    <tr>
-						      <th><input type="checkbox" id="checkAll"></th>
-						      <th>학급명</th>
-						      <th>학생 명단</th>
-						      <th>담당 강사</th>
-						      <th>강의실</th>
-						      <th>시작일</th>
-						      <th>종료일</th>
-						      <th>상태</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						  	<tr class="add_class_info">
-						  		<td></td>
-						  		<td><input type="text" name="c_class"></td>
-						  		<td></td>
-						  		<td><input type="text" name=""></td>
-						  		<td><input type="text" name=""></td>
-						  		<td><input type="text" name=""></td>
-						  		<td><input type="text" name=""></td>
-						  		<td><input type="text" name=""></td>
-						  		<td><input type="text" name=""></td>
-						  	</tr>
-						  </tbody>
-						</table>	
-						
-				    	<div>
-				    		<button type="button" id="classAddBtn">추가</button>
-				    		<button type="button" id="classDelBtn">선택삭제</button>
-				    	</div>
-			    	</div>
-			    </div> -->
 			    
 			</div>
           
@@ -436,6 +323,9 @@
 			$("#searchBtn").on("click", function(e) {
 				e.preventDefault();
 				let searchVal = $("#sSearch").val();
+				if(searchList.hide()) {
+					searchList.show();
+				}
 				searchList.children().remove(); //새로 검색 했을 때 이전 검색 결과 지우기
 				
 				if(searchVal === "") { //검색어 비었을 때
@@ -493,7 +383,7 @@
 			//검색한 학생정보 선택해서 DB 상세정보 form에 출력하기
 			searchList.on("click", "li a", function(e) {
 				e.preventDefault();
-				
+				searchList.hide();
 				//버튼 토글
 				btnShow3();
 				//처음엔 저장, 초기화 버튼만 보이다가 검색한 데이터를 클릭하면 수정, 삭제, 추가 버튼으로 변경
@@ -502,6 +392,12 @@
 				getStudent(studentId); //해당 학생 정보
 				getCommute(studentId);//해당 학생의 통학 정보
 				//getClass(studentId);//해당 학생의 학급 정보
+				//getImage(studentId);//해당 학생의 이미지 첨부 파일
+				getImage(studentId, function(){ 
+					console.log("버튼 가리기");
+					$(".imgCloseBtn").hide();//검색해서 나온 첨부파일은 삭제 버튼 가리기
+				});
+				
 				
 				studentDisable();//수정 버튼을 눌렀을 때만 수정 가능하게 입력 막기
 			});
@@ -523,14 +419,15 @@
 						$("#s_sibling").val(data.s_sibling);
 						$("#reg_date").val(data.reg_date);
 						$("#first_date").val(data.first_date);
+						//getImage(s_id);//첨부파일
 						//$("#s_filename").val(data.s_filename);
 						
 						if(data.s_gender == "남자") {
-							console.log(data.s_gender);
+							//console.log(data.s_gender);
 							$("#s_gender_m").prop('disabled', false).prop('checked', true);
 							$("#s_gender_f").prop('disabled', true);
-						} else {
-							console.log(data.s_gender);
+						} else if(data.s_gender == "여자") {
+							//console.log(data.s_gender);
 							$("#s_gender_f").prop('disabled', false).prop('checked', true);
 							$("#s_gender_m").prop('disabled', true);
 						}
@@ -595,7 +492,7 @@
 					s_sibling : $("#s_sibling").val(),
 					reg_date : $("#reg_date").val(),
 					first_date : $("#first_date").val(),
-					s_filename : $("#s_filename").val()
+					attachImg : sendImgData()
 				}
 				
 				StudentService.insertStudent(student, function(result){
@@ -642,7 +539,7 @@
 					s_sibling : $("#s_sibling").val(),
 					reg_date : $("#reg_date").val(),
 					first_date : $("#first_date").val(),
-					s_filename : $("#s_filename").val()
+					attachImg : sendImgData()
 				}
 				StudentService.updateStudent(student, function(result){
 					if(result == "success") {
@@ -657,27 +554,23 @@
 			delBtn.on("click", function() {
 				
 				//학생 정보 삭제
-				//if(nowSid == "") {
 				if(studentId == "") {
 					alert("삭제할 데이터가 없습니다.");
 					return;
 				}else {
-					delStudent(nowSid, function() {
+					delStudent(studentId, function() {
 						studentInit();
 						btnShow3();
-						//nowSid == "";
 						studentId == "";
 					});
-					//delCommute(nowSid);//통학 정보 삭제
 					delCommute(studentId);//통학 정보 삭제
 				}
 				
 			});
 			
 			//학생 정보 삭제
-			//function delStudent(nowSid, callback){
-				//StudentService.deleteStudent(nowSid, function(result) {
 			function delStudent(studentId, callback){
+					console.log("삭제할 번호 : "+studentId);
 				StudentService.deleteStudent(studentId, function(result) {
 					if(result == "success"){
 						alert("학생 정보 삭제 성공");
@@ -689,19 +582,18 @@
 			//저장 버튼
 			saveBtn.on("click", function() {
 				//초기 -> 저장, 추가 -> 저장 = 새 데이터 추가
-				//if((nowSid == "" && nowBtn == "") || nowBtn == addBtn) {
 				if((studentId == "" && nowBtn == "") || nowBtn == addBtn) {
 					//btnTogle($(this));
 					btnShow2();
 					//학생 정보 저장
 					setStudent(function(callback) {
-						//console.log("ddd : "+callback);
 						setCommute(callback); //통학
 						//저장하고 지워줘야 계속 입력할 수 있다.
 						studentInit();
 						studentEdit();
 						//추가 후 저장하고 나서 또 다른 추가 없이 취소를 누르면 이전 정보가 보이면 안된다.
 						studentId = "";
+						
 					});
 				}else if(nowBtn == modifyBtn) {
 					//수정 -> 저장
@@ -709,7 +601,6 @@
 					btnShow3();
 					
 					//학생 정보 수정
-					//upCommute(nowSid); //통학
 					upCommute(studentId); //통학
 					upStudent(function() {
 						//수정한 데이터 불러와서 보여주기
@@ -720,15 +611,11 @@
 					});
 				}
 				
-				sendImgData();//첨부 이미지 데이터 전달
+				
 			});
 			
 			//취소 버튼
 			cancelBtn.on("click", function() {			
-				//기존에 보던 학생정보 페이지 보여주기
-				console.log("이전에 보던 번호 : "+nowSid);
-				console.log("이전에 보던 번호 : "+studentId);
-				
 				//첫 화면일땐 그냥 지우기만 해야 한다.
 				//if(nowSid == "") {
 				if(studentId == "") {
@@ -737,13 +624,13 @@
 					studentEdit();
 				}else {
 					//취소하면 보던걸 다시 보여줘야 함
-					//getStudent(nowSid);
-					//upCommute(nowSid);
 					getStudent(studentId);
 					getCommute(studentId);
 					btnShow3();
 					studentDisable();
-					//btnTogle($(this));
+					getImage(studentId, function(){ 
+						$(".imgCloseBtn").hide();
+					});
 				}
 				
 			});
@@ -775,24 +662,24 @@
 				studentForm.find("input").val(''); //학생 정보 비우기
 				studentForm.find("input[type='radio']").prop('checked', false);
 				
-				//console.log("지우기 실행");
 				$("#commuteInfo").find("input").val(''); //통학 정보 비우기
-				//$("#classInfo tbody").children().remove();//학급 정보 비우기
+				showNoImage();//첨부파일 초기화
 			}
 			
 			//입력 가능 변경 - 학생 정보 입력창 데이터 삭제 후 입력 가능하게 변경
 			function studentEdit() {
-				studentImg.show();				
+				studentImg.show();	
+				//$(".imgCloseBtn").show();
 				
-				studentForm.find("input:not('#s_id')").prop('readonly', false);
+				studentForm.find("input:not('#s_id, .file-upload-info')").prop('readonly', false);
 				studentForm.find("input[type='radio']").prop('disabled', false);
 				
 				$("#commuteInfo").find("input").prop('readonly', false);
+				
 			}
 			
 			//입력 불가 변경 - 저장, 취소 완료 후 원래 데이터가 보여질 때 입력 불가능하게 변경
 			function studentDisable() {
-				//console.log("수정금지 실행");
 				//이미지 첨부 가려서 첨부 못하게 하기
 				studentImg.hide();
 				
@@ -800,33 +687,26 @@
 				studentForm.find("input[type='radio']").prop('disabled', true);
 				
 				$("#commuteInfo").find("input").prop('readonly', true);
+				
 			}
 			
 			//============== 학생 사진 업로드 ===============
-			let formObj = $("form[role='form']");
-			function sendImgData(e) { //저장 버튼을 눌렀을 때 실행할 함수
+			function sendImgData() { //저장 버튼을 눌렀을 때 실행할 함수
 				
+				let upImgData = $(".upload_img");
+			
+				if(upImgData.length > 0){//= 첨부할 파일이 있으면
+					let formData = {				
+					    fileName:upImgData.data("filename"),
+					    uuid:upImgData.data("uuid"),
+					    uploadPath:upImgData.data("path"),
+					    fileType:upImgData.data("type")
+					}
+					console.log("첨부파일 등록");
+				    return formData;
+				}
+					console.log("첨부파일 없음");
 			}
-			saveBtn.on("click", function(e) { //저장 버튼을 눌렀을 때
-				e.preventDefault();
-				//console.log($(this));
-				
-				let str = "";
-				
-				$(".uploadResult ul li").each(function(i, obj){
-					let jobj = $(obj);
-					console.dir(jobj);
-					console.log(jobj);
-					
-					str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
-					str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
-					str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
-					str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
-					
-				});
-				formObj.append(str);
-				
-			});
 			
 			let regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png)$");
 			let maxSize = 5242880; //5MB
@@ -847,29 +727,27 @@
 			
 			//파일 업로드를 위한 별도의 버튼 없이 <input type='file'>의 내용 변경을 감지하는 이벤트를 처리
 			$("input[type='file']").change(function(e){
+				console.log("input type file change!!!");
 				let formData = new FormData();//폼태그 만들어 줌
-				let inputFile = $('#s_filename');
-				let files = inputFile.files;//multiple 속성이 없으므로 하나만 선택됨. 그래서 하나뿐임
-				
+				let inputFile = $(this);
+				let files = inputFile[0].files;//multiple 속성이 없으므로 하나만 선택됨. 그래서 하나뿐임
 				//파일 업로드 전 제약 조건 확인
-				if(!checkExtenstion(files.name, files.size)) {
+				if(!checkExtenstion(files[0].name, files[0].size)) {
 					return false;
 				}else {
-					formData.append("uploadFile", files);
+					$(".file-upload-info").val(files[0].name);
+					formData.append("uploadFile", files[0]);
 				}
-				console.log('formData : '+formData);
 				
 				//데이터 전송을 위한 Ajax 설정
 				$.ajax({
-					url:'/studentRest/uploadAjaxAction',
+					url:'/uploadAjaxAction',
 					processData:false,
 					contentType:false,
 					data:formData,
 					type:'POST',
 					dataType:'json',
 					success:function(result){
-						console.log(result);
-						
 						//결과값 출력 함수
 						showUploadedResult(result);
 					}
@@ -879,25 +757,29 @@
 			//업로드 결과를 보여주기 위한 showUploadedResult();
 			function showUploadedResult(result){
 				//출력할 내용이 없으면 더이상 진행하지 않음
-				if(!result || result.length == 0){ //uploadResultArr가 없거나 0인 경우 = 없다
+				if(result == null){
 					return;
 				}
+				$(".s_ico").hide();
 				let uploadBox = $(".img_box");
+				console.log("data-type : "+$(".upload_img").data("image"));
+				$(".upload_img").remove();//하나만 첨부 가능하니까 새로 첨부하면 삭제
+				//showNoImage();
+				
 				let str = "";
 				
-				if(result.image) {//이미지 파일
-					let fileCallPath = encodeURIComponent(result.uploadPath+"/s_"+result.uuid+"_"+result.fileName);														
-					
-					str += "<div data-path='"+result.uploadPath+"' data-uuid='"+result.uuid+"' ";
-					str += "data-filename='"+result.fileName+"' data-type='"+result.image+"'>";
-					str += "<span> "+obj.fileName+"</span>";
-					str += "<button type='button' data-file='"+fileCallPath+"' data-type='image' ";
-					str += "class='btn btn-warning btn-circle'>";
-					str += "<i class='mdi mdi-close-box'></i></button><br>";
-					str += "<img class='img-fluid' src='/display?fileName="+fileCallPath+"'>";
-					str += "</div>";
+				let fileCallPath = encodeURIComponent(result.uploadPath+"/s_"+result.uuid+"_"+result.fileName);														
+				console.log("첨부한 파일의 image : ");
+				console.log(result.image);
+				str += "<div class='upload_img' data-path='"+result.uploadPath+"' data-uuid='"+result.uuid+"' ";
+				str += "data-filename='"+result.fileName+"' data-type='"+result.image+"'>";
+				str += "<button type='button' class='imgCloseBtn' data-file='"+fileCallPath+"' data-type='image' ";
+				str += "class='btn btn-warning btn-circle'>";
+				str += "<i class='mdi mdi-close-box'></i></button><br>";
+				str += "<img class='img-fluid' src='/display?fileName="+fileCallPath+"'>";
+				str += "</div>";
 
-				}
+				$(".s_ico").hide();//이미지 없음 아이콘 숨기기
 				uploadBox.append(str);
 			};
 			
@@ -905,26 +787,77 @@
 			$(".img_box").on("click","button",function(e){
 				let targetFile = $(this).data("file");
 				let type = $(this).data("type");
-				
-				console.log("삭제 대상 파일 : "+targetFile);
-				console.log("삭제 대상 파일 타입 : "+type);
-				
-				let targetLi = $(".img_box");
-				
+			console.log("딜리트 파일 실행");
 				$.ajax({
-					url: '/studentRest/deleteFile',
+					url: '/deleteFile',
 					data: {fileName: targetFile, type: type},
 					dataType: 'text',
 					type: 'POST',
 					success: function(result){
 						alert(result);
-						targetLi.remove();
+						showNoImage();
 					}
 				});
 				
 			});
 			
+			//첨부된 파일 보여주기
+			//첨부파일 작업
+			function getImage(s_id, callback) {
+				$.getJSON('/studentRest/getAttachImg', {s_id:s_id}, function(result){
+					/* //출력할 내용이 없으면 더이상 진행하지 않음
+					if(result == null){
+						console.log("가져온 첨부파일 있는지 확인");					
+						console.log(result);					
+						showNoImage();//출력할 내용이 없으면 기본이미지를 보여줘야함 
+						return;
+					} */
+					//console.log("돌려받은 결과");
+					//console.log(result);
+					$(".s_ico").hide();
+					let uploadBox = $(".img_box");
+					//console.log("기존 정보를 보고 있다가 다른 정보 검색해서 봄");
+					$(".upload_img").remove();//다른 정보를 보고 있다가 새 데이터를 가져오면 기존거 삭제
+					let str = "";
+										
+					let fileCallPath = encodeURIComponent(result.uploadPath+"/s_"+result.uuid+"_"+result.fileName);														
+					//console.log("수상한 콘솔");
+					//console.log(result.fileType);
+					str += "<div class='upload_img' data-path='"+result.uploadPath+"' data-uuid='"+result.uuid+"' ";
+					//str += "data-filename='"+result.fileName+"' data-type='"+result.image+"'>"; ImageAttachFileDTO가 아니라 ImageAttachVO를 반환하기 때문에 result.image가 없다.
+					str += "data-filename='"+result.fileName+"' data-type='"+(result.fileType == 'image'? true:result.fileType)+"'>";
+					str += "<button type='button' class='imgCloseBtn' data-file='"+fileCallPath+"' data-type='image' ";
+					str += "class='btn btn-warning btn-circle'>";
+					str += "<i class='mdi mdi-close-box'></i></button><br>";
+					str += "<img class='img-fluid' src='/display?fileName="+fileCallPath+"'>";
+					str += "</div>";
+
+					uploadBox.append(str);
+					callback();
+				}).fail(function(xhr, status, err){
+					if(callback){ 
+						//callback(null);
+						//출력할 내용이 없으면 더이상 진행하지 않음
+						//console.log("가져온 첨부파일 없음!");					
+						showNoImage();//출력할 내용이 없으면 기본이미지를 보여줘야함 
+					}
+				});
+			};
 			
+			
+			//삭제 버튼 처리 - 화면에서 삭제. 실제 파일 삭제는 아님
+			$(".uploadResult").on("click", "button", function(e) {
+				if(confirm("remove this file?")) {
+					showNoImage();
+				}
+			});
+			
+			function showNoImage(){
+				$(".s_ico").show();
+				$(".upload_img").remove();
+				$(".file-upload-info").val("");
+			}
+					
 			
 			
 			
@@ -991,6 +924,7 @@
 			//function delCommute(nowSid){
 				//StudentService.deleteCommute(nowSid, function(result) {
 			function delCommute(studentId){
+				console.log("삭제할 아이디 : "+studentId);				
 				StudentService.deleteCommute(studentId, function(result) {
 					if(result == "success"){
 						alert("통학 정보 삭제 성공");
@@ -1051,8 +985,7 @@
 			//셀렉트 선택시 첫번째 꺼 선택 해제	
 			//document.getElementById("monthSelect").options[0].removeAttribute("selected");	
 			 */
-				
-				
+	
 				
 		});
 		

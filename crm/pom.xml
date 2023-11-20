@@ -79,6 +79,19 @@
 		    <artifactId>mysql-connector-j</artifactId>
 		</dependency>
 		
+		<!-- 파일 업로드 설정 추가 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		
+		<!-- 썸네일 -->
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.20</version>
+		</dependency>
 		
 	</dependencies>
 

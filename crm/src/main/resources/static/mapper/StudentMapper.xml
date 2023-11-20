@@ -8,7 +8,7 @@
 		select * from student where s_id = #{s_id}
 	</select>
 	<!-- 학생 정보 등록 -->
-	<insert id="insertStudent" parameterType="org.studentcrm.crm.command.StudentVO">
+	<insert id="insertStudent" parameterType="org.studentcrm.crm.command.StudentVO" useGeneratedKeys="true" keyProperty="s_id">
 		insert into student(s_name, s_school, s_grade, s_birth, s_gender, s_phone, 
 			s_family, s_relation, s_family_phone1, s_family_phone2, s_sibling,
 			reg_date, first_date, s_filename)

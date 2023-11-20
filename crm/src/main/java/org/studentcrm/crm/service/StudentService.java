@@ -2,6 +2,7 @@ package org.studentcrm.crm.service;
 
 import java.util.List;
 
+import org.studentcrm.crm.command.ImageAttachVO;
 import org.studentcrm.crm.command.RegisterVO;
 import org.studentcrm.crm.command.StudentVO;
 
@@ -18,6 +19,9 @@ public interface StudentService {
 	public List<StudentVO> getStudentName(String s_name);
 	//최근 추가된 s_id 가져오기
 	public int getLastId();
+	
+	//이미지 첨부파일 가져오기
+	public ImageAttachVO getAttachImg(int s_id);
 	
 //	//학생 id로 학급 정보 가져오기(class, student를 register로 조인)
 //	public List<RegisterVO> getClassInfo(int s_id);

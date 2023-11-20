@@ -1,7 +1,5 @@
 package org.studentcrm.crm.command;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,5 +27,5 @@ public class StudentVO {
    private String s_memo;
    
    //첨부 파일 관련 멤버
-   private List<ImageAttachVO> attachList; 
+   private ImageAttachVO attachImg; 
 }

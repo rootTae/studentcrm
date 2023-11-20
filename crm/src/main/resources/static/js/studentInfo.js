@@ -54,7 +54,9 @@
 	
 	//학생 정보 추가
 	function insertStudent(student, callback) {
-		//console.log("js 실행");
+		console.log("폼데이터 확인--------");
+		console.log(student.attachImg);
+		
 		$.ajax({
 			type:'POST',
 			url:'/studentRest/insert',
@@ -67,7 +69,8 @@
 				}
 			},
 			error:function(xhr, status, er) {
-				if(error){
+				console.log("aaaa");
+				if(er){
 					error(er);
 				}
 			}	
@@ -85,7 +88,7 @@
 				}
 			},
 			error : function(xhr, status, er) {
-				if(error){
+				if(er){
 					error(er);
 				}
 			} 
@@ -94,6 +97,7 @@
 	
 	//학생 정보 수정
 	function updateStudent(student, callback){
+		//console.log(student.attachImg);
 		$.ajax({
 			type:'POST',
 			url:'/studentRest/update/'+student.s_id,
@@ -105,7 +109,7 @@
 				}
 			},
 			error:function(xhr, status, er){
-				if(error){
+				if(er){
 					error(er);
 				}
 			}
@@ -164,7 +168,7 @@
 			},
 			error:function(xhr, status, er){
 				console.log("통학 에러");
-				if(error){
+				if(er){
 					error(er);
 				}
 			}
@@ -178,11 +182,14 @@
 			url:'/studentRest/deleteC/'+s_id,
 			success : function(delResult, status, xhr){
 				if(callback){
-					callback(delResult);
+					console.log(delResult);
+					callback("통학삭제성공"+delResult);
 				}
 			},
 			error : function(xhr, status, er) {
-				if(error){
+					console.log("삭제할 통학 정보가 없음");
+				if(er){
+					callback(null);
 					error(er);
 				}
 			} 
@@ -216,9 +223,7 @@
 		});
 	}
 
-	
-	
-	
+
 	
 	return{
 		getSearchList:getSearchList,

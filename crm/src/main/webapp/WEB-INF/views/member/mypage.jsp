@@ -4,6 +4,30 @@
 <%@include file="/WEB-INF/views/include/_header.jsp" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
+	String t_loginid = request.getParameter("t_loginid");
+	String t_pw = request.getParameter("t_pw");
+	
+	//아이디를 기억하기 위한 idCheck 값 받기
+	String idCheck = request.getParameter("idCheck");
+	
+	//선생님 ver
+	if(t_loginid.equals("chris") && t_pw.equals("1234")) {
+		Cookie userId = new Cookie("t_loginid", t_loginid);
+		userId.setMaxAge(30);
+		response.addCookie(userId);
+		
+		//idCheck가 있는 경우 - 쿠키 생성
+		if(idCheck != null) {
+			Cookie check = new Cookie("idCheck", t_loginid);
+			check.setMaxAge(30);
+			response.addCookie(check);		
+		}
+		
+		response.sendRedirect("mypage.jsp");
+	}else {
+		response.sendRedirect("login.jsp");
+	}
+
 %>
 <!-- partial -->
   <body>
@@ -20,13 +44,13 @@
           	<div>
 				<h2>마이페이지입니다.</h2>
 				<h3>'${sessionScope.t_loginid }'님 로그인을 환영합니다.</h3>
+				
+				
+				
 				<a href="updatePage/${sessionScope.t_id }">회원정보 변경</a>
 				<a href="logout">로그아웃</a>
 			</div>
-          
-          
-          
-          
+             
           </div>
           <!-- content-wrapper ends -->
         

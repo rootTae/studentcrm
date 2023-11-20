@@ -1,6 +1,19 @@
+<%@page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%
+Cookie[] idCheck = request.getCookies();
+String t_loginid = null;
+	if(idCheck != null) {
+		for(int i=0; i<idCheck.length; i++) {
+			if(idCheck[i].getName().equals("idCheck")) {
+				t_loginid = idCheck[i].getValue();
+			}
+		}
+	}
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -33,8 +46,7 @@
                   <div class="form-group">
                     <label>ID*</label>
                  	 <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid"
-    					    value="<c:out value='${session.getAttribute("rememberedId")}'  />">
-                  </div>
+   						 value="<%= t_loginid %>"></div>
                   <div class="form-group">
                     <label>PASSWORD*</label>
                     <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
@@ -42,9 +54,8 @@
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input type="checkbox" id="rememberMe" class="form-check-input">Remember me</label>
+                        <input type="checkbox" name="idCheck" class="form-check-input">Remember me</label>
                     </div>
-                    <a href="#" class="forgot-pass">Forgot password?</a>
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn" onclick="location.href='mypage'">Login</button>
@@ -74,38 +85,31 @@
     <script src="/assets/js/todolist.js"></script>
     <!-- endinject -->
     <c:if test="${not empty msg}">
-<<<<<<< HEAD
+
     <script type="text/javascript">
    		 alert('${msg}');
-         document.getElementById('logform').addEventListener('submit', function (e) {
-        	 e.preventDefault();
-            if (document.getElementById('rememberMe').checked) {
-                var rememberedId = document.getElementById('t_loginid').value;
-                // 서버에 rememberedId 값을 전송하는 Ajax 요청을 보낼 수 있음
-                console.log("reID");
-                console.log(rememberedId);
-            }
-        }); 
-
+  
+        // Function to get cookie by name
+        function getCookie(cookieName) {
+        	Cookie[] idCheck = request.getCookies();
+        	String id = null;
+        	if(idCheck != null) {
+        		for(int i=0; i<idCheck.length; i++) {
+        			if(idCheck[i].getName().equals("idCheck")) {
+        				id = idCheck[i].getValue();
+        			}
+        		}
+        	}
+        }
+        
          $(document).ready(function () {
+        	 console.log(<%= t_loginid %>);
              var check = '${param.check}';
              if (check !== '') {
                  alert("You should log in to use this service!");
              }
          }); 
-=======
-    <script>
-        alert('${msg}');
-        
-        $(document).ready(function () {
-            var check = '${param.check}';
-            if (check !== '') {
-                alert("You should log in to use this service!");
-            }
-        }); 
 
-
->>>>>>> branch 'develop' of https://github.com/rootTae/studentcrm.git
     </script>
 </c:if>
   </body>

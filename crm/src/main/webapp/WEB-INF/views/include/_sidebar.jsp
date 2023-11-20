@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
     <!-- <a class="sidebar-brand brand-logo" href="/main"><img src="/assets/images/logo.svg" alt="logo" /></a> -->
@@ -14,11 +15,19 @@
             <img class="img-xs rounded-circle " src="/assets/images/faces/face15.jpg" alt="">
             <span class="count bg-success"></span>
           </div> -->
-          <div class="profile-name ml-0">
-            <h5 class="mb-0 font-weight-normal">${sessionScope.t_loginid }님</h5>
-            <span>담당과목 세션에서 받아 넣기</span>
+          <div class="profile-name ml-0 row" style="text-align: center;">
+          	<div class="col-md-4">
+          		<button type="button" class="btn btn-outline-primary" style="line-height: 10px; font-size: 12px; margin-bottom: 10px;">${sessionScope.t_subject }</button>
+          	</div>
+          	<div class="col-md-4" >
+            	<h5 class="mb-0 font-weight-normal">${sessionScope.t_name }</h5>
+            </div>
+            <div class="col-md-12" style="text-align: left;">
+            	<span class="classList"></span>
+            </div>
+           </div>
           </div>
-        </div>
+          </div>
         <!-- <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
           <a href="#" class="dropdown-item preview-item">
@@ -108,3 +117,27 @@
    
   </ul>
 </nav>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script type="text/javascript" src="/js/classListsByLogin.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    var classListSpan = $(".classList");
+    var t_id = ${sessionScope.t_id};
+    //console.log("classlist");
+    console.log("classlist on the sidebar");
+	console.log(t_id);
+    attendanceService.getClassList({ t_id: t_id },
+        function (list) {
+            var str = "";
+            
+            //console.log(daysInMonth);
+         
+            for (var i = 0, len = list.length || 0; i < len; i++) {
+                str += "<div data-list='" + list[i].class_name + "'>'" + list[i].class_name + "'</div>";
+            }
+            classListSpan.html(str);
+        });
+	
+});
+</script>

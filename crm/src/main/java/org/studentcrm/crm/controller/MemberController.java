@@ -110,6 +110,8 @@ public class MemberController {
 				log.info("로그인 성공");
 				session.setAttribute("t_id", vo.getT_id());
 				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
+				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
+				session.setAttribute("t_subject", vo.getT_subject());
 				log.info("login 이후 mypage로 갈 vo 확인 "+vo);
 				RA.addFlashAttribute("msg", "login success");
 				return "redirect:/member/mypage";
@@ -131,8 +133,9 @@ public class MemberController {
 		//로그아웃 
 		@RequestMapping("/logout")
 		public String logout(HttpSession session) {
-			session.invalidate();
 			
+			session.invalidate();
+			//session.removeAttribute("t_pw");
 			return "redirect:/member/login";
 		}
 }

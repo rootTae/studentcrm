@@ -347,7 +347,7 @@ function showStudentList(class_nameValue) {
 $(document).ready(function () {
 	var a_status = "";
     var classListTR = $(".classList");
-    var t_id = 3;
+    var t_id = ${sessionScope.t_id};
     //console.log("classlist");
    //console.log(t_id);
 

@@ -140,6 +140,8 @@ public class StudentRestController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertCommute(@RequestBody CommuteVO vo){
+		log.info(vo);
+		
 		int result = cService.insertCommute(vo);
 		return result == 1 ?
 				new ResponseEntity<>("success", HttpStatus.OK)

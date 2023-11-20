@@ -270,6 +270,24 @@
 			                     </div>
 			                   </div>
 		                   </form>
+		                   
+		                   <hr class="my-4">
+	                    
+	              		<!-- ============== 학생 메모 =============== -->
+			              <form class="form-sample" id="studentMemo">
+				              <div class="row">
+			                     <div class="col-md-12">
+			                     
+			                       <div class="form-group">
+			                       	<label class="col-sm-12 col-form-label" for="zip_code">학생 기타 정보</label>
+			                         <div class="col-sm-12">
+			                       		<textarea class="form-control" id="s_memo" name='s_memo' rows="4"></textarea>
+			                         </div>
+			                       </div>
+			                      
+			                     </div>
+			                   </div>
+		                   </form>
 	                  </div>
 	                </div>
 	              </div>
@@ -419,6 +437,7 @@
 						$("#s_sibling").val(data.s_sibling);
 						$("#reg_date").val(data.reg_date);
 						$("#first_date").val(data.first_date);
+						$("#s_memo").val(data.s_memo);
 						//getImage(s_id);//첨부파일
 						//$("#s_filename").val(data.s_filename);
 						
@@ -492,6 +511,7 @@
 					s_sibling : $("#s_sibling").val(),
 					reg_date : $("#reg_date").val(),
 					first_date : $("#first_date").val(),
+					s_memo : $("#s_memo").val(),
 					attachImg : sendImgData()
 				}
 				
@@ -499,7 +519,7 @@
 					//if(result == "success") {
 					if(result > 0) {
 						alert("success");
-						console.log("jsp : "+result);
+						//console.log("jsp : "+result);
 						callback(result);
 					}
 				});
@@ -539,6 +559,7 @@
 					s_sibling : $("#s_sibling").val(),
 					reg_date : $("#reg_date").val(),
 					first_date : $("#first_date").val(),
+					s_memo : $("#s_memo").val(),
 					attachImg : sendImgData()
 				}
 				StudentService.updateStudent(student, function(result){
@@ -656,11 +677,12 @@
 			//데이터 비우기
 			function studentInit() {
 				//입력 취소시 입력했던 파일 정보 비우기
-				studentImg.find("#s_filename").val();
+				studentImg.find("#s_filename").val('');
 				
 				//input - readonly 제거, value 값 삭제
 				studentForm.find("input").val(''); //학생 정보 비우기
 				studentForm.find("input[type='radio']").prop('checked', false);
+				$("#s_memo").val(''); 
 				
 				$("#commuteInfo").find("input").val(''); //통학 정보 비우기
 				showNoImage();//첨부파일 초기화
@@ -673,6 +695,7 @@
 				
 				studentForm.find("input:not('#s_id, .file-upload-info')").prop('readonly', false);
 				studentForm.find("input[type='radio']").prop('disabled', false);
+				$("#s_memo").prop('readonly', false); 
 				
 				$("#commuteInfo").find("input").prop('readonly', false);
 				
@@ -685,6 +708,7 @@
 				
 				studentForm.find("input:not('#s_id')").prop('readonly', true);
 				studentForm.find("input[type='radio']").prop('disabled', true);
+				$("#s_memo").prop('readonly', true); 
 				
 				$("#commuteInfo").find("input").prop('readonly', true);
 				
@@ -892,12 +916,18 @@
 					address2 : $("#address2").val(),
 					location : $("#location").val()
 				}
+
+				console.log("다 비어있음");
+				//s_id 외에 모두 비어 있으면 DB에 저장하지 않고 값이 하나라도 있을 때 저장
+				if(!(zip_code == null && address1 == null && address2 == null && location == null)) {
+					console.log("다 비어있음");
+					StudentService.insertCommute(commute, function(result){
+						if(result == "success") {
+							alert("통학정보 추가 성공");
+						}
+					});
+				}
 				
-				StudentService.insertCommute(commute, function(result){
-					if(result == "success") {
-						alert("통학정보 추가 성공");
-					}
-				});
 			}
 			
 			//통학 정보 수정
@@ -913,23 +943,39 @@
 					address2 : $("#address2").val(),
 					location : $("#location").val()
 				}
-				StudentService.updateCommute(student, function(result){
-					if(result == "success") {
-						alert("통학 정보 수정 성공");
-					}
-				});
+				if(!(zip_code == null && address1 == null && address2 == null && location == null)) {
+					StudentService.updateCommute(student, function(result){
+						if(result == "success") {
+							alert("통학 정보 수정 성공");
+						}
+					});
+				}
 			}
 			
 			//통학 정보 삭제
 			//function delCommute(nowSid){
 				//StudentService.deleteCommute(nowSid, function(result) {
 			function delCommute(studentId){
-				console.log("삭제할 아이디 : "+studentId);				
-				StudentService.deleteCommute(studentId, function(result) {
-					if(result == "success"){
-						alert("통학 정보 삭제 성공");
-					}
-				});
+				console.log("삭제할 아이디 : "+studentId);	
+				
+				let commute = {
+					s_id :studentId,
+					zip_code : $("#zip_code").val(),
+					address1 : $("#address1").val(),
+					address2 : $("#address2").val(),
+					location : $("#location").val()
+				}
+
+				if(!(zip_code == null && address1 == null && address2 == null && location == null)) {
+					StudentService.deleteCommute(studentId, function(result) {
+						if(result == "success"){
+							alert("통학 정보 삭제 성공");
+						}
+					});
+				}
+				
+				
+				
 			}
 			
 			

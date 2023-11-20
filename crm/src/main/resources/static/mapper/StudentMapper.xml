@@ -11,16 +11,16 @@
 	<insert id="insertStudent" parameterType="org.studentcrm.crm.command.StudentVO" useGeneratedKeys="true" keyProperty="s_id">
 		insert into student(s_name, s_school, s_grade, s_birth, s_gender, s_phone, 
 			s_family, s_relation, s_family_phone1, s_family_phone2, s_sibling,
-			reg_date, first_date, s_filename)
+			reg_date, first_date, s_memo)
 		values(#{s_name}, #{s_school}, #{s_grade}, #{s_birth}, #{s_gender}, #{s_phone}, 
 			#{s_family}, #{s_relation}, #{s_family_phone1}, #{s_family_phone2}, #{s_sibling},
-			#{reg_date}, #{first_date}, #{s_filename})
+			#{reg_date}, #{first_date}, #{s_memo})
 	</insert>
 	<!-- 학생 정보 수정 -->
 	<update id="updateStudent" parameterType="org.studentcrm.crm.command.StudentVO">
 		update student set s_name=#{s_name}, s_school=#{s_school}, s_grade=#{s_grade}, s_birth=#{s_birth}, s_gender=#{s_gender}, s_phone=#{s_phone}, 
 			s_family=#{s_family}, s_relation=#{s_relation}, s_family_phone1=#{s_family_phone1}, s_family_phone2=#{s_family_phone2}, s_sibling=#{s_sibling},
-			reg_date=#{reg_date}, first_date=#{first_date}, s_filename=#{s_filename}
+			reg_date=#{reg_date}, first_date=#{first_date}, s_memo=#{s_memo}
 		where s_id=#{s_id}
 	</update>
 	<!-- 학생 정보 삭제 -->

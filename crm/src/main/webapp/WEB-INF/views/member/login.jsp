@@ -74,6 +74,7 @@
     <script src="/assets/js/todolist.js"></script>
     <!-- endinject -->
     <c:if test="${not empty msg}">
+<<<<<<< HEAD
     <script type="text/javascript">
    		 alert('${msg}');
          document.getElementById('logform').addEventListener('submit', function (e) {
@@ -92,6 +93,19 @@
                  alert("You should log in to use this service!");
              }
          }); 
+=======
+    <script>
+        alert('${msg}');
+        
+        $(document).ready(function () {
+            var check = '${param.check}';
+            if (check !== '') {
+                alert("You should log in to use this service!");
+            }
+        }); 
+
+
+>>>>>>> branch 'develop' of https://github.com/rootTae/studentcrm.git
     </script>
 </c:if>
   </body>

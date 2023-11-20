@@ -35,8 +35,13 @@
 		                    <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid">
 		                  </div>
 	                  </div>
+<<<<<<< HEAD
 	                  <div class="form-group col-2 d-flex">
 	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="CheckId()"><br>
+=======
+	                  <div class="form-group col-2 d-flex pl-0">
+	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="IdCheck()"><br>
+>>>>>>> branch 'develop' of https://github.com/rootTae/studentcrm.git
 	                  </div>
                   </div>
                   <div class="row">
@@ -117,7 +122,11 @@
 		} else {
 		  	$.ajax({
 		  		type : "post",     //요청 형식
+<<<<<<< HEAD
 		  		url : "/member/checkId",   //요청할 주소
+=======
+		  		url : "/member/idCheck",   //요청할 주소
+>>>>>>> branch 'develop' of https://github.com/rootTae/studentcrm.git
 		  		data : userId,//서버에 전송할 데이터  json형식 {key:value}
 		  		dataType : "json", //서버의 요청후 리턴해 주는 타입 
 		  		error : function(request, error) {

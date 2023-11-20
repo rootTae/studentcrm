@@ -77,12 +77,12 @@ public class RegisterRestController {
 	
 	//수강신청 변경
 	@RequestMapping(method = {RequestMethod.PUT , RequestMethod.PATCH},
-			value ="/{r_id}",
+			value ="/class/{r_id}",
 			consumes = "application/json",
 	        produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> registerModify(
 			@RequestBody RegisterVO vo,
-			@PathVariable("s_id") int r_id){			
+			@PathVariable("r_id") int r_id){			
 		log.info("r_id: "+r_id);
 	    log.info("registerModify: "+vo);
 		return rservice.rModify(vo)==1

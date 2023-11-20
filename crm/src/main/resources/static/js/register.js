@@ -8,8 +8,6 @@
 	
 	//수강 신청
     function Rregister(data, callback, error) {
-
-
         $.ajax({
             type: 'post',
             url: '/registerC/newregister',
@@ -77,8 +75,8 @@
 	   // 수정 
 	   function registerModify(data,callback,error){
 	      let r_id = data.r_id;
-	      
-	      console.info(s_id);
+	      console.info(data);     
+	      console.info(r_id);
 	   $.ajax({
 	      type : 'put',
 	      url : "/registerC/class/"+r_id,

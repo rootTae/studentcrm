@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.studentcrm.crm.mapper.RegisterMapper">
+
+<!-- 수강신청 -->
+<insert id="registerClass" parameterType="org.studentcrm.crm.command.RegisterVO">
+	 insert into  register(s_id, class_name ) 
+	 values(#{s_id}, #{class_name})
+</insert>
+
+
+<!-- 수강신청 삭제 -->
+<delete id="deleteRegister" parameterType="java.lang.Integer">
+	delete from register where r_id = #{r_id}
+</delete>
+
+<!--수강신청 반 변경 -->
+<update id="updateRegister" parameterType="org.studentcrm.crm.command.RegisterVO">
+        update register set class_name = #{class_name}
+        where r_id = #{r_id}
+    </update>
+    
+    
+<!-- 시험점수 리스트  -->
+<select id="getRegisterList" resultType="org.studentcrm.crm.command.RegisterVO">
+		select * from register r
+		join class c on r.class_name =c.class_name
+		join student s on r.s_id = s.s_id
+		join teacher t on c.t_id = t.t_id
+		where r.s_id = #{s_id}
+	</select>
+		
+<!-- 반 이름으로 반검색 -->
+<select id="getClassList" parameterType="java.lang.String" 
+resultType="org.studentcrm.crm.command.ClassVO">
+	select * from class c
+	join teacher t on c.t_id = t.t_id
+</select>
+
+</mapper>

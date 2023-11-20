@@ -13,7 +13,7 @@ public class ClassVO {
 
 	String class_name;
 	String classroom;
-	String teacher_name;
+	String t_name;
 	String c_period;
 	String c_startdate;
 	String c_enddate;

@@ -19,47 +19,29 @@
           
           <!-- 여기에 내용 코드 입력 - 이 페이지를 복사해서 사용하세요 -->
           <div class="page-header">
-              <h3 class="page-title">학생 성적 관리</h3>
+              <h3 class="page-title">수강 신청</h3>
             </div>
             
-	          <div class="row">
-         		<div class="col-5 grid-margin stretch-card">
-            		<div class="card">
-           				<div class="card-body">
-           					<h4 class="card-title">시험 정보 검색</h4>
-			                  <p class="card-description">시험명을 입력해 주세요.</p>
-			                  <form id="examsearchForm" method="post" class="form-inline">
-				                  <input type="text" class="form-control mb-2 mr-sm-2" id="e_name" name="e_name" required placeholder="시험명">
-				                  <button type="button" class="btn btn-primary mb-2" >검색</button>
-                  			  </form>
-                		</div>
-              		</div>
-            	</div>
-
-
-              <div class="col-7 grid-margin">
+	        <div class="row">
+              <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">시험 검색 결과</h4>
+                    <h4 class="card-title">수업 검색</h4>
                     <div class="table-responsive">
-	                    <button type="button" class="inserExamtbtn" >추가</button>
-			        	<button type="button" class="updateExambtn" style="display: none">수정</button>
-			        	<button type="button" class="deleteExambtn" style="display: none">삭제</button>
-			        	<button type="button" class="saveExambtn" style="display: none">저장</button>
-			        	<button type="button" class="cancelExambtn" style="display: none">취소</button>
-                      <table class="table" id="examTable">
+				    <button type="button" class="btn btn-primary mb-2" id="search">검색</button>
+				    <button type="button" class="btn btn-primary mb-2" id="cancel">취소</button>                	
+                      <table class="table" id="ClassTable">
                         <thead>
                           <tr>
-                            <th>
-              
-                            </th>
-                            <th>시험 번호</th>
-                            <th>시험명</th>
-		                    <th>학년</th>
-		                    <th>시험 날짜</th> 
+                            <th>수업 명</th>
+                            <th>강사 이름</th>
+		                    <th>강의실</th>
+		                    <th>수업 시간</th>
+		                    <th>수업 시작일</th>
+		                    <th>수업 종료일</th> 
                           </tr>
                         </thead>
-                        <tbody class="exam_List">
+                        <tbody class="class_List">
                           
                         </tbody>
                       </table>
@@ -72,13 +54,13 @@
             
             
        		<div class="row">
-         		<div class="col-5 grid-margin stretch-card">
+         		<div class="col-3 grid-margin stretch-card">
             		<div class="card">
            				<div class="card-body">
            					<h4 class="card-title">학생 정보 검색</h4>
 			                  <p class="card-description">학생의 이름 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
-				                  <input type="text" class="form-control mb-2 mr-sm-2" name="s_name" id="s_name" required placeholder="학생이름">
+				                  <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_nam" required placeholder="학생이름">
 				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
                   			  </form>
                 		</div>
@@ -86,7 +68,7 @@
             	</div>
 	          
 	          
-              <div class="col-7 grid-margin">
+              <div class="col-9 grid-margin">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 검색 결과</h4>
@@ -114,38 +96,38 @@
               </div>
             </div>
             
-            
-             <div class="row ">
+                        
+             <div class="row">
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">시험 점수 결과</h4>
+                    <h4 class="card-title">수강신청 리스트</h4>
                     <div class="table-responsive">
-	                    <button type="button" class="insertbtn" style="display: none">추가</button>
-				        <button type="button" class="updatebtn" style="display: none">수정</button>
-				        <button type="button" class="deletebtn" style="display: none">삭제</button>
+                    <div>
+	                    <button type="button" class="insertbtn" >추가</button>
+				        <button type="button" class="updatebtn" >수정</button>
+				        <button type="button" class="deletebtn" >삭제</button>
 				        <button type="button" class="savebtn" style="display: none">저장</button>
 				        <button type="button" class="cancelbtn" style="display: none">취소</button>
-				        <button type="button" class="chartbtn" style="display: none">그래프 생성</button>
-                      <table class="table" id="scoreTable">
+				    </div>
+                      <table class="table" id="registerTable">
                         <thead>
                           <tr>
                             <th> 
                                                       
                             </th>
-                            <th hidden>성적 관리 번호</th>
+                            <th hidden>수강신청 관리 번호</th>
                             <th>학생 번호</th>
 		                    <th>학생 이름</th>
-		                    <th>시험 번호</th>
-		                    <th>시험 명</th>
-		                    <th>시험 날짜</th>
-		                    <th>국어</th>
-		                    <th>영어</th>
-		                    <th>수학</th>
-		                    <th>평균</th>
+		                    <th>수업 명</th>
+		                    <th>담당 강사</th>
+		                    <th>강의실</th>
+		                    <th>수업 시간</th>
+		                    <th>수업 시작일</th>
+		                    <th>수업 종료일</th>
                           </tr>
                         </thead>
-                        <tbody class="scoreList" id="scoreList">
+                        <tbody class="RegisterList" id="RegisterList">
                           
                         </tbody>
                       </table>
@@ -155,28 +137,7 @@
               </div>
             </div>
             
-            
-            <div class="row">
-              <div class="col-lg-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body" id="line"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <h4 class="card-title">Line chart</h4>
-                    <canvas id="linechart-multi" style="height: 181px; display: block; width: 363px;" width="363" height="181" class="chartjs-render-monitor"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body" id ="bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <h4 class="card-title">Bar chart</h4>
-                    <canvas id="barChart" style="height: 181px; display: block; width: 363px;" width="363" height="181" class="chartjs-render-monitor"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            
-            
+                 
           <!-- content-wrapper ends -->
         </div>
         <!-- main-panel ends -->
@@ -188,7 +149,6 @@
     <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-     <script src="/assets/vendors/chart.js/Chart.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="/assets/js/off-canvas.js"></script>
@@ -198,15 +158,14 @@
     <script src="/assets/js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="/assets/js/chart.js"></script>
     <!-- End custom js for this page -->
+    
+    
     <!-- 여기에 스크립트 입력 -->
     <script type="text/javascript" src="/js/demo/grades.js"></script>
+    <script type="text/javascript" src="/js/register.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-        var total = "";
-        
-        
         //지금 데이터 저장
         let nowename="";
         let noweid="";
@@ -219,17 +178,41 @@
         let deletebtn = $(".deletebtn");
         let savebtn = $(".savebtn");
         let cancelbtn = $(".cancelbtn");
-        //시험 버튼 설정
-        let inserExamtbtn = $(".inserExamtbtn");
-        let updateExambtn = $(".updateExambtn");
-        let deleteExambtn = $(".deleteExambtn");
-        let saveExambtn = $(".saveExambtn");
-        let cancelExambtn = $(".cancelExambtn");   
-        
-     	// 학생 이름 검색 
+       
+       //수업 검색  
+        $('#search').on('click', function(event){      
+        	event.preventDefault();
+        	
+            RegisterService.getClassList(function(list){
+            	console.log(list);
+            	
+            	var class_List = $('.class_List');
+            	class_List.empty();
+            		
+            	list.forEach(function(class_){
+                 	var str = '<tr>' +  
+                         '<td><input type="text" class="class_name" name="class_name" readonly value="'+ class_.class_name +'"></td>' +
+                         '<td><input type="text" class="t_name" name="t_name" readonly value="'+ class_.t_name +'"></td>' +
+                         '<td><input type="text" class="classroom" name="classroom"  readonly value="'+ class_.classroom +'"></td>' +
+                         '<td><input type="text" class="c_period" name="c_period" readonly value="'+ class_.c_period +'"></td>' +
+                         '<td><input type="text" class="c_startdate" name="c_startdate" readonly value="'+ class_.c_startdate +'"></td>' +
+                         '<td><input type="text" class="c_enddate" name="c_enddate" readonly value="'+ class_.c_enddate + '"></td>' +
+                         '</tr>';        
+                      class_List.append(str);
+                 });
+            });
+        });
+		
+       	// 반 검색 취소 
+        $('#cancel').on('click',function(event){
+        	var class_List = $('.class_List');
+        	class_List.empty();				
+        });
+
+     // 학생 이름 검색 
         $('#searchForm').submit(function(event){
             event.preventDefault();
-            var s_nameValue = $('#s_name').val();
+            var s_nameValue = $('#searchS_nam').val();
 
             getStudent(s_nameValue);
         });
@@ -237,7 +220,7 @@
      	//학생 리스트 
         function getStudent(s_nameValue) {
             GradesService.getStudentList({ s_name: s_nameValue }, function(student) {
-                //console.log(student);
+                console.log(student);
                 var studentList = $('.studentList');
                 studentList.empty();
 
@@ -246,17 +229,18 @@
                     '<td><div class="form-check form-check-muted m-0">'+
                     '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
                     '<i class="input-helper"></i></label></div></td>'+  
-                        '<td><input type="text" class="is_s_id" name="is_s_id" id="is_s_id" readonly value="'+ student.s_id +'"></td>' +
-                        '<td><input type="text" class="is_s_name" name="is_s_name"  id="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
-                        '<td><input type="text" class="is_s_gender" name="is_s_gender" id="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
-                        '<td><input type="text" class="is_s_phone" name="is_s_phone"  id="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
-                        '<td><input type="text" class="is_s_school" name="is_s_school" id ="is_s_school" readonly value="'+ student.s_school +'"></td>' +
-                        '<td><input type="text" class="is_s_grade" name="is_s_grade" id="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
+                        '<td><input type="text" class="is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
+                        '<td><input type="text" class="is_s_name" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
+                        '<td><input type="text" class="is_s_gender" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
+                        '<td><input type="text" class="is_s_phone" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
+                        '<td><input type="text" class="is_s_school" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
+                        '<td><input type="text" class="is_s_grade" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
                         '</tr>';        
                     studentList.append(str);
                 });
             });
-        }
+        } 	
+       	
 
       //학생정보 체크박스 체크  (학생점수 리스트)
         $(document).on('click', '.s_checkbox', function() {
@@ -264,77 +248,113 @@
     		   // 현재 클릭한 체크박스만 선택       	
     		 	 $(this).prop('checked', true);
     		   
-    		 	var scoreList = $('.scoreList');
-                scoreList.empty();
+    		 	var registerList = $('.RegisterList');
+    		 	registerList.empty();
                 
                 let checkedCheckbox = $('.s_checkbox:checked');
     		  
-                if (checkedCheckbox) {
-                	
-                    var s_id = checkedCheckbox.closest("tr").find("input#is_s_id").val();
-                    var s_name = checkedCheckbox.closest("tr").find("input#is_s_name").val();
-					
-                    nowsid=s_id;
-                    nowsname=s_name;
+                if (checkedCheckbox) {                	
+                    var s_id = checkedCheckbox.closest("tr").find("input.is_s_id").val();				
+                    console.log(s_id);
+                    getRegister(s_id);
                     
-                    console.log(nowsid);
-                    
-                    getscore(s_name, s_id);                    
                     btnShow3();                    	                   
-                }
-                
+                }               
         });
-     	   	
-     	
 
-     // 학생 점수 리스트   
-     function getscore(s_name,s_id){	
-    	 var scoreList = $('.scoreList');
-         scoreList.empty();
-        GradesService.getScoreList({s_name: s_name, s_id: s_id}, function(scores) {
-            // 성적 데이터를 받아오는데 성공한 경우에만 아래 코드 실행
-            if (scores && scores.length > 0) {
-               
-                scores.forEach(function (score) {
-                    // 평균 점수 계산
-                    score.avgScore = ((score.korScore + score.engScore + score.mathScore) / 3).toFixed(1);
-                    // 과목별 총 평균 갱신
-                    GradesService.SubjectsTotalAvg(score, function(result){
-                    
-                    var str = '<tr>' +
-                        '<td><div class="form-check form-check-muted m-0">'+
-                        '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
-                        '<i class="input-helper"></i></label></div></td>'+
-                        '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" value="'+score.score_id+'" readonly></td>' +
-                        '<td><input type="text" class="s_id" id="s_id" name="s_id" readonly value="' + score.s_id +'"> </td>' +
-                        '<td><input type="text" class="s_name" id="s_name" name="s_name" readonly value="'+ score.s_name +'"></td>' +
-                        '<td><input type="text" class="e_id" id="e_id" name="e_id" readonly value="'+ score.e_id +'"></td>' +
-                        '<td><input type="text" class="e_name" id="e_name" name="e_name" readonly value="'+ score.e_name +'"></td>' +
-                        '<td><input type="text" class="e_date" id="e_date" name="e_date" readonly value="'+ score.e_date +'"></td>' +
-                        '<td><input type="text" class="korScore" id="korScore" name="korScore" readonly value="'+ score.korScore +'"></td>' +
-                        '<td><input type="text" class="engScore" id="engScore" name="engScore" readonly value="'+ score.engScore +'"></td>' +
-                        '<td><input type="text" class="mathScore" id="mathScore" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
-                        '<td><input type="text" class="avgScore" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
-                        '<td hidden><input type="text" class="korAvg" name="korAvg" id="korAvg" value="'+result.korAvg+'" readonly></td>' +
-                        '<td hidden><input type="text" class="engAvg" name="engAvg" id="engAvg" value="'+result.engAvg+'" readonly></td>' +
-                        '<td hidden><input type="text" class="mathAvg" name="mathAvg" id="mathAvg" value="'+result.mathAvg+'" readonly></td>' +
-                        '<td hidden><input type="text" class="total" name="total" id="total" value="'+result.totalAvgScore +'" readonly></td>' +
-                        '</tr>';                   
-                    scoreList.append(str);
-                   
+      
+      /// 수강신청 리스트 가져오기
+        function getRegister(s_id) {
+            var registerList = $('.RegisterList');
+            registerList.empty();
+            
+            // s_id가 어디서 왔는지 확인해야 합니다.
+            RegisterService.getRegistertList(s_id, function (registers) {
+                // 데이터를 받아오는데 성공한 경우에만 아래 코드 실행
+                console.log(registers);
+                if (registers && registers.length > 0) {
+                    registers.forEach(function (register) {
+                        var str = '<tr>' +
+                            '<td><div class="form-check form-check-muted m-0">' +
+                            '<label class="form-check-label"><input type="checkbox" class="form-check-input R_checkbox">' +
+                            '<i class="input-helper"></i></label></div></td>' +
+                            '<td hidden><input type="text" class="R_r_id" name="R_r_id" value="' + register.r_id + '" readonly></td>' + // 수정된 부분
+                            '<td><input type="text" class="R_s_id" name="R_s_id" readonly value="' + register.s_id + '"> </td>' +
+                            '<td><input type="text" class="R_s_name" name="R_s_name" readonly value="' + register.s_name + '"></td>' +
+                            '<td><input type="text" class="R_class_name" name="R_class_name" readonly value="' + register.class_name + '"></td>' +
+                            '<td><input type="text" class="R_t_name" name="R_t_name" readonly value="' + register.t_name + '"></td>' +
+                            '<td><input type="text" class="R_classroom" name="R_classroom" readonly value="' + register.classroom + '"></td>' +
+                            '<td><input type="text" class="R_c_period" name="R_c_period" readonly value="' + register.c_period + '"></td>' +
+                            '<td><input type="text" class="R_c_startdate" name="R_c_startdate" readonly value="' + register.c_startdate + '"></td>' +
+                            '<td><input type="text" class="R_c_enddate" name="R_c_enddate" readonly value="' + register.c_enddate + '"></td>' +
+                            '</tr>';
+                        registerList.append(str);
                     });
-                });
-                $('.chartbtn').show();
-            } else {
-                // 성적 데이터가 없을 경우 처리 (에러 메시지 출력 등)
-                console.log("No score data available");
-                alert("데이터가 없습니다.");
-                $('.chartbtn').hide();
-            }
-        });  	 
-     }
-     
-     
+                } else {
+                    // 데이터가 없을 경우 처리 (에러 메시지 출력 등)
+                    console.log("No score data available");
+                    alert("데이터가 없습니다.");
+                }
+            });
+        }
+
+        //수강신청 버튼 
+  	  $(".insertbtn").on('click', function() {
+    		if ($('.s_checkbox:checked').length > 0) {
+  	    
+  		   
+  		 
+    		addRegister(register)
+  			btnShow2();        
+  	        nowbtn = addbtn;     
+  		 }  
+       });
+      
+      
+  	  //점수 추가 
+	     function addRegister(register) {
+	     
+	    	  var str = '<tr>' +
+              '<td><div class="form-check form-check-muted m-0">' +
+              '<label class="form-check-label"><input type="checkbox" class="form-check-input R_checkbox">' +
+              '<i class="input-helper"></i></label></div></td>' +
+              '<td hidden><input type="text" class="R_r_id" name="R_r_id" value="' + register.r_id + '" readonly></td>' + // 수정된 부분
+              '<td><input type="text" class="R_s_id" name="R_s_id" readonly value="' + register.s_id + '"> </td>' +
+              '<td><input type="text" class="R_s_name" name="R_s_name" readonly value="' + register.s_name + '"></td>' +
+              '<td><input type="text" class="R_class_name" name="R_class_name" readonly value="' + register.class_name + '"></td>' +
+              '<td><input type="text" class="R_t_name" name="R_t_name" readonly value="' + register.t_name + '"></td>' +
+              '<td><input type="text" class="R_classroom" name="R_classroom" readonly value="' + register.classroom + '"></td>' +
+              '<td><input type="text" class="R_c_period" name="R_c_period" readonly value="' + register.c_period + '"></td>' +
+              '<td><input type="text" class="R_c_startdate" name="R_c_startdate" readonly value="' + register.c_startdate + '"></td>' +
+              '<td><input type="text" class="R_c_enddate" name="R_c_enddate" readonly value="' + register.c_enddate + '"></td>' +
+              '</tr>';
+          	  registerList.append(str);
+	         
+	         $('.RegisterList').append(str);               
+	     }
+
+      
+        // 버튼 show, hide
+        function btnShow2(){
+            savebtn.show();
+            cancelbtn.show();
+            
+            addbtn.hide();
+            updatebtn.hide();
+            deletebtn.hide();
+        }
+        
+        function btnShow3(){
+            savebtn.hide();
+            cancelbtn.hide();
+            
+            addbtn.show();
+            updatebtn.show();
+            deletebtn.show();
+        }
+      
+      
+/*     
      function renderScoreList(scores){
      	 var scoreList = $('.scoreList');
          scoreList.empty();
@@ -372,40 +392,30 @@
   //학생 성적 -----부분시작      
    
      
-  // 성적점수 추가 버튼 
-	  $(".insertbtn").on('click', function() {
-  		if ($('.s_checkbox:checked').length > 0) {
-	    
-		 let score={s_id : nowsid, s_name :nowsname};
-		 
-	    	addScore(score);
-			btnShow2();        
-	        nowbtn = addbtn;     
-		 }  
-     });
 
-  //점수 추가 
-     function addScore(score) {
-     
-         var str = '<tr class="addscoredata" id="addscoredata" name="addscoredata">' +
-             '<td><div class="form-check form-check-muted m-0">' +
-             '<label class="form-check-label"><input type="checkbox"  class="form-check-input sl_checkbox">' +
-             '<i class="input-helper"></i></label></div></td>' +
-             '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" readonly></td>' +
-             '<td class="i_s_id"><input type="text" name="add_s_id" id="add_s_id" readonly value="' + score.s_id + '"> </td>' +
-             '<td class="i_s_name"><input type="text" name="add_s_name" id="add_s_name" readonly value="' + score.s_name + '"></td>' +
-             '<td class="i_e_id"><input type="text" name="add_e_id" id="add_e_id"></td>' +
-             '<td class="i_e_name"><input type="text" name="add_e_name" id="add_e_name" readonly></td>' +
-             '<td class="i_e_date"><input type="text" name="add_e_date" id="add_e_date" readonly></td>' +
-             '<td class="i_korScore"><input type="text" name="add_korScore" id="add_korScore"></td>' +
-             '<td class="i_engScore"><input type="text" name="add_engScore" id="add_engScore"></td>' +
-             '<td class="i_mathScore"><input type="text" name="add_mathScore" id="add_mathScore" ></td>' +
-             '<td class="i_avgScore"></td>' +
-             '</tr>';   
-         
-         $('.scoreList').append(str);               
-     }
-  
+
+	  //점수 추가 
+	     function addScore(score) {
+	     
+	         var str = '<tr class="addscoredata" id="addscoredata" name="addscoredata">' +
+	             '<td><div class="form-check form-check-muted m-0">' +
+	             '<label class="form-check-label"><input type="checkbox"  class="form-check-input sl_checkbox">' +
+	             '<i class="input-helper"></i></label></div></td>' +
+	             '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" readonly></td>' +
+	             '<td class="i_s_id"><input type="text" name="add_s_id" id="add_s_id" readonly value="' + score.s_id + '"> </td>' +
+	             '<td class="i_s_name"><input type="text" name="add_s_name" id="add_s_name" readonly value="' + score.s_name + '"></td>' +
+	             '<td class="i_e_id"><input type="text" name="add_e_id" id="add_e_id"></td>' +
+	             '<td class="i_e_name"><input type="text" name="add_e_name" id="add_e_name" readonly></td>' +
+	             '<td class="i_e_date"><input type="text" name="add_e_date" id="add_e_date" readonly></td>' +
+	             '<td class="i_korScore"><input type="text" name="add_korScore" id="add_korScore"></td>' +
+	             '<td class="i_engScore"><input type="text" name="add_engScore" id="add_engScore"></td>' +
+	             '<td class="i_mathScore"><input type="text" name="add_mathScore" id="add_mathScore" ></td>' +
+	             '<td class="i_avgScore"></td>' +
+	             '</tr>';   
+	         
+	         $('.scoreList').append(str);               
+	     }
+	  
 
 
         //성적 입력
@@ -683,53 +693,7 @@
             }
         });
       
-        // 버튼 show, hide
-        function btnShow2(){
-            savebtn.show();
-            cancelbtn.show();
-            
-            addbtn.hide();
-            updatebtn.hide();
-            deletebtn.hide();
-        }
-        
-        function btnShow3(){
-            savebtn.hide();
-            cancelbtn.hide();
-            
-            addbtn.show();
-            updatebtn.show();
-            deletebtn.show();
-        }
-        
-        function e_btnShow2(){
-        	saveExambtn.show();
-            cancelExambtn.show();
-            
-            inserExamtbtn.hide();
-            updateExambtn.hide();
-            deleteExambtn.hide();
-        }
-        
-        function e_btnShow3(){
-        	saveExambtn.hide();
-        	cancelExambtn.hide();
-            
-            inserExamtbtn.show();
-            updateExambtn.show();
-            deleteExambtn.show();
-        }
-        
-        function e_btnShow1(){
-        	saveExambtn.hide();
-        	cancelExambtn.hide();
-            
-            inserExamtbtn.show();
-            updateExambtn.hide();
-            deleteExambtn.hide();
-        }
-        
-        
+           
         function scoreEdit() {
         	
         	if($('.el_checkbox:checked')){
@@ -753,10 +717,8 @@
  		   // 현재 클릭한 체크박스만 선택       	
  		 	 $(this).prop('checked', true); 		   
         });     
-
-    });
+        */
+    }); 
     </script>
-    
-    
   </body>
 </html>

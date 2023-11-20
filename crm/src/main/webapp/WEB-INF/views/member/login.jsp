@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>Login.jsp</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
@@ -31,24 +31,25 @@
                 <h3 class="card-title text-left mb-3">Login</h3>
                 <form id="logform" action="loginForm" method="post">
                   <div class="form-group">
-                    <label>아이디*</label>
-                    <input type="text" class="form-control p_input"id="t_loginid" name="t_loginid">
+                    <label>ID*</label>
+                 	 <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid"
+    					    value="<c:out value='${session.getAttribute("rememberedId")}'  />">
                   </div>
                   <div class="form-group">
-                    <label>비밀번호*</label>
+                    <label>PASSWORD*</label>
                     <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input">아이디 기억하기</label>
+                        <input type="checkbox" id="rememberMe" class="form-check-input">Remember me</label>
                     </div>
-                    <a href="#" class="forgot-pass">비밀번호 찾기</a>
+                    <a href="#" class="forgot-pass">Forgot password?</a>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block enter-btn" onclick="location.href='mypage'">Login</button>
                   </div>
-                  <p class="sign-up">Don't have an Account?<a href="register"> Sign Up</a></p>
+                  <p class="sign-up">Don't have an Account?<a href="register" onclick="location.href='register'"> Sign Up</a></p>
                 </form>
               </div>
             </div>
@@ -73,9 +74,25 @@
     <script src="/assets/js/todolist.js"></script>
     <!-- endinject -->
     <c:if test="${not empty msg}">
-    <script>
-        alert('${msg}');
+    <script type="text/javascript">
+   		 alert('${msg}');
+         document.getElementById('logform').addEventListener('submit', function (e) {
+        	 e.preventDefault();
+            if (document.getElementById('rememberMe').checked) {
+                var rememberedId = document.getElementById('t_loginid').value;
+                // 서버에 rememberedId 값을 전송하는 Ajax 요청을 보낼 수 있음
+                console.log("reID");
+                console.log(rememberedId);
+            }
+        }); 
+
+         $(document).ready(function () {
+             var check = '${param.check}';
+             if (check !== '') {
+                 alert("You should log in to use this service!");
+             }
+         }); 
     </script>
-	</c:if>
+</c:if>
   </body>
 </html>

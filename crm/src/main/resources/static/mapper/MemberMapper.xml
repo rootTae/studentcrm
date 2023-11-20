@@ -19,7 +19,7 @@
 	
 	<!-- login -->
 	<select id="login" parameterType="org.studentcrm.crm.command.TeacherVO" resultType="org.studentcrm.crm.command.TeacherVO">
-		select * from teacher where t_loginid=#{t_loginid} and t_pw=#{t_pw} 
+		select * from teacher where t_loginid=#{t_loginid} and t_pw=#{t_pw} limit 1
 	</select>
 	
 	<!-- id 확인 -->

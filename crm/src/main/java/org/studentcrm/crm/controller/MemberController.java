@@ -29,9 +29,9 @@ public class MemberController {
 	MemberService memberService;
 	
 		//조인 화면 이동 처리
-		@RequestMapping(value = "/regist", method = RequestMethod.GET)
+		@RequestMapping(value = "/register", method = RequestMethod.GET)
 		public String goJoin() {
-			return "member/regist";
+			return "member/register";
 		}
 		
 		//로그인 화면 이동 처리
@@ -53,7 +53,7 @@ public class MemberController {
 //		}
 		
 		//checkId - id 중복체크
-		@PostMapping("/idCheck")
+		@PostMapping("/checkId")
 		@ResponseBody
 		public int idCheck(@RequestParam("t_loginid") String t_loginid) {
 			int result = memberService.idCheck(t_loginid);
@@ -105,10 +105,12 @@ public class MemberController {
 				@RequestParam("t_pw") String t_pw,
 				RedirectAttributes RA) {
 			TeacherVO vo = memberService.login(t_loginid, t_pw);
+			log.info(vo);
 			if(vo != null) {
 				log.info("로그인 성공");
 				session.setAttribute("t_id", vo.getT_id());
 				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
+				log.info("login 이후 mypage로 갈 vo 확인 "+vo);
 				RA.addFlashAttribute("msg", "login success");
 				return "redirect:/member/mypage";
 			}else {

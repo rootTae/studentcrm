@@ -3,6 +3,8 @@
 <!-- partial:partials/_header.html -->
 <%@include file="/WEB-INF/views/include/_header.jsp" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+%>
 <!-- partial -->
   <body>
     <div class="container-scroller">

@@ -31,41 +31,41 @@
                   <div class="row">
 	                  <div class="form-group col d-flex">
 		                  <div style="width: 100%;">
-		                    <label>아이디</label>
+		                    <label>ID</label>
 		                    <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid">
 		                  </div>
 	                  </div>
 	                  <div class="form-group col-2 d-flex">
-	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="IdCheck()"><br>
+	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="CheckId()"><br>
 	                  </div>
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>비밀번호</label>
+	                    <label>PASSWORD</label>
 	                    <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>비밀번호 확인</label>
+	                    <label>Confirm the password</label>
 	                    <input type="password" class="form-control p_input" id="pwCheck" name="pwCheck">
 	                  </div>
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>이름</label>
+	                    <label>Name</label>
 	                    <input type="text" class="form-control p_input" id="t_name" name="t_name">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>지도 과목</label>
+	                    <label>Subjects</label>
 	                    <input type="text" class="form-control p_input" id="t_subject" name="t_subject">
 	                  </div>
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>담당 학급</label>
+	                    <label>Teaching classes</label>
 	                    <input type="text" class="form-control p_input" id="t_class" name="t_class">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>전화번호</label>
+	                    <label>Phone #</label>
 	                    <input type="text" class="form-control p_input" id="t_phone" name="t_phone">
 	                  </div>
                   </div>
@@ -108,7 +108,7 @@
     <script src="/assets/js/todolist.js"></script>
     <!-- endinject -->
     <script type="text/javascript">
-	function IdCheck() {
+	function CheckId() {
 		var id = $("#t_loginid").val(); //id태그 value에 접근
 		var userId = {"t_loginid" : id}; //전송할 데이터의 key값 : value설정
 			
@@ -117,7 +117,7 @@
 		} else {
 		  	$.ajax({
 		  		type : "post",     //요청 형식
-		  		url : "/pages/idCheck",   //요청할 주소
+		  		url : "/member/checkId",   //요청할 주소
 		  		data : userId,//서버에 전송할 데이터  json형식 {key:value}
 		  		dataType : "json", //서버의 요청후 리턴해 주는 타입 
 		  		error : function(request, error) {

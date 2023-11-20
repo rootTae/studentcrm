@@ -1,14 +1,9 @@
 package org.studentcrm.crm.controller;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.AttendanceVO;
 import org.studentcrm.crm.command.ClassVO;
 import org.studentcrm.crm.command.StudentVO;
-import org.studentcrm.crm.command.TeacherVO;
 import org.studentcrm.crm.service.AttendanceService;
 
 import lombok.extern.log4j.Log4j2;

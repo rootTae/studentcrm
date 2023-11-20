@@ -4,12 +4,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-Cookie[] idCheck = request.getCookies();
-String t_loginid = null;
-	if(idCheck != null) {
-		for(int i=0; i<idCheck.length; i++) {
-			if(idCheck[i].getName().equals("idCheck")) {
-				t_loginid = idCheck[i].getValue();
+	Cookie[] arr =request.getCookies();
+	String t_loginid = null;
+	
+	if(arr != null) {
+		for(int i=0; i<arr.length; i++) {
+			if(arr[i].getName().equals("t_loginid")) {
+			t_loginid = arr[i].getValue();
+			System.out.println("login.jsp");
+			System.out.println(t_loginid);
 			}
 		}
 	}
@@ -46,7 +49,7 @@ String t_loginid = null;
                   <div class="form-group">
                     <label>ID*</label>
                  	 <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid"
-   						 value="<%= t_loginid %>"></div>
+   						 value="<%= t_loginid%>"></div>
                   <div class="form-group">
                     <label>PASSWORD*</label>
                     <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
@@ -54,7 +57,7 @@ String t_loginid = null;
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input type="checkbox" name="idCheck" class="form-check-input">Remember me</label>
+                        <input type="checkbox" name="idCheck" class="form-check-input" value="y">Remember me</label>
                     </div>
                   </div>
                   <div class="text-center">

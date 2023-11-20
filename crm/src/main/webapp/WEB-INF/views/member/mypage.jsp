@@ -4,30 +4,18 @@
 <%@include file="/WEB-INF/views/include/_header.jsp" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-	String t_loginid = request.getParameter("t_loginid");
-	String t_pw = request.getParameter("t_pw");
+	Cookie[] arr =request.getCookies();
+	String t_loginid = null;
 	
-	//아이디를 기억하기 위한 idCheck 값 받기
-	String idCheck = request.getParameter("idCheck");
-	
-	//선생님 ver
-	if(t_loginid.equals("chris") && t_pw.equals("1234")) {
-		Cookie userId = new Cookie("t_loginid", t_loginid);
-		userId.setMaxAge(30);
-		response.addCookie(userId);
-		
-		//idCheck가 있는 경우 - 쿠키 생성
-		if(idCheck != null) {
-			Cookie check = new Cookie("idCheck", t_loginid);
-			check.setMaxAge(30);
-			response.addCookie(check);		
+	if(arr != null) {
+		for(int i=0; i<arr.length; i++) {
+			if(arr[i].getName().equals("t_loginid")) {
+			t_loginid = arr[i].getValue();
+			System.out.println("mypage");
+			System.out.println(t_loginid);
+			}
 		}
-		
-		response.sendRedirect("mypage.jsp");
-	}else {
-		response.sendRedirect("login.jsp");
 	}
-
 %>
 <!-- partial -->
   <body>

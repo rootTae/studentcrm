@@ -1,9 +1,12 @@
 package org.studentcrm.crm.controller;
 
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -103,9 +106,16 @@ public class MemberController {
 		public String loginForm(HttpSession session, 
 				@RequestParam("t_loginid") String t_loginid, 
 				@RequestParam("t_pw") String t_pw,
+				@RequestParam("idCheck") String idCheck,
+				HttpServletResponse response,
 				RedirectAttributes RA) {
 			TeacherVO vo = memberService.login(t_loginid, t_pw);
 			log.info(vo);
+			log.info(idCheck);
+			Cookie userId = new Cookie("t_loginid", t_loginid);
+			userId.setMaxAge(30);
+			response.addCookie(userId);
+			
 			if(vo != null) {
 				log.info("로그인 성공");
 				session.setAttribute("t_id", vo.getT_id());
@@ -114,6 +124,11 @@ public class MemberController {
 				session.setAttribute("t_subject", vo.getT_subject());
 				log.info("login 이후 mypage로 갈 vo 확인 "+vo);
 				RA.addFlashAttribute("msg", "login success");
+				if(idCheck != null) {
+					Cookie check = new Cookie("idCheck", t_loginid);
+					check.setMaxAge(30);
+					response.addCookie(check);		
+				}
 				return "redirect:/member/mypage";
 			}else {
 				log.info("로그인 실패");

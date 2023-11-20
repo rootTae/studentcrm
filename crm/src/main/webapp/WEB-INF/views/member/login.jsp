@@ -75,6 +75,15 @@
     <c:if test="${not empty msg}">
     <script>
         alert('${msg}');
+        
+        $(document).ready(function () {
+            var check = '${param.check}';
+            if (check !== '') {
+                alert("You should log in to use this service!");
+            }
+        }); 
+
+
     </script>
 	</c:if>
   </body>

@@ -29,9 +29,9 @@ public class MemberController {
 	MemberService memberService;
 	
 		//조인 화면 이동 처리
-		@RequestMapping(value = "/regist", method = RequestMethod.GET)
+		@RequestMapping(value = "/register", method = RequestMethod.GET)
 		public String goJoin() {
-			return "member/regist";
+			return "member/register";
 		}
 		
 		//로그인 화면 이동 처리

@@ -35,7 +35,7 @@
 		                    <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid">
 		                  </div>
 	                  </div>
-	                  <div class="form-group col-2 d-flex">
+	                  <div class="form-group col-2 d-flex pl-0">
 	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="IdCheck()"><br>
 	                  </div>
                   </div>
@@ -117,7 +117,7 @@
 		} else {
 		  	$.ajax({
 		  		type : "post",     //요청 형식
-		  		url : "/pages/idCheck",   //요청할 주소
+		  		url : "/member/idCheck",   //요청할 주소
 		  		data : userId,//서버에 전송할 데이터  json형식 {key:value}
 		  		dataType : "json", //서버의 요청후 리턴해 주는 타입 
 		  		error : function(request, error) {

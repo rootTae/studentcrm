@@ -1,3 +1,4 @@
+classListsByLogin.js
 /**
  * after logged in, get all the class-lists by teacher ID value
  */
@@ -39,9 +40,9 @@
       console.log(class_name);
       $.getJSON("/attendance/studentlist/" + class_name,
          function(data){
-			console.log(data);
+         console.log(data);
             if(callback){
-				callback(data);
+            callback(data);
                /*let s_idArray = [];
                let s_nameArray = [];
                console.log(data.s_id);
@@ -57,7 +58,7 @@
                callback(s_nameArra);*/
             }
          }).fail(function(xhr, status, err){
-			console.log("errors")
+         console.log("errors")
             if(error){
                error();
             }
@@ -65,29 +66,34 @@
       }
     
    function insertStat(data, callback, error){
-	
-	console.log("insertStat");
-	$.ajax({
-		type:'POST',
-		url:'/attendance/initial/' + data.s_id+'/'+data.a_date,
+   
+   console.log("insertStat");
+    console.log(data);
+   $.ajax({
+      type:'POST',
+      url:'/attendance/initial/' + data.s_id+'/'+data.a_date,
         contentType: 'application/JSON;charset=UTF-8',
         data: JSON.stringify(data),
+        
         success:function(response){
-			if(callback){
-				callback(response);
-			}
-		},
-		error:function(xhr, status, error){
-			if(error){
-				error();
-			}
-		}
-	});
-	
-	} 
+         if(callback){
+            callback(response);
+         }
+      },
+      error:function(xhr, status, error){
+         if(error){
+            error();
+         }
+         console.log(xhr);
+          console.log(status);
+          console.log(error);
+      }
+   });
+   
+   } 
      
     
-    function updateStat(data, callback, error){
+   function updateStat(data, callback, error){
       /*let requestData = {
          s_id : data.s_id,
          a_date : data.a_date,
@@ -115,19 +121,35 @@
    }
    
    function getMonthlyAttendance(data, callback, error){
-	console.log("getMonthlyAttendance");
-	console.log(data);
-	$.getJSON("/attendance/" + s_id +'/'+ firstDayOfMonth +'/'+ LastDayOfMonth, 
-		function(data){
-			if(callback){
-				callback(data);
-			}
-		}).fail(function(xhr, status, err){
-			if(error){
-				error();
-			}
-		});
-	}
+      console.log("getMonthlyAttendance");
+      console.log(data);
+      $.getJSON("/attendance/" + s_id +'/'+ firstDayOfMonth +'/'+ LastDayOfMonth, 
+         function(data){
+            if(callback){
+               callback(data);
+            }
+         }).fail(function(xhr, status, err){
+            if(error){
+               error();
+            }
+         });
+      }
+   
+   function readForUpdate(data, callback, error){
+      console.log("js:readForUpdate");
+      console.log(data);
+      $.getJSON("attendance/read/" + s_id + a_date,
+         function(data){
+            if(callback){
+               callback(data);
+            }
+      }).fail(function(xhr,status,err){
+         if(error){
+            error();
+            console.log(err);
+         }
+      })
+   }
 
    return{
       readInfo: readInfo,
@@ -135,6 +157,7 @@
       getStudentList: getStudentList,
       insertStat: insertStat,
       updateStat: updateStat,
-      getMonthlyAttendance: getMonthlyAttendance
+      getMonthlyAttendance: getMonthlyAttendance,
+      readForUpdate: readForUpdate
    };   
 })();

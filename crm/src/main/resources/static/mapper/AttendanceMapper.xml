@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.studentcrm.crm.mapper.AttendanceMapper">
-	<!-- 학생id로 학생의 학교이름, 전번 받아오기 -->
-	<select id="read" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
-		select s_id, s_school, s_phone from student where s_id = #{s_id}
-	</select>
-	
-	<!-- class 테이블의 c_class와 student 테이블의 s_id, s_school, s_phone을 JOIN하여 가져오는 쿼리 -->
-	<select id="s_listByClass" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.String">
-	    select s.s_id, s.s_name, s.s_school, s.s_phone
-	    from student s
-	    inner join register r on s.s_id = r.s_id
-	    where r.class_name = #{class_name}
-	</select>
-	
-	<!-- 로그인 때 받은 t_id로 학생들 이름을 띄울 수 있는 반 리스트들을 나열 -->
-	<select id="classListByTeacher" resultType="org.studentcrm.crm.command.ClassVO" parameterType="java.lang.Integer">
-		select t_id, class_name from class where t_id = #{t_id}
-	</select>
-	
-	<!-- 메모 삽입 -->
-	<insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
-   		insert into attendance(s_id,a_date,a_comment)
-   		values(#{s_id},#{a_date},#{a_comment})
-	</insert>
-	<!-- 메모 읽기 -->
-	<select id="readMemo" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
-  		select s_id, a_date, a_comment from attendance
-   		where s_id = #{s_id} and a_date = #{a_date}
-	</select>
-	
-	<!-- 업데이트 vo읽어오기 -->
-	<select id="readForUpdate" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
-  		select * from attendance
-   		where s_id = #{s_id} and a_date = #{a_date}
-	</select>
-	
-	<!-- 출결 최초 입력 -->
-	<insert id="insertStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
-		insert into attendance(s_id, a_date, a_status)
-		values(#{s_id}, #{a_date}, #{a_status})
-	</insert>
-	
-	<!-- 출결 상황 업데이트 -->
+   <!-- 학생id로 학생의 학교이름, 전번 받아오기 -->
+   <select id="read" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.Integer">
+      select s_id, s_school, s_phone from student where s_id = #{s_id}
+   </select>
+   
+   <!-- class 테이블의 c_class와 student 테이블의 s_id, s_school, s_phone을 JOIN하여 가져오는 쿼리 -->
+   <select id="s_listByClass" resultType="org.studentcrm.crm.command.StudentVO" parameterType="java.lang.String">
+       select s.s_id, s.s_name, s.s_school, s.s_phone
+       from student s
+       inner join register r on s.s_id = r.s_id
+       where r.class_name = #{class_name}
+   </select>
+   
+   <!-- 로그인 때 받은 t_id로 학생들 이름을 띄울 수 있는 반 리스트들을 나열 -->
+   <select id="classListByTeacher" resultType="org.studentcrm.crm.command.ClassVO" parameterType="java.lang.Integer">
+      select t_id, class_name from class where t_id = #{t_id}
+   </select>
+   
+   <!-- 메모 삽입 -->
+   <insert id="insertMemo" parameterType="org.studentcrm.crm.command.AttendanceVO">
+         insert into attendance(s_id,a_date,a_comment)
+         values(#{s_id},#{a_date},#{a_comment})
+   </insert>
+   
+   <!-- 메모 읽기 -->
+   <select id="readMemo" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
+        select s_id, a_date, a_comment from attendance
+         where s_id = #{s_id} and a_date = #{a_date}
+   </select>
+   
+   <!-- 업데이트 vo읽어오기 -->
+   <select id="readForUpdate" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
+        select * from attendance
+         where s_id = #{s_id} and a_date = #{a_date}
+   </select>
+   
+   <!-- 출결 최초 입력 -->
+   <insert id="insertStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
+      insert into attendance(s_id, a_date, a_status)
+      values(#{s_id}, #{a_date}, #{a_status})
+   </insert>
+   
+   <!-- 출결 상황 업데이트 -->
     <update id="updateStatus" parameterType="org.studentcrm.crm.command.AttendanceVO">
         update attendance set a_status = #{a_status}
         where s_id = #{s_id} and a_date = #{a_date}
@@ -54,24 +55,23 @@
     
     <!-- to visualize student's monthly attendance -->
     <select id="getMonthlyAttendance" parameterType="org.studentcrm.crm.command.AttendanceVO" resultType="org.studentcrm.crm.command.AttendanceVO">
-	    select s_id,
-	        case
-	            when a_status = 'Attend' then 'Attend'
-	            when a_status = 'Late' then 'Late'
-	            when a_status = 'Absent' then 'Absent'
-	            when a_status = 'Leave early' then 'Leave early'
-	        end as a_status,
-	        count(a_status) as count
-	    from attendance
-	    where s_id = #{s_id} and a_date between #{firstDayOfMonth} and #{lastDayOfMonth}
-	    group by a_status
-	</select>
-    
+       select s_id,
+           case
+               when a_status = 'Attend' then 'Attend'
+               when a_status = 'Late' then 'Late'
+               when a_status = 'Absent' then 'Absent'
+               when a_status = 'Leave early' then 'Leave early'
+           end as a_status,
+           count(a_status) as count
+       from attendance
+       where s_id = #{s_id} and a_date between #{firstDayOfMonth} and #{lastDayOfMonth}
+       group by a_status
+   </select>
     
     <!-- 검색을 위한 날짜 시간 받아오기 -->
-	<select id="getTime" resultType="java.util.Date">
-	    select a_date from attendance
-	    where s_id = #{s_id}	
-	</select>	   
+   <select id="getTime" resultType="java.util.Date">
+       select a_date from attendance
+       where s_id = #{s_id}   
+   </select>      
     
 </mapper>

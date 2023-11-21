@@ -73,4 +73,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return result;
 	}
 
+	@Override
+	public AttendanceVO readForUpdate(AttendanceVO vo) {
+		AttendanceVO result = mapper.readForUpdate(vo); 
+		return result;
+	}
+
 }

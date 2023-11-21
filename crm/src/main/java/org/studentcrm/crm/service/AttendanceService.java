@@ -18,5 +18,6 @@ public interface AttendanceService {
 	public AttendanceVO insertStat(AttendanceVO vo); 
 	public AttendanceVO updateStat(AttendanceVO vo); //출석, 지각, 결석, 조퇴, 출석으로 돌아가는 update
 	public List<AttendanceVO> getMonthlyAttendance(AttendanceVO vo);
+	public AttendanceVO readForUpdate(AttendanceVO vo);
 	
 }

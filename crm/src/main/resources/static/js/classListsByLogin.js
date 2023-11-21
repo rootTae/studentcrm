@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-/**
- * after logged in, get all the class-lists by teacher ID value
- */
->>>>>>> branch 'develop' of https://github.com/rootTae/studentcrm.git
  var attendanceService = (function(){
    
    function readInfo(param, callback, error){

@@ -1,9 +1,14 @@
 package org.studentcrm.crm.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.studentcrm.crm.command.AttendanceVO;
 import org.studentcrm.crm.command.ClassVO;
 import org.studentcrm.crm.command.StudentVO;
+import org.studentcrm.crm.command.TeacherVO;
 import org.studentcrm.crm.service.AttendanceService;
 
 import lombok.extern.log4j.Log4j2;
@@ -39,13 +46,28 @@ public class AttendanceRestController {
       return new ResponseEntity<StudentVO>(result,HttpStatus.OK);
    }
    
+   // getStat
+   @GetMapping(value="/read/{s_id}/{a_date}", produces= {MediaType.APPLICATION_JSON_VALUE})
+   public ResponseEntity<AttendanceVO> readForUpdate(
+         @PathVariable("s_id") int s_id,
+         @PathVariable("a_date") String a_date,
+         @RequestBody AttendanceVO vo
+         ){
+      log.info("s_id for readForUpdate at controller: " + s_id);
+      AttendanceVO result = service.readForUpdate(vo);
+      log.info("vo for readForUpdate at controller: " + vo);
+      return new ResponseEntity<AttendanceVO>(result, HttpStatus.OK);
+   }
+   
    // s_list
    @GetMapping(value="/studentlist/{class_name}", produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<List<StudentVO>> s_list(@PathVariable("class_name") String class_name){
-      log.info("s_class: " + class_name);
+      log.info("s_class for s_list at controller: " + class_name);
       List<StudentVO> studentsList = service.s_list(class_name);
       return new ResponseEntity<List<StudentVO>>(studentsList, HttpStatus.OK);
    }
+   
+   
    
    // classlistByt_id
    @GetMapping(value="/classlist/{t_id}", produces= {MediaType.APPLICATION_JSON_VALUE})
@@ -83,19 +105,19 @@ public class AttendanceRestController {
    
    // insertStat
    @PostMapping(value = "/initial/{s_id}/{a_date}",
-		   consumes = "application/json;charset=utf-8",
-		   produces = {MediaType.TEXT_PLAIN_VALUE})
+         consumes = "application/json;charset=utf-8",
+         produces = {MediaType.TEXT_PLAIN_VALUE})
    public ResponseEntity<AttendanceVO> insert(
-		   @RequestBody AttendanceVO vo,
-		   @PathVariable("s_id") int s_id,
-	       @PathVariable("a_date") String a_date
-		   ){
-	   	log.info("vo for insertStat:" + vo);
-	    return (vo.getA_status() == null || vo.getA_status().isEmpty())
-			   ? new ResponseEntity<AttendanceVO>(service.insertStat(vo), HttpStatus.OK) 
-			   : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+         @RequestBody AttendanceVO vo,
+         @PathVariable("s_id") int s_id,
+          @PathVariable("a_date") String a_date
+         ){
+         log.info("vo for insertStat:" + vo);
+       return (vo.getA_status() == null || vo.getA_status().isEmpty())
+            ? new ResponseEntity<>(service.insertStat(vo), HttpStatus.OK) 
+            : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
    }
-
+   
    // updateStat
    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
          value="/{s_id}/{a_date}", consumes="application/json;charset=UTF-8", produces= {MediaType.APPLICATION_JSON_VALUE})
@@ -104,37 +126,32 @@ public class AttendanceRestController {
          @PathVariable("s_id") int s_id,
          @PathVariable("a_date") String a_date
          ){
-	  log.info(vo);
-	  
-		/*
-		 * vo.setS_id(s_id); vo.setA_date(a_date);
-		 */
+   
+      log.info("a_status for controller updateStatvo" + vo.getA_status());
       
-      log.info(vo.getA_status());
-      log.info("s_id"+s_id);
-      log.info("AttendanceVO " + vo);
+      log.info("AttendanceVO at controller" + vo);
       return service.updateStat(vo) != null
             ? new ResponseEntity<>(service.updateStat(vo), HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-   }
+   } 
    
    @RequestMapping(method = RequestMethod.GET,
-	        value="/{s_id}/{firstDayOfMonth}/{lastDayOfMonth}", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<AttendanceVO>> getMonthlyAttendance(
-	        @PathVariable("s_id") int s_id,
-	        @PathVariable("firstDayOfMonth") String firstDayOfMonth,
-	        @PathVariable("lastDayOfMonth") String lastDayOfMonth,
-	        @RequestBody AttendanceVO vo
-	        ){
-				/*
-				 * LocalDate firstDayOfMonth = month.withDayOfMonth(1); LocalDate lastDayOfMonth
-				 * = month.withDayOfMonth(month.lengthOfMonth());
-				 */
-	    
-	    List<AttendanceVO> result = service.getMonthlyAttendance(vo);
+           value="/{s_id}/{firstDayOfMonth}/{lastDayOfMonth}", produces= {MediaType.APPLICATION_JSON_VALUE})
+   public ResponseEntity<List<AttendanceVO>> getMonthlyAttendance(
+           @PathVariable("s_id") int s_id,
+           @PathVariable("firstDayOfMonth") String firstDayOfMonth,
+           @PathVariable("lastDayOfMonth") String lastDayOfMonth,
+           @RequestBody AttendanceVO vo
+           ){
+            /*
+             * LocalDate firstDayOfMonth = month.withDayOfMonth(1); LocalDate lastDayOfMonth
+             * = month.withDayOfMonth(month.lengthOfMonth());
+             */
+       
+       List<AttendanceVO> result = service.getMonthlyAttendance(vo);
 
-	    return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+       return new ResponseEntity<>(result, HttpStatus.OK);
+   }
    
    
    

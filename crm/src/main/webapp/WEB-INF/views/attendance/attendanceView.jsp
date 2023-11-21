@@ -1,3 +1,4 @@
+attendanceView.jsp
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -34,7 +35,7 @@
         }
         
         td {
-        	background-color: #fffcf2;
+           background-color: #fffcf2;
         }
 
         th {
@@ -67,11 +68,11 @@
         
         /* .memoBtn {
           display: none; 
-     	 }
+         }
 
-     	 .memoBtn.show {
+         .memoBtn.show {
           display: block; 
-     	 } */
+         } */
         
          .memo > div {display:none; width:100px; padding: 10px; padding-bottom: 0px; box-sizing: border-box;} /* 안됨 */
          .memo div p {line-height: 10px; font-weight:normal;}
@@ -113,7 +114,7 @@
                        <table class="form-inline table">
                          <tr class="classList">
 
-                   		 </tr>
+                          </tr>
                          <!-- <button type="submit" class="btn btn-primary mb-2" id="searchBtn">검색</button> -->
                        </table>
                      </div>
@@ -122,30 +123,62 @@
               <div class="col-lg-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <h4 class="card-title">Doughnut chart</h4>
+                    <h4 class="card-title">Student Attendance chart</h4>
                     <canvas id="doughnutChart" style="height: 222px; display: block; width: 445px;" width="445" height="222" class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
               </div>
-               <div class="col-md-6 grid-margin stretch-card">
+               <div class="col-md-12 grid-margin stretch-card">
                    <div class="card">
                      <div class="card-body">
                        <h4 class="card-title">Attendance Sheet</h4>
+                       
+                       <button id="yearDropdownBtn">Select Year</button>
+                  <!-- 드롭다운 메뉴 -->
+                  <select id="yearDropdown" style="display: none;">
+                      <!-- 1부터 12까지의 옵션 추가 -->
+                      <option value="2021">2021</option>
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                  </select>
+                       
+                       <button id="monthDropdownBtn">Select Month</button>
+                  <!-- 드롭다운 메뉴 -->
+                  <select id="monthDropdown" style="display: none;">
+                      <!-- 1부터 12까지의 옵션 추가 -->
+                      <option value="1">January</option>
+                      <option value="2">February</option>
+                      <option value="3">March</option>
+                      <option value="4">April</option>
+                      <option value="5">May</option>
+                      <option value="6">June</option>
+                      <option value="7">July</option>
+                      <option value="8">August</option>
+                      <option value="9">September</option>
+                      <option value="10">October</option>
+                      <option value="11">November</option>
+                      <option value="12">December</option>
+                  </select>
+                  <button type="button" class="btn btn-outline-primary btn-icon-text submitBtn">
+                            <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit </button>   
                        <p class="card-description">attend/late/absent/leave early</p>  
-		                  <form>
-		                      <table class="table">
-		                          <tr>
-		                             <th>ID</th>
-		                              <th>Name</th>
-		                              <c:forEach var="day" begin="1" end="<%=daysInMonth %>">
-		                                  <th>${day}</th>
-		                              </c:forEach>
-		                          </tr>
-		                          
-		                          <tbody class="studentsList">
-		                          </tbody>
-		                      </table>
-		                  </form>
+                        <form>
+                            <table class="table">
+                                <tr>
+                                   <th>ID</th>
+                                    <th>Name</th>
+                                    <c:forEach var="day" begin="1" end="<%=daysInMonth %>">
+                                        <th>${day}</th>
+                                    </c:forEach>
+                                </tr>
+                                
+                                <tbody class="studentsList">
+                                </tbody>
+                            </table>
+                        </form>
                      </div>
                    </div>
                  </div>
@@ -154,23 +187,53 @@
           </div>
        </div>
      </div>
-   <!-- plugins:js -->
-    <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="/assets/js/off-canvas.js"></script>
-    <script src="/assets/js/hoverable-collapse.js"></script>
-    <script src="/assets/js/misc.js"></script>
-    <script src="/assets/js/settings.js"></script>
-    <script src="/assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <!-- End custom js for this page -->   
-<script src="https://code.jquery.com/jquery.js"></script>
+ <!-- container-scroller -->
+ <!-- plugins:js -->
+ <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+ <!-- endinject -->
+ <!-- Plugin js for this page -->
+ <!-- End plugin js for this page -->
+ <!-- inject:js -->
+ <script src="/assets/js/chart.js"></script>
+ <script src="/assets/js/off-canvas.js"></script>
+ <script src="/assets/js/hoverable-collapse.js"></script>
+ <script src="/assets/js/misc.js"></script>
+ <script src="/assets/js/settings.js"></script>
+ <script src="/assets/js/todolist.js"></script>
+ <!-- endinject -->
+ <!-- Custom js for this page -->
+ <!-- End custom js for this page -->
+ 
+ <!-- 여기에 스크립트 입력 -->
+<!-- <script src="https://code.jquery.com/jquery.js"></script> -->
 <script type="text/javascript" src="/js/classListsByLogin.js"></script>
 <script type="text/javascript">
+
+document.getElementById('monthDropdownBtn').addEventListener('click', function() {
+
+    var dropdown = document.getElementById('monthDropdown');
+    dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
+});
+
+// 옵션을 선택했을 때의 이벤트 처리
+document.getElementById('monthDropdown').addEventListener('change', function() {
+    var selectedMonth = this.value;
+    alert('Selected Month: ' + selectedMonth);
+    // 여기서 선택된 월에 대한 작업을 수행할 수 있습니다.
+});
+
+document.getElementById('yearDropdownBtn').addEventListener('click', function() {
+
+    var dropdown = document.getElementById('yearDropdown');
+    dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
+});
+
+// 옵션을 선택했을 때의 이벤트 처리
+document.getElementById('yearDropdown').addEventListener('change', function() {
+    var selectedYear = this.value;
+    alert('Selected Year: ' + selectedYear);
+    // 여기서 선택된 월에 대한 작업을 수행할 수 있습니다.
+});
 
 function statusChange(cell) {
    var cellParts = cell.id.split("_");
@@ -183,14 +246,12 @@ function statusChange(cell) {
    var isoDateString = year+"-"+month+"-"+date;
    
 /*    var requested = { 
-		    s_id: s_id,
-	        a_date: isoDateString, 
-	        a_status: a_status}; */
+          s_id: s_id,
+           a_date: isoDateString, 
+           a_status: a_status}; */
    
    console.log("check"+a_status);
    
-   let ddd = $(cell).children('span').text();
-   console.log("최초 : "+ddd);
    /* updateStat({
         s_id: studentName,
         a_date: isoDateString, 
@@ -202,7 +263,9 @@ function statusChange(cell) {
        alert('update failed');
         console.error('Error updating status');
     }); */
-
+   let prevStat = $(cell).children('span').text();
+    console.log("prevStat");
+    console.log(prevStat);
     switch (cell.className) {
         case 'white':
             cell.className = 'blue';
@@ -229,26 +292,26 @@ function statusChange(cell) {
             break;
     }
    var a_status = $(cell).children('span').text();
-	console.log("aaaaa:"+a_status);
+   console.log("a_status:"+a_status);
    var requested = { 
-		    s_id: s_id,
-	        a_date: isoDateString, 
-	        a_status: a_status};
+          s_id: s_id,
+           a_date: isoDateString, 
+           a_status: a_status};
     
-if(a_status == 'Attend' && ddd == ''){
-	console.log('인서트 실행');
-	console.log($(cell).find(".stat").text());
-	   attendanceService.insertStat(requested);
-	   //return;
-} else {
-	console.log('업데이트 실행');
-	   attendanceService.updateStat(requested);
-	   //return;
-} 
-    
-   //console.log("needed");
-   //attendanceService.updateStat(requested)
-   //console.log(a_status);
+   if(a_status == 'Attend' && prevStat == ''){
+      console.log('인서트 실행');
+      console.log($(cell).find(".stat").text());
+         attendanceService.insertStat(requested);
+         //return;
+   } else {
+      console.log('업데이트 실행');
+         attendanceService.updateStat(requested);
+         //return;
+   } 
+       
+      //console.log("needed");
+      //attendanceService.updateStat(requested)
+      //console.log(a_status);
 }
 
 function showStudentList(class_nameValue) {
@@ -260,12 +323,14 @@ function showStudentList(class_nameValue) {
     attendanceService.getStudentList({class_name: class_nameValue}, function(students){
         var studentsList = $('.studentsList');
         /* studentsList.empty(); */
-		studentsList.empty();
+      studentsList.empty();
         var str = '';
-		console.log(students);
+      console.log(students);
         students.forEach(function(student){
             str += '<tr>';
-            str += '<td  class="' + student.s_id + '">'+student.s_id+'<div id="chart"></div></td>';
+            str += '<td class="' + student.s_id + '"><button class="showStat" style="width: 1px; height: 8px; border-radius: 50%; border: 1px solid #000; display: inline-block; vertical-align: middle;">&#8226;</button>' + student.s_id + '</td>';
+                   
+            //str += '<td class="' + student.s_id + '">'+student.s_id+'<div id="a_chart"></div></td>';
             str += '<td class="memo">' + student.s_name+'<div></div></td>';
 
             for (var i = 1; i <= daysInMonth; i++){
@@ -276,78 +341,144 @@ function showStudentList(class_nameValue) {
         });
         studentsList.append(str);
         memo();
-        existedAttendanceSheet();
+       // existedAttendanceSheet(); 
     });
     
-    function existedAttendanceSheet() {
-    	
-    }
-    
-    /* $('.studentList').on('click', 'readable', function(e){
-    	e.stopPropagation();
-    	
-    	$('.memoBtn').hide();
-    	var memoBtn = $(this).find('.memoBtn');
-    	memoBtn.show();
-    	
-    }); */
-    
-    $('#chart').on('click',function(e){
-    	console.log("chart");
-    	e.stopPropagation();
-    	var cellId = $(this).next().attr('id');
-    	
-    	var parts = cellId.split("_");
-    	
-    	var s_id = parts[0];
-    	var year = parts[1];
-    	var month = parts[2];
-		var lastDay = new Date(year, month, 0);
-		
-		console.log("마지막 날짜: "+lastDay);
-		
-    	var firstDayOfMonth = year+"-"+month+"-"+"01";
-    	var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
-    	attendanceService.getMonthlyAttendance({
-    		s_id:s_id, 
-    		firstDayOfMonth:firstDayOfMonth, 
-    		lastDayOfMonth:lastDayOfMonth
-    		}, function(statusList){
-    			
-    		})
-    	
-    })
- 
-	function memo() {
-    	
-	    $('.memo').on('click', function(e){
-	        console.log("readable clicked");
-	        e.stopPropagation();
-	        var s_id = $(this).prev().attr('class');
-	        
-	        $(this).find("div").toggle('hidden');
+    $('.submitBtn').on('click', function(e){
+       var firstDayInMonth = "01";
+        var daysInMonth = <%= daysInMonth %>;
+        var year = $('#yearDropdown').val();
+        var months = $('#monthDropdown').val();
+        console.log('Selected Year:', year);
+        var month = ((months < 10) ? '0' + months : months);
+        console.log('Revised Month:', month);
 
-	        var sInfoList = $(this).find("div");
-	        sInfoList.empty(); 
-	
-	        attendanceService.readInfo({s_id: s_id}, function(student){
-	        	console.log(student.s_school);
-	        	console.log(student.s_phone);
+        attendanceService.getStudentList({ class_name: class_nameValue }, function (students) {
+            var studentsList = $('.studentsList');
+            studentsList.empty();
+            var str = '';
+            console.log(students);
+
+            students.forEach(function (student) {
+                str += '<tr>';
+                str += '<td class="' + student.s_id + '"><button class="showStat" style="width: 1px; height: 8px; border-radius: 50%; border: 1px solid #000; display: inline-block; vertical-align: middle;">&#8226;</button>' + student.s_id + '</td>';
+                str += '<td class="memo">' + student.s_name + '<div></div></td>';
+
+                for (var i = 1; i <= daysInMonth; i++) {
+                    var cellId = student.s_id + "_" + year + "_" + month + "_" + ((i < 10) ? '0' + i : i);
+                    str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"><span class="stat"></span></td>';
+                    
+                    (function (s_id, a_date) {
+                        attendanceService.insertStat({ s_id: s_id, a_date: a_date }, function (dailyStatus) {
+                            console.log('Daily Status:', dailyStatus); 
+                        });
+                    })(student.s_id, year + "-" + month + "-" + ((i < 10) ? '0' + i : i));
+                }
+
+                str += '</tr>';
+            });
+
+            studentsList.append(str);
+            memo();
+        });
+    })
+    
+    $(document).ready(function () {
+        // 학생 목록에 대한 이벤트 등록
+        $('.studentsList').on('click', '.showStat', function(e){
+            e.stopPropagation();
+            var cellId = $(this).next().attr('id');
+            console.log(cellId);
+            var parts = cellId.split("_");
+
+            var s_id = parts[0];
+            var year = parts[1];
+            var month = parts[2];
+            var lastDay = new Date(year, month, 0);
+
+            console.log("마지막 날짜: "+lastDay);
+
+            var firstDayOfMonth = year+"-"+month+"-"+"01";
+            var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
+            attendanceService.getMonthlyAttendance({
+                s_id:s_id, 
+                firstDayOfMonth:firstDayOfMonth, 
+                lastDayOfMonth:lastDayOfMonth
+            }, function(statusList){
+                console.log(s_id);
+                console.log(firstDayOfMonth);
+                console.log(statusList);
+                
+            });
+        });
+
+        // 초기 학생 목록 로드 및 이벤트 등록
+        showStudentList();
+    });
+
+    // 학생 목록을 업데이트할 때마다 호출되는 함수
+    function showStudentList() {
+        var daysInMonth = <%= daysInMonth %>;
+        var yearNow = <%= yearNow %>;
+        var monthNow = <%= monthNow %>;
+
+        // 새로운 학생 목록에 대한 이벤트 등록
+        $('.studentsList').on('click', '.showStat', function(e){
+            e.stopPropagation();
+            var cellId = $(this).next().attr('id');
+            console.log(cellId);
+            var parts = cellId.split("_");
+
+            var s_id = parts[0];
+            var year = parts[1];
+            var month = parts[2];
+            var lastDay = new Date(year, month, 0);
+
+            console.log("마지막 날짜: "+lastDay);
+
+            var firstDayOfMonth = year+"-"+month+"-"+"01";
+            var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
+            attendanceService.getMonthlyAttendance({
+                s_id:s_id, 
+                firstDayOfMonth:firstDayOfMonth, 
+                lastDayOfMonth:lastDayOfMonth
+            }, function(statusList){
+                console.log(s_id);
+                console.log(firstDayOfMonth);
+                console.log(statusList);
+            });
+        });
+    }
+   function memo() {
+       
+       $('.memo').on('click', function(e){
+           console.log("readable clicked");
+           e.stopPropagation();
+           var s_id = $(this).prev().attr('class');
+           
+           $(this).find("div").toggle('hidden');
+
+           var sInfoList = $(this).find("div");
+           sInfoList.empty(); 
+   
+           attendanceService.readInfo({s_id: s_id}, function(student){
+              console.log(student.s_school);
+              console.log(student.s_phone);
                 var str = '<div>'+
                     '<p>' + student.s_school + '</p>'+
                     '<p>' + student.s_phone + '</p></div>';
-	        	console.log(str);
+              console.log(str);
                     
                 sInfoList.append(str);
-	        });
-	    });
+           });
+       });
     }
 }
 
 $(document).ready(function () {
-	var a_status = "";
+   var a_status = "";
     var classListTR = $(".classList");
-    var t_id = ${sessionScope.t_id};
+    var t_id = 1;
     //console.log("classlist");
    //console.log(t_id);
 
@@ -363,30 +494,33 @@ $(document).ready(function () {
             }
             classListTR.html(str);
         });
-	
+   
     showStudentList
 });
 </script>
-      <!-- plugins:js -->
-    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="../../assets/vendors/chart.js/Chart.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="../../assets/js/off-canvas.js"></script>
-    <script src="../../assets/js/hoverable-collapse.js"></script>
-    <script src="../../assets/js/misc.js"></script>
-    <script src="../../assets/js/settings.js"></script>
-    <script src="../../assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="../../assets/js/chart.js"></script>
-    <!-- End custom js for this page -->
+<!-- plugins:js -->
+<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/assets/js/chart.js"></script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/misc.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<!-- End custom js for this page -->   
    </body>
 </html>
-
-<%-- <table class="studentsList">
+<%--> $('.studentList').on('click', 'readable', function(e){
+       e.stopPropagation();
+       
+       $('.memoBtn').hide();
+       var memoBtn = $(this).find('.memoBtn');
+       memoBtn.show();
+       
+    }); 
+ <table class="studentsList">
        <tr> 
            <th>Name</th>
             <c:forEach var="day" begin="1" end="<%=daysInMonth %>">
@@ -404,4 +538,64 @@ $(document).ready(function () {
           </c:forEach>
         </tr> 
    </table>
+   
+      <%--  function existedAttendanceSheet() {
+        var firstDayInMonth = "01";
+        var daysInMonth = <%= daysInMonth %>;
+        var year = $('#yearDropdown').val();
+        var months = $('#monthDropdown').val();
+        console.log('Selected Year:', year);
+        var month = ((months < 10) ? '0' + months : months);
+        console.log('Revised Month:', month);
+
+        attendanceService.getStudentList({ class_name: class_nameValue }, function (students) {
+            var studentsList = $('.studentsList');
+            studentsList.empty();
+            var str = '';
+            console.log(students);
+
+            students.forEach(function (student) {
+                str += '<tr>';
+                str += '<td class="' + student.s_id + '"><button class="showStat" style="width: 1px; height: 8px; border-radius: 50%; border: 1px solid #000; display: inline-block; vertical-align: middle;">&#8226;</button>' + student.s_id + '</td>';
+                str += '<td class="memo">' + student.s_name + '<div></div></td>';
+
+                for (var i = 1; i <= daysInMonth; i++) {
+                    var cellId = student.s_id + "_" + year + "_" + month + "_" + ((i < 10) ? '0' + i : i);
+                    str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"><span class="stat"></span></td>';
+                    
+                    (function (s_id, a_date) {
+                        attendanceService.insertStat({ s_id: s_id, a_date: a_date }, function (dailyStatus) {
+                            console.log('Daily Status:', dailyStatus); 
+                        });
+                    })(student.s_id, year + "-" + month + "-" + ((i < 10) ? '0' + i : i));
+                }
+
+                str += '</tr>';
+            });
+
+            studentsList.append(str);
+            memo();
+        });
+    } --%>
+    <%-- function existedAttendanceSheet() {
+       
+       var firstDayInMonth = "01";
+       var daysInMonth = <%= daysInMonth %>;
+        var year = $('#yearDropdown').val();
+        var months = $('#monthDropdown').val();
+        console.log('Selected Year:', year);
+        var month = ((months<10) ? '0' + months : months);
+        console.log('Revised Month:', month);
+        
+        for(var i = 1; i<=daysInMonth; i++ ){
+           var s_id = i;
+           var a_date = year + "-" + month + "-" + ((i<10) ? '0' + i : i);
+           attendanceService.insertStat({s_id: s_id, a_date:}
+           , function(dailyStatus){
+              console.log('Daily Status:', dailyStatus);
+           });
+        }
+    } 
+     --%>
+   
  --%>

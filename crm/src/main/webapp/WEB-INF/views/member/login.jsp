@@ -4,8 +4,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-	Cookie[] arr =request.getCookies();
-	String t_loginid = null;
+	/* Cookie[] arr =request.getCookies();
+	String t_loginid = "";
 	
 	if(arr != null) {
 		for(int i=0; i<arr.length; i++) {
@@ -15,7 +15,18 @@
 			System.out.println(t_loginid);
 			}
 		}
-	}
+	} */
+	
+	// Function to get cookie by name
+   	Cookie[] idCheck = request.getCookies();
+   	String id = "";
+   	if(idCheck != null) {
+   		for(int i=0; i<idCheck.length; i++) {
+   			if(idCheck[i].getName().equals("idCheck")) {
+   				id = idCheck[i].getValue();
+   			}
+   		}
+   	}
 %>
 <!DOCTYPE html>
 <html>
@@ -49,7 +60,7 @@
                   <div class="form-group">
                     <label>ID*</label>
                  	 <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid"
-   						 value="<%= t_loginid != null ? t_loginid:""%>"></div>
+   						 value="<%= id%>"></div>
                   <div class="form-group">
                     <label>PASSWORD*</label>
                     <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
@@ -87,12 +98,17 @@
     <script src="/assets/js/settings.js"></script>
     <script src="/assets/js/todolist.js"></script>
     <!-- endinject -->
-    <c:if test="${not empty msg}">
+    <%-- <c:if test="${not empty msg}"> --%>
 
     <script type="text/javascript">
-   		 alert('${msg}');
+   		// alert('${msg}');
+   		if(!(${not empty msg} == "")) {
+	    	console.log("msg 있음");
+	        alert('${msg}');
+    	}
+    	console.log("msg 없음");
   
-        // Function to get cookie by name
+        /* // Function to get cookie by name
         function getCookie(cookieName) {
         	Cookie[] idCheck = request.getCookies();
         	String id = null;
@@ -103,10 +119,11 @@
         			}
         		}
         	}
-        }
+        } */
         
          $(document).ready(function () {
-        	 console.log(<%= t_loginid %>);
+        	 console.log("쿠키에 저장된 id");
+        	 console.log(<%=id %>);
              var check = '${param.check}';
              if (check !== '') {
                  alert("You should log in to use this service!");
@@ -114,6 +131,6 @@
          }); 
 
     </script>
-</c:if>
+	<%-- </c:if> --%>
   </body>
 </html>

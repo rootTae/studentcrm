@@ -71,10 +71,10 @@
 	                    	<div class="col-md-4 ml-auto text-right">
 	                    		<button class="s_add_Btn btn btn-primary mr-2" style="display:none">추가</button>
 						  		<button class="s_modify_Btn btn btn-secondary mr-2" style="display:none">수정</button>
-						  		<button class="s_del_Btn btn btn-dark" style="display:none">삭제</button>
+						  		<button class="s_del_Btn btn btn-info" style="display:none">삭제</button>
 						  	
 						  		<button class="s_save_Btn btn btn-primary mr-2" >저장</button>
-						  		<button class="s_cancel_Btn btn btn-dark">취소</button>
+						  		<button class="s_cancel_Btn btn btn-info">취소</button>
 	                    	</div>
 	                    </div>
 	                    <form class="form-sample">

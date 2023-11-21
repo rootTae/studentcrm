@@ -44,9 +44,9 @@
                     <div class="table-responsive">
 	                    <button type="button" class="inserExamtbtn btn btn-primary mb-2" >추가</button>
 			        	<button type="button" class="updateExambtn btn btn-secondary mb-2" style="display: none">수정</button>
-			        	<button type="button" class="deleteExambtn btn btn-dark mb-2" style="display: none">삭제</button>
+			        	<button type="button" class="deleteExambtn btn btn-info mb-2" style="display: none">삭제</button>
 			        	<button type="button" class="saveExambtn btn btn-primary mb-2" style="display: none">저장</button>
-			        	<button type="button" class="cancelExambtn btn btn-dark mb-2" style="display: none">취소</button>
+			        	<button type="button" class="cancelExambtn btn btn-info mb-2" style="display: none">취소</button>
                       <table class="table" id="examTable">
                         <thead>
                           <tr>
@@ -123,9 +123,9 @@
                     <div class="table-responsive">
 	                    <button type="button" class="insertbtn btn btn-primary mb-2" style="display: none">추가</button>
 				        <button type="button" class="updatebtn btn btn-secondary mb-2" style="display: none">수정</button>
-				        <button type="button" class="deletebtn btn btn-dark mb-2" style="display: none">삭제</button>
+				        <button type="button" class="deletebtn btn btn-info mb-2" style="display: none">삭제</button>
 				        <button type="button" class="savebtn btn btn-primary mb-2" style="display: none">저장</button>
-				        <button type="button" class="cancelbtn btn btn-dark mb-2" style="display: none">취소</button>
+				        <button type="button" class="cancelbtn btn btn-info mb-2" style="display: none">취소</button>
 				        <button type="button" class="chartbtn btn btn-primary mb-2" style="display: none">그래프 생성</button>
                       <table class="table" id="scoreTable">
                         <thead>

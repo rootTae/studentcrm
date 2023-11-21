@@ -49,7 +49,7 @@
                   <div class="form-group">
                     <label>ID*</label>
                  	 <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid"
-   						 value="<%= t_loginid%>"></div>
+   						 value="<%= t_loginid != null ? t_loginid:""%>"></div>
                   <div class="form-group">
                     <label>PASSWORD*</label>
                     <input type="password" class="form-control p_input" id="t_pw" name="t_pw">

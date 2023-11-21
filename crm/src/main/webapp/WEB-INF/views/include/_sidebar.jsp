@@ -108,8 +108,8 @@ $(document).ready(function () {
     var classListSpan = $(".classList");
     var t_id = ${sessionScope.t_id};
     //console.log("classlist");
-    console.log("classlist on the sidebar");
-	console.log(t_id);
+    //console.log("classlist on the sidebar");
+	//console.log(t_id);
     attendanceService.getClassList({ t_id: t_id },
         function (list) {
             var str = "";

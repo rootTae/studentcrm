@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.studentcrm.crm.mapper.PaymentMapper">
+
+<!-- 입력 -->
+<insert id="insertPayment" parameterType="org.studentcrm.crm.command.P_InformationVO">
+	 insert into p_Information (p_date, p_form, p_receipt, r_id ) 
+	 values(#{p_date},#{p_form},#{p_receipt},#{r_id})
+</insert>
+
+<!--  삭제 -->
+<delete id="deletePayment" parameterType="java.lang.Integer">
+	delete from p_Information where p_id = #{p_id}
+</delete>
+
+<!-- 수정 -->
+<update id="updatePayment" parameterType="org.studentcrm.crm.command.P_InformationVO">
+        update p_Information set p_date = #{p_date}, p_form=${p_form}, p_receipt=${p_receipt}
+        where p_id = #{p_id}
+    </update>
+    
+
+
+<!-- 학생번호로 학생시험점수 리스트  -->
+<select id="getPaymentList" resultType="org.studentcrm.crm.command.P_InformationVO"
+        parameterType="org.studentcrm.crm.command.P_InformationVO">
+    select *
+    from p_Information p
+             JOIN register r ON r.r_id = p.r_id
+             JOIN class c ON r.class_name = c.class_name
+             JOIN student s ON r.s_id = s.s_id
+             JOIN teacher t ON c.t_id = t.t_id
+    where p.p_date BETWEEN #{startDate} AND #{endDate} AND s.s_id = #{s_id}
+    order by c.c_startdate desc;
+</select>
+
+</mapper>

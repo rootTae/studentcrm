@@ -106,11 +106,11 @@ public class MemberController {
 		public String loginForm(HttpSession session, 
 				@RequestParam("t_loginid") String t_loginid, 
 				@RequestParam("t_pw") String t_pw,
-				@RequestParam("idCheck") String idCheck,
+				@RequestParam(name = "idCheck", required = false) String idCheck,
 				HttpServletResponse response,
 				RedirectAttributes RA) {
 			TeacherVO vo = memberService.login(t_loginid, t_pw);
-			log.info(vo);
+			//log.info(vo);
 			log.info(idCheck);
 			Cookie userId = new Cookie("t_loginid", t_loginid);
 			userId.setMaxAge(30);
@@ -122,12 +122,18 @@ public class MemberController {
 				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
 				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
 				session.setAttribute("t_subject", vo.getT_subject());
-				log.info("login 이후 mypage로 갈 vo 확인 "+vo);
+				//log.info("login 이후 mypage로 갈 vo 확인 "+vo);
 				RA.addFlashAttribute("msg", "login success");
 				if(idCheck != null) {
 					Cookie check = new Cookie("idCheck", t_loginid);
 					check.setMaxAge(30);
 					response.addCookie(check);		
+				} else {
+				    // idCheck 값이 없을 때는 쿠키를 삭제 
+					//= 기억하기 체크 > 로그인 > 로그아웃 > 기억하기 체크 해제 > 로그인 > 로그아웃시 아이디 보이는 문제 해결용
+				    Cookie check = new Cookie("idCheck", "");
+				    check.setMaxAge(0);  // 쿠키 만료
+				    response.addCookie(check);
 				}
 				return "redirect:/member/mypage";
 			}else {

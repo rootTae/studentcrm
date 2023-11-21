@@ -71,10 +71,10 @@
 	                    	<div class="col-md-4 ml-auto text-right">
 	                    		<button class="s_add_Btn btn btn-primary mr-2" style="display:none">추가</button>
 						  		<button class="s_modify_Btn btn btn-secondary mr-2" style="display:none">수정</button>
-						  		<button class="s_del_Btn btn btn-dark" style="display:none">삭제</button>
+						  		<button class="s_del_Btn btn btn-info" style="display:none">삭제</button>
 						  	
 						  		<button class="s_save_Btn btn btn-primary mr-2" >저장</button>
-						  		<button class="s_cancel_Btn btn btn-dark">취소</button>
+						  		<button class="s_cancel_Btn btn btn-info">취소</button>
 	                    	</div>
 	                    </div>
 	                    <form class="form-sample">
@@ -126,6 +126,30 @@
 	                              <input type='text' class="form-control" name='s_birth' id='s_birth' placeholder='yyyy-mm-dd'>
 	                            </div>
 	                          </div>
+	                          
+	                          <!-- <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">생년월일</label>
+	                            
+	                            <div class="row col-12">
+		                            <div class="col pr-0">
+		                              <input type='text' class="form-control" name='s_birth' id='s_birth' placeholder='yyyy-mm-dd'>
+		                            </div>
+		                            
+		                            <div class="calendar_btn">
+			                            <div class="col-auto pr-0 d-flex align-items-center h-100">
+			                              <label for="s_birth" class="mb-0">
+			                              	<button type="button" class="btn btn-primary">
+		                 						 <i class="mdi mdi-calendar mr-0"></i>
+		                 					</button>
+		                 				  </label>
+			                            </div>
+		                            </div>
+		                            
+	                            </div>
+	                            
+	                          </div> -->
+	                          
+	                          
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">전화번호</label>
 	                            <div class="col-sm-12">
@@ -629,6 +653,7 @@
 						getStudent(studentId);
 						//다시 수정 불가능하게 수정
 						studentDisable();
+						$(".imgCloseBtn").hide();
 					});
 				}
 				

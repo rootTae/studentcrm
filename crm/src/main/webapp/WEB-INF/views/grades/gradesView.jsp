@@ -43,7 +43,7 @@
                     <h4 class="card-title">시험 검색 결과</h4>
                     <div class="table-responsive">
 	                    <button type="button" class="inserExamtbtn btn btn-primary mb-2" >추가</button>
-			        	<button type="button" class="updateExambtn btn btn-secondary mr-2" style="display: none">수정</button>
+			        	<button type="button" class="updateExambtn btn btn-secondary mb-2" style="display: none">수정</button>
 			        	<button type="button" class="deleteExambtn btn btn-dark mb-2" style="display: none">삭제</button>
 			        	<button type="button" class="saveExambtn btn btn-primary mb-2" style="display: none">저장</button>
 			        	<button type="button" class="cancelExambtn btn btn-dark mb-2" style="display: none">취소</button>
@@ -122,7 +122,7 @@
                     <h4 class="card-title">시험 점수 결과</h4>
                     <div class="table-responsive">
 	                    <button type="button" class="insertbtn btn btn-primary mb-2" style="display: none">추가</button>
-				        <button type="button" class="updatebtn btn btn-secondary mr-2" style="display: none">수정</button>
+				        <button type="button" class="updatebtn btn btn-secondary mb-2" style="display: none">수정</button>
 				        <button type="button" class="deletebtn btn btn-dark mb-2" style="display: none">삭제</button>
 				        <button type="button" class="savebtn btn btn-primary mb-2" style="display: none">저장</button>
 				        <button type="button" class="cancelbtn btn btn-dark mb-2" style="display: none">취소</button>

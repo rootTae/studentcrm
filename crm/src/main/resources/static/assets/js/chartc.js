@@ -1,5 +1,11 @@
-chart.js
 $(function() {
+console.log('chartjs');
+/*
+getCntForEachStatus(function(statusList){
+	var statusList = statusList;
+	console.log("쫌");
+	console.log(statusList);
+});*/
 
   'use strict';
 function clearChart(chartInstance) {
@@ -102,7 +108,7 @@ clearChart(doughnutChart);
   
   var doughnutPieData = {
     datasets: [{
-      data: [30, 40, 10,20],
+      data: [10,20,30,40],
       backgroundColor: [
        'rgba(155, 246, 255, 0.5)',
         'rgba(255, 214, 165, 0.5)',
@@ -129,14 +135,16 @@ clearChart(doughnutChart);
       'Leave Early'
     ]
   };
+  console.log("js----");
+
+console.log(doughnutPieData.datasets[0].data);
+  /*var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");*/
   
-  var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
-  
-  var doughnutChart = new Chart(doughnutChartCanvas,{
+ /* var doughnutChart = new Chart(doughnutChartCanvas,{
    type: 'doughnut',
    data: data,
    options: options
-  });
+  });*/
   
   var doughnutPieOptions = {
     responsive: true,
@@ -406,3 +414,6 @@ clearChart(doughnutChart);
     // 다른 함수들도 필요하다면 추가 가능
   };
 });
+
+
+

@@ -1,7 +1,3 @@
-classListsByLogin.js
-/**
- * after logged in, get all the class-lists by teacher ID value
- */
  var attendanceService = (function(){
    
    function readInfo(param, callback, error){
@@ -9,7 +5,7 @@ classListsByLogin.js
       console.log(s_id);
       $.getJSON("/attendance/"+s_id,
          function(data){
-            if(callback){
+            if(data){
                callback(data)
             }
          }).fail(function(xhr, status,err){
@@ -24,7 +20,7 @@ classListsByLogin.js
       console.log(t_id);
       $.getJSON("/attendance/classlist/" + t_id,
          function(data){
-            if(callback){
+            if(data){
                callback(data);
             }
          }).fail(function(xhr, status, err){
@@ -41,7 +37,7 @@ classListsByLogin.js
       $.getJSON("/attendance/studentlist/" + class_name,
          function(data){
          console.log(data);
-            if(callback){
+            if(data){
             callback(data);
                /*let s_idArray = [];
                let s_nameArray = [];
@@ -76,7 +72,7 @@ classListsByLogin.js
         data: JSON.stringify(data),
         
         success:function(response){
-         if(callback){
+         if(response){
             callback(response);
          }
       },
@@ -107,9 +103,9 @@ classListsByLogin.js
          url:'/attendance/' + data.s_id+'/'+data.a_date,
          contentType: 'application/JSON;charset=UTF-8',
          data:JSON.stringify(data),
-         success:function(response){
-            if(callback){
-               callback(response);
+         success:function(result){
+            if(result){
+               callback(result);
             }
          },
          error:function(xhr, status, error){
@@ -123,24 +119,41 @@ classListsByLogin.js
    function getMonthlyAttendance(data, callback, error){
       console.log("getMonthlyAttendance");
       console.log(data);
-      $.getJSON("/attendance/" + s_id +'/'+ firstDayOfMonth +'/'+ LastDayOfMonth, 
-         function(data){
-            if(callback){
-               callback(data);
-            }
-         }).fail(function(xhr, status, err){
-            if(error){
-               error();
-            }
-         });
-      }
+      let s_id = data.s_id;
+      console.log("GMTJS");
+      console.log(s_id);
+      let firstDayOfMonth = data.firstDayOfMonth;
+      let lastDayOfMonth = data.lastDayOfMonth;
+      console.log("GMTJS: LASTDAY");
+      console.log(lastDayOfMonth);
+         
+     $.ajax({
+     type:'GET',
+     /*url:"/attendance/" + s_id +"/"+ firstDayOfMonth +"/"+ lastDayOfMonth,*/
+     url:"/attendance/" + s_id +"/"+ encodeURIComponent(firstDayOfMonth) + "/" + encodeURIComponent(lastDayOfMonth),
+     contentType: 'application/JSON;charset=UTF-8',
+     //data:JSON.stringify(data),
+     success:function(result){
+        if(result){
+           callback(result);
+        }
+     },
+     error:function(xhr, status, error){
+        if(error){
+           error();
+          
+        }
+     }
+  });
+     
+  }
    
    function readForUpdate(data, callback, error){
       console.log("js:readForUpdate");
       console.log(data);
-      $.getJSON("attendance/read/" + s_id + a_date,
+      $.getJSON("attendance/read/" + data.s_id +"/"+ data.a_date,
          function(data){
-            if(callback){
+            if(data){
                callback(data);
             }
       }).fail(function(xhr,status,err){

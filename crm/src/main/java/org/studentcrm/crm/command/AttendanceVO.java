@@ -17,17 +17,11 @@ public class AttendanceVO {
 	LocalDate a_date;
 	String class_name;
 	int s_id;
+	int count;
 	
 	LocalDate month = LocalDate.now(); // 현재 월을 사용
     LocalDate firstDayOfMonth = month.withDayOfMonth(1);
     LocalDate lastDayOfMonth = month.withDayOfMonth(month.lengthOfMonth());
     
-    @Override
-    public String toString() {
-        return "AttendanceVO{" +
-                "s_id=" + s_id +
-                ", firstDayOfMonth=" + firstDayOfMonth +
-                ", lastDayOfMonth=" + lastDayOfMonth +
-                '}';
-    }
+    
 }

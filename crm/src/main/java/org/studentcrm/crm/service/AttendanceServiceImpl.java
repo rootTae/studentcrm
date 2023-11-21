@@ -36,7 +36,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public AttendanceVO insertStat(AttendanceVO vo) {
 		log.info("insertStat" + vo);
-		return mapper.insertStatus(vo) ? mapper.readForUpdate(vo) : null;
+		
+		boolean result = mapper.updateStatus(vo);
+		log.info("The value already exists in DB: "+ result);
+		if (!result) {
+			log.info("추가 확인!!!");
+			return mapper.insertStatus(vo) ? mapper.readForUpdate(vo) : null;
+		}
+		return null;
+		
+		
 	}
 	
 	@Override

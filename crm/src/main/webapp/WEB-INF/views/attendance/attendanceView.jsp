@@ -1,4 +1,4 @@
-attendanceView.jsp
+<%@page import="java.util.Arrays"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,25 +23,7 @@ attendanceView.jsp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-       /*  table {
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-            cursor: pointer;
-        }
-        
-        td {
-           background-color: #fffcf2;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        } */
-
+ 
         .white {
             background-color: #fffcf2;
         }
@@ -66,20 +48,10 @@ attendanceView.jsp
             color: #ffffff;
         }
         
-        /* .memoBtn {
-          display: none; 
-         }
-
-         .memoBtn.show {
-          display: block; 
-         } */
-        
          .memo > div {display:none; width:100px; padding: 10px; padding-bottom: 0px; box-sizing: border-box;} /* 안됨 */
          .memo div p {line-height: 10px; font-weight:normal;}
          .memo {font-weight: bold;}
-    
-        /* .memoTextarea {display:none;position:absolute;right:-101px;top:-108px;width:100px;height:100px;border:2px solid #aaa;background-color:#f1faee;}
-        .memoBtn{display:block;position:absolute;top:0;right:0;width:3px;height:3px;z-index:100} */
+
     </style>
     
     <script>
@@ -165,7 +137,7 @@ attendanceView.jsp
                   <button type="button" class="btn btn-outline-primary btn-icon-text submitBtn">
                             <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit </button>   
                        <p class="card-description">attend/late/absent/leave early</p>  
-                        <form>
+                        <!-- <form>  -->
                             <table class="table">
                                 <tr>
                                    <th>ID</th>
@@ -178,7 +150,7 @@ attendanceView.jsp
                                 <tbody class="studentsList">
                                 </tbody>
                             </table>
-                        </form>
+                       <!-- </form>  -->
                      </div>
                    </div>
                  </div>
@@ -189,17 +161,15 @@ attendanceView.jsp
      </div>
  <!-- container-scroller -->
  <!-- plugins:js -->
- <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
- <!-- endinject -->
- <!-- Plugin js for this page -->
- <!-- End plugin js for this page -->
  <!-- inject:js -->
- <script src="/assets/js/chart.js"></script>
- <script src="/assets/js/off-canvas.js"></script>
- <script src="/assets/js/hoverable-collapse.js"></script>
- <script src="/assets/js/misc.js"></script>
- <script src="/assets/js/settings.js"></script>
- <script src="/assets/js/todolist.js"></script>
+ <script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<!-- <script src="/assets/js/chartc.js"></script> -->
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/misc.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
  <!-- endinject -->
  <!-- Custom js for this page -->
  <!-- End custom js for this page -->
@@ -301,11 +271,15 @@ function statusChange(cell) {
    if(a_status == 'Attend' && prevStat == ''){
       console.log('인서트 실행');
       console.log($(cell).find(".stat").text());
-         attendanceService.insertStat(requested);
+         attendanceService.insertStat(requested,function(result){
+        	 console.log(result);
+         });
          //return;
    } else {
       console.log('업데이트 실행');
-         attendanceService.updateStat(requested);
+         attendanceService.updateStat(requested, function(result){
+        	 console.log(result);
+         });
          //return;
    } 
        
@@ -381,43 +355,141 @@ function showStudentList(class_nameValue) {
             studentsList.append(str);
             memo();
         });
-    })
+    });
+    
+    
     
     $(document).ready(function () {
+    	  	
         // 학생 목록에 대한 이벤트 등록
         $('.studentsList').on('click', '.showStat', function(e){
             e.stopPropagation();
-            var cellId = $(this).next().attr('id');
+     
+            var cellId = $(this).parent().next().next().attr('id');
             console.log(cellId);
             var parts = cellId.split("_");
+            console.log("parts : "+parts);
 
             var s_id = parts[0];
             var year = parts[1];
             var month = parts[2];
-            var lastDay = new Date(year, month, 0);
-
+            var lastDayIng = new Date(year, month, 0);
+            var lastDay = lastDayIng.getDate();
+			
+            /* doughnutPieData.datasets[0].data = [10, 20, 30, 40]; */
+            
             console.log("마지막 날짜: "+lastDay);
-
+            
+            let data={
+                s_id: s_id, 
+                firstDayOfMonth: firstDayOfMonth, 
+                lastDayOfMonth: lastDayOfMonth
+            }
+            
             var firstDayOfMonth = year+"-"+month+"-"+"01";
             var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
-            attendanceService.getMonthlyAttendance({
-                s_id:s_id, 
-                firstDayOfMonth:firstDayOfMonth, 
-                lastDayOfMonth:lastDayOfMonth
-            }, function(statusList){
-                console.log(s_id);
+            
+            attendanceService.getMonthlyAttendance(data, function(statusList){
+           
+                console.log("attendanceView: GMD");
                 console.log(firstDayOfMonth);
-                console.log(statusList);
+                getCntForEachStatus(statusList);
                 
             });
+            
+                
         });
 
         // 초기 학생 목록 로드 및 이벤트 등록
-        showStudentList();
+        /* showStudentList(); */
     });
+    
+    function getCntForEachStatus(statusList) {
+    	/* $.ajax({
+    		url: '/chart',
+    		processData: false,
+			contentType: false,
+			type: 'GET',
+			dataType: 'json'
+    	})
+    	 */
+    	console.log("인자값")
+    	console.log(statusList);
+    	console.log(statusList[0].a_status);
+    	
+    	//var chartdata = doughnutPieData.datasets[0].data;
+    	
+    	console.log(chartdata);
+    	var chartdata = [0, 0, 0, 0];
+    	for (let i = 0; i < statusList.length;i++){
+    		if(statusList[i].a_status === 'Attend'){
+    			chartdata[0] = statusList[i].count;
+    		}else if(statusList[i].a_status === 'Late') {
+    			chartdata[1] = statusList[i].count;
+    		}else if(statusList[i].a_status === 'Absent') {
+    			chartdata[2] = statusList[i].count;
+    		}else if(statusList[i].a_status === 'Leave Early') {
+    			chartdata[3] = statusList[i].count;
+    		}
+    	}
+    	
+    	//doughnutPieData.datasets[0].data = chartdata;
+    	 var doughnutPieData = {
+		    datasets: [{
+		        data: chartdata,
+		        backgroundColor: [
+		         'rgba(155, 246, 255, 0.5)',
+		          'rgba(255, 214, 165, 0.5)',
+		          'rgba(255, 173, 173, 0.5)',
+		          'rgba(189, 178, 255, 0.5)',
+		          'rgba(153, 102, 255, 0.5)',
+		          'rgba(255, 159, 64, 0.5)'
+		        ],
+		        borderColor: [
+		        'rgba(155, 246, 255, 1)',
+		          'rgba(255, 214, 165,1)',
+		          'rgba(255, 173, 173, 1)',
+		          'rgba(189, 178, 255, 1)',
+		          'rgba(153, 102, 255, 1)',
+		          'rgba(255, 159, 64, 1)'
+		        ],
+		      }],
+
+		      // These labels appear in the legend and in the tooltips when hovering different arcs
+		      labels: [
+		        'Attend',
+		        'Late',
+		        'Absent',
+		        'Leave Early'
+		      ]
+		    }; 
+    	
+    	 var doughnutPieOptions = {
+		    responsive: true,
+		    animation: {
+		      animateScale: true,
+		      animateRotate: true
+		    }
+		  };
+    	 //console.log(chart);
+    	 if ($("#doughnutChart").length) {
+   		    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
+   		    var doughnutChart = new Chart(doughnutChartCanvas, {
+   		      type: 'doughnut',
+   		      data: doughnutPieData,
+   		      options: doughnutPieOptions
+   		    });
+   		  }
+    	 //doughnutPieData.datasets[0].data = [10,10,10,20,0,0];
+    	 
+    	/* doughnutPieData.data[1] = statusList[1].count;   
+    	doughnutPieData.data[2] = statusList[2].count;   
+    	doughnutPieData.data[3] = statusList[3].count;   */ 
+    }
+    
 
     // 학생 목록을 업데이트할 때마다 호출되는 함수
-    function showStudentList() {
+    <%-- function showStudentList() {
         var daysInMonth = <%= daysInMonth %>;
         var yearNow = <%= yearNow %>;
         var monthNow = <%= monthNow %>;
@@ -425,14 +497,15 @@ function showStudentList(class_nameValue) {
         // 새로운 학생 목록에 대한 이벤트 등록
         $('.studentsList').on('click', '.showStat', function(e){
             e.stopPropagation();
-            var cellId = $(this).next().attr('id');
+            var cellId = $(this).parent().next().next().attr('id');
             console.log(cellId);
             var parts = cellId.split("_");
 
             var s_id = parts[0];
             var year = parts[1];
             var month = parts[2];
-            var lastDay = new Date(year, month, 0);
+            var lastDayIng = new Date(year, month, 0);
+            var lastDay = lastDayIng.getDate();
 
             console.log("마지막 날짜: "+lastDay);
 
@@ -448,7 +521,7 @@ function showStudentList(class_nameValue) {
                 console.log(statusList);
             });
         });
-    }
+    } --%>
    function memo() {
        
        $('.memo').on('click', function(e){
@@ -495,18 +568,18 @@ $(document).ready(function () {
             classListTR.html(str);
         });
    
-    showStudentList
+    
 });
 </script>
 <!-- plugins:js -->
-<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<!-- <script src="/assets/vendors/chart.js/Chart.min.js"></script>
 <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/chart.js"></script>
+<script src="/assets/js/chartc.js"></script>
 <script src="/assets/js/off-canvas.js"></script>
 <script src="/assets/js/hoverable-collapse.js"></script>
 <script src="/assets/js/misc.js"></script>
 <script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
+<script src="/assets/js/todolist.js"></script> -->
 <!-- endinject -->
 <!-- Custom js for this page -->
 <!-- End custom js for this page -->   
@@ -596,6 +669,6 @@ $(document).ready(function () {
            });
         }
     } 
-     --%>
+     
    
  --%>

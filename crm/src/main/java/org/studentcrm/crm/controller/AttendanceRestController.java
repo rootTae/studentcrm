@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -106,21 +107,24 @@ public class AttendanceRestController {
    // insertStat
    @PostMapping(value = "/initial/{s_id}/{a_date}",
          consumes = "application/json;charset=utf-8",
-         produces = {MediaType.TEXT_PLAIN_VALUE})
+         produces = {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<AttendanceVO> insert(
          @RequestBody AttendanceVO vo,
          @PathVariable("s_id") int s_id,
           @PathVariable("a_date") String a_date
          ){
          log.info("vo for insertStat:" + vo);
-       return (vo.getA_status() == null || vo.getA_status().isEmpty())
-            ? new ResponseEntity<>(service.insertStat(vo), HttpStatus.OK) 
-            : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+         log.info("vo A_status : "+vo.getA_status().isEmpty());
+         AttendanceVO result = service.insertStat(vo);
+       return (result !=null)
+            ? new ResponseEntity<>(result, HttpStatus.OK) 
+            : new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
    }
    
    // updateStat
    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-         value="/{s_id}/{a_date}", consumes="application/json;charset=UTF-8", produces= {MediaType.APPLICATION_JSON_VALUE})
+         value="/{s_id}/{a_date}", consumes="application/json;charset=UTF-8", 
+         produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<AttendanceVO> update(
          @RequestBody AttendanceVO vo, 
          @PathVariable("s_id") int s_id,
@@ -135,21 +139,49 @@ public class AttendanceRestController {
             : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
    } 
    
+   @GetMapping(value="/chart", produces= {MediaType.APPLICATION_JSON_VALUE})
+   public ResponseEntity<AttendanceVO> chart(
+		   @RequestBody AttendanceVO vo
+		   ){
+	    
+	   return new ResponseEntity<AttendanceVO>(vo, HttpStatus.OK); 
+   }
+   
+   
+   
    @RequestMapping(method = RequestMethod.GET,
            value="/{s_id}/{firstDayOfMonth}/{lastDayOfMonth}", produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<List<AttendanceVO>> getMonthlyAttendance(
            @PathVariable("s_id") int s_id,
            @PathVariable("firstDayOfMonth") String firstDayOfMonth,
-           @PathVariable("lastDayOfMonth") String lastDayOfMonth,
-           @RequestBody AttendanceVO vo
+           @PathVariable("lastDayOfMonth") String lastDayOfMonth
+//           ,@RequestBody AttendanceVO vo
            ){
-            /*
-             * LocalDate firstDayOfMonth = month.withDayOfMonth(1); LocalDate lastDayOfMonth
-             * = month.withDayOfMonth(month.lengthOfMonth());
-             */
+	   
+       log.info("GMA: " + lastDayOfMonth);
+//	   AttendanceVO vo = new AttendanceVO();
+//	   vo.setS_id(s_id); 
+//	   LocalDate firstLocalDate = LocalDate.parse(firstDayOfMonth);
+//	   LocalDate lastLocalDate = LocalDate.parse(lastDayOfMonth);
+//	   vo.setFirstDayOfMonth(firstLocalDate);
+//	   vo.setLastDayOfMonth(lastLocalDate);
+//       log.info("GMA: " + vo);
+       LocalDate month = LocalDate.now(); // 현재 월을 사용
+       LocalDate firstDayOfMonth1 = month.withDayOfMonth(1);
+       LocalDate lastDayOfMonth1 = month.withDayOfMonth(month.lengthOfMonth());
        
-       List<AttendanceVO> result = service.getMonthlyAttendance(vo);
-
+       AttendanceVO attendanceVO = new AttendanceVO();
+       attendanceVO.setS_id(s_id);
+       attendanceVO.setFirstDayOfMonth(firstDayOfMonth1);
+       attendanceVO.setLastDayOfMonth(lastDayOfMonth1);
+       
+       log.info(attendanceVO);
+       System.out.println(s_id);
+       System.out.println(firstDayOfMonth1);
+       System.out.println(lastDayOfMonth1);
+	   
+       List<AttendanceVO> result = service.getMonthlyAttendance(attendanceVO);
+       log.info("결과 : "+result);
        return new ResponseEntity<>(result, HttpStatus.OK);
    }
    

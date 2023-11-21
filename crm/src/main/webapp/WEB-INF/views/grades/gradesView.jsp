@@ -42,11 +42,11 @@
                   <div class="card-body">
                     <h4 class="card-title">시험 검색 결과</h4>
                     <div class="table-responsive">
-	                    <button type="button" class="inserExamtbtn" >추가</button>
-			        	<button type="button" class="updateExambtn" style="display: none">수정</button>
-			        	<button type="button" class="deleteExambtn" style="display: none">삭제</button>
-			        	<button type="button" class="saveExambtn" style="display: none">저장</button>
-			        	<button type="button" class="cancelExambtn" style="display: none">취소</button>
+	                    <button type="button" class="inserExamtbtn btn btn-primary mb-2" >추가</button>
+			        	<button type="button" class="updateExambtn btn btn-secondary mr-2" style="display: none">수정</button>
+			        	<button type="button" class="deleteExambtn btn btn-dark mb-2" style="display: none">삭제</button>
+			        	<button type="button" class="saveExambtn btn btn-primary mb-2" style="display: none">저장</button>
+			        	<button type="button" class="cancelExambtn btn btn-dark mb-2" style="display: none">취소</button>
                       <table class="table" id="examTable">
                         <thead>
                           <tr>
@@ -121,12 +121,12 @@
                   <div class="card-body">
                     <h4 class="card-title">시험 점수 결과</h4>
                     <div class="table-responsive">
-	                    <button type="button" class="insertbtn" style="display: none">추가</button>
-				        <button type="button" class="updatebtn" style="display: none">수정</button>
-				        <button type="button" class="deletebtn" style="display: none">삭제</button>
-				        <button type="button" class="savebtn" style="display: none">저장</button>
-				        <button type="button" class="cancelbtn" style="display: none">취소</button>
-				        <button type="button" class="chartbtn" style="display: none">그래프 생성</button>
+	                    <button type="button" class="insertbtn btn btn-primary mb-2" style="display: none">추가</button>
+				        <button type="button" class="updatebtn btn btn-secondary mr-2" style="display: none">수정</button>
+				        <button type="button" class="deletebtn btn btn-dark mb-2" style="display: none">삭제</button>
+				        <button type="button" class="savebtn btn btn-primary mb-2" style="display: none">저장</button>
+				        <button type="button" class="cancelbtn btn btn-dark mb-2" style="display: none">취소</button>
+				        <button type="button" class="chartbtn btn btn-primary mb-2" style="display: none">그래프 생성</button>
                       <table class="table" id="scoreTable">
                         <thead>
                           <tr>
@@ -246,12 +246,12 @@
                     '<td><div class="form-check form-check-muted m-0">'+
                     '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
                     '<i class="input-helper"></i></label></div></td>'+  
-                        '<td><input type="text" class="is_s_id" name="is_s_id" id="is_s_id" readonly value="'+ student.s_id +'"></td>' +
-                        '<td><input type="text" class="is_s_name" name="is_s_name"  id="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
-                        '<td><input type="text" class="is_s_gender" name="is_s_gender" id="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
-                        '<td><input type="text" class="is_s_phone" name="is_s_phone"  id="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
-                        '<td><input type="text" class="is_s_school" name="is_s_school" id ="is_s_school" readonly value="'+ student.s_school +'"></td>' +
-                        '<td><input type="text" class="is_s_grade" name="is_s_grade" id="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
+                        '<td><input type="text" class="is_s_id form-control" name="is_s_id" id="is_s_id" readonly value="'+ student.s_id +'"></td>' +
+                        '<td><input type="text" class="is_s_name form-control" name="is_s_name"  id="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
+                        '<td><input type="text" class="is_s_gender form-control" name="is_s_gender" id="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
+                        '<td><input type="text" class="is_s_phone form-control" name="is_s_phone"  id="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
+                        '<td><input type="text" class="is_s_school form-control" name="is_s_school" id ="is_s_school" readonly value="'+ student.s_school +'"></td>' +
+                        '<td><input type="text" class="is_s_grade form-control" name="is_s_grade" id="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
                         '</tr>';        
                     studentList.append(str);
                 });
@@ -305,16 +305,16 @@
                         '<td><div class="form-check form-check-muted m-0">'+
                         '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
                         '<i class="input-helper"></i></label></div></td>'+
-                        '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" value="'+score.score_id+'" readonly></td>' +
-                        '<td><input type="text" class="s_id" id="s_id" name="s_id" readonly value="' + score.s_id +'"> </td>' +
-                        '<td><input type="text" class="s_name" id="s_name" name="s_name" readonly value="'+ score.s_name +'"></td>' +
-                        '<td><input type="text" class="e_id" id="e_id" name="e_id" readonly value="'+ score.e_id +'"></td>' +
-                        '<td><input type="text" class="e_name" id="e_name" name="e_name" readonly value="'+ score.e_name +'"></td>' +
-                        '<td><input type="text" class="e_date" id="e_date" name="e_date" readonly value="'+ score.e_date +'"></td>' +
-                        '<td><input type="text" class="korScore" id="korScore" name="korScore" readonly value="'+ score.korScore +'"></td>' +
-                        '<td><input type="text" class="engScore" id="engScore" name="engScore" readonly value="'+ score.engScore +'"></td>' +
-                        '<td><input type="text" class="mathScore" id="mathScore" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
-                        '<td><input type="text" class="avgScore" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
+                        '<td hidden><input type="text" class="score_id form-control" name="score_id" id="score_id" value="'+score.score_id+'" readonly></td>' +
+                        '<td><input type="text" class="s_id form-control" id="s_id" name="s_id" readonly value="' + score.s_id +'"> </td>' +
+                        '<td><input type="text" class="s_name form-control" id="s_name" name="s_name" readonly value="'+ score.s_name +'"></td>' +
+                        '<td><input type="text" class="e_id form-control" id="e_id" name="e_id" readonly value="'+ score.e_id +'"></td>' +
+                        '<td><input type="text" class="e_name form-control" id="e_name" name="e_name" readonly value="'+ score.e_name +'"></td>' +
+                        '<td><input type="text" class="e_date form-control" id="e_date" name="e_date" readonly value="'+ score.e_date +'"></td>' +
+                        '<td><input type="text" class="korScore form-control" id="korScore" name="korScore" readonly value="'+ score.korScore +'"></td>' +
+                        '<td><input type="text" class="engScore form-control" id="engScore" name="engScore" readonly value="'+ score.engScore +'"></td>' +
+                        '<td><input type="text" class="mathScore form-control" id="mathScore" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
+                        '<td><input type="text" class="avgScore form-control" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
                         '<td hidden><input type="text" class="korAvg" name="korAvg" id="korAvg" value="'+result.korAvg+'" readonly></td>' +
                         '<td hidden><input type="text" class="engAvg" name="engAvg" id="engAvg" value="'+result.engAvg+'" readonly></td>' +
                         '<td hidden><input type="text" class="mathAvg" name="mathAvg" id="mathAvg" value="'+result.mathAvg+'" readonly></td>' +
@@ -352,15 +352,15 @@
                  '<label class="form-check-label"><input type="checkbox" class="form-check-input sl_checkbox">'+
                  '<i class="input-helper"></i></label></div></td>'+ 
                  '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" value="'+score.score_id+'" readonly></td>' +
-                 '<td><input type="text" class="s_id" id="s_id" name="s_id" readonly value="' + score.s_id +'"> </td>' +
-                 '<td><input type="text" class="s_name" id="s_name" name="s_name" readonly value="'+ score.s_name +'"></td>' +
-                 '<td><input type="text" class="e_id" id="e_id" name="e_id" readonly value="'+ score.e_id +'"></td>' +
-                 '<td><input type="text" class="e_name" id="e_name" name="e_name" readonly value="'+ score.e_name +'"></td>' +
-                 '<td><input type="text" class="e_date" id="e_date" name="e_date" readonly value="'+ score.e_date +'"></td>' +
-                 '<td><input type="text" class="korScore" id="korScore" name="korScore" readonly value="'+ score.korScore +'"></td>' +
-                 '<td><input type="text" class="engScore" id="engScore" name="engScore" readonly value="'+ score.engScore +'"></td>' +
-                 '<td><input type="text" class="mathScore" id="mathScore" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
-                 '<td><input type="text" class="avgScore" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
+                 '<td><input type="text" class="s_id form-control" id="s_id" name="s_id" readonly value="' + score.s_id +'"> </td>' +
+                 '<td><input type="text" class="s_name form-control" id="s_name" name="s_name" readonly value="'+ score.s_name +'"></td>' +
+                 '<td><input type="text" class="e_id form-control" id="e_id" name="e_id" readonly value="'+ score.e_id +'"></td>' +
+                 '<td><input type="text" class="e_name form-control" id="e_name" name="e_name" readonly value="'+ score.e_name +'"></td>' +
+                 '<td><input type="text" class="e_date form-control" id="e_date" name="e_date" readonly value="'+ score.e_date +'"></td>' +
+                 '<td><input type="text" class="korScore form-control" id="korScore" name="korScore" readonly value="'+ score.korScore +'"></td>' +
+                 '<td><input type="text" class="engScore form-control" id="engScore" name="engScore" readonly value="'+ score.engScore +'"></td>' +
+                 '<td><input type="text" class="mathScore form-control" id="mathScore" name="mathScore" readonly value="' + score.mathScore +'"></td>' +
+                 '<td><input type="text" class="avgScore form-control" id="avgScore" name="avgScore" readonly value="'+ score.avgScore + '"></td>' +
                  '</tr>';                   
              scoreList.append(str);
         	   
@@ -392,14 +392,14 @@
              '<label class="form-check-label"><input type="checkbox"  class="form-check-input sl_checkbox">' +
              '<i class="input-helper"></i></label></div></td>' +
              '<td hidden><input type="text" class="score_id" name="score_id" id="score_id" readonly></td>' +
-             '<td class="i_s_id"><input type="text" name="add_s_id" id="add_s_id" readonly value="' + score.s_id + '"> </td>' +
-             '<td class="i_s_name"><input type="text" name="add_s_name" id="add_s_name" readonly value="' + score.s_name + '"></td>' +
-             '<td class="i_e_id"><input type="text" name="add_e_id" id="add_e_id"></td>' +
-             '<td class="i_e_name"><input type="text" name="add_e_name" id="add_e_name" readonly></td>' +
-             '<td class="i_e_date"><input type="text" name="add_e_date" id="add_e_date" readonly></td>' +
-             '<td class="i_korScore"><input type="text" name="add_korScore" id="add_korScore"></td>' +
-             '<td class="i_engScore"><input type="text" name="add_engScore" id="add_engScore"></td>' +
-             '<td class="i_mathScore"><input type="text" name="add_mathScore" id="add_mathScore" ></td>' +
+             '<td class="i_s_id"><input type="text" class="form-control" name="add_s_id" id="add_s_id" readonly value="' + score.s_id + '"> </td>' +
+             '<td class="i_s_name"><input type="text" class="form-control" name="add_s_name" id="add_s_name" readonly value="' + score.s_name + '"></td>' +
+             '<td class="i_e_id"><input type="text" class="form-control" name="add_e_id" id="add_e_id"></td>' +
+             '<td class="i_e_name"><input type="text" class="form-control" name="add_e_name" id="add_e_name" readonly></td>' +
+             '<td class="i_e_date"><input type="text" class="form-control" name="add_e_date" id="add_e_date" readonly></td>' +
+             '<td class="i_korScore"><input type="text" class="form-control" name="add_korScore" id="add_korScore"></td>' +
+             '<td class="i_engScore"><input type="text" class="form-control" name="add_engScore" id="add_engScore"></td>' +
+             '<td class="i_mathScore"><input type="text" class="form-control" name="add_mathScore" id="add_mathScore" ></td>' +
              '<td class="i_avgScore"></td>' +
              '</tr>';   
          
@@ -539,10 +539,10 @@
                     '<td><div class="form-check form-check-muted m-0">' +
                     '<label class="form-check-label"><input type="checkbox" class="form-check-input el_checkbox">' +
                     '<i class="input-helper"></i></label></div></td>' +
-                    '<td class="ie_e_id"><input type="text" name="ie_e_id" id="ie_e_id" value="' + exam.e_id + '"readonly></td>' +
-                    '<td class="ie_e_name"><input type="text" name="ie_e_name" id="ie_e_name" value="' + exam.e_name + '"readonly></td>' +
-                    '<td class="ie_e_grade"><input type="text" name="ie_e_grade" id="ie_e_grade" value="' + exam.e_grade + '"readonly> </td>' +
-                    '<td class="ie_e_date"><input type="text" name="ie_e_date" id="ie_e_date" value="' + exam.e_date + '"readonly>  </td>' +
+                    '<td class="ie_e_id"><input type="text" class="form-control" name="ie_e_id" id="ie_e_id" value="' + exam.e_id + '"readonly></td>' +
+                    '<td class="ie_e_name"><input type="text" class="form-control" name="ie_e_name" id="ie_e_name" value="' + exam.e_name + '"readonly></td>' +
+                    '<td class="ie_e_grade"><input type="text" class="form-control" name="ie_e_grade" id="ie_e_grade" value="' + exam.e_grade + '"readonly> </td>' +
+                    '<td class="ie_e_date"><input type="text" class="form-control" name="ie_e_date" id="ie_e_date" value="' + exam.e_date + '"readonly>  </td>' +
                     '</tr>';
                 exam_List.append(str);
             });
@@ -564,10 +564,10 @@
                 '<td><div class="form-check form-check-muted m-0">' +
                 '<label class="form-check-label"><input type="checkbox"  class="form-check-input el_checkbox">' +
                 '<i class="input-helper"></i></label></div></td>' +
-                '<td class="ie_e_id"><input type="text" name="add_e_id" id="add_e_id" readonly></td>' +
-                '<td class="ie_e_name"><input type="text" name="add_e_name" id="add_e_name" ></td>' +
-                '<td class="ie_e_grade"><input type="text" name="add_e_grade" id="add_e_grade"  ></td>' +
-                '<td class="ie_e_date"><input type="text" name="add_e_date" id="add_e_date" ></td>' +
+                '<td class="ie_e_id"><input type="text" class="form-control" name="add_e_id" id="add_e_id" readonly></td>' +
+                '<td class="ie_e_name"><input type="text" class="form-control" name="add_e_name" id="add_e_name" ></td>' +
+                '<td class="ie_e_grade"><input type="text" class="form-control" name="add_e_grade" id="add_e_grade"  ></td>' +
+                '<td class="ie_e_date"><input type="text" class="form-control" name="add_e_date" id="add_e_date" ></td>' +
                 '</tr>';
             $('.exam_List').append(str);
         }

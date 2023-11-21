@@ -1,4 +1,3 @@
-classListsByLogin.js
 /**
  * after logged in, get all the class-lists by teacher ID value
  */

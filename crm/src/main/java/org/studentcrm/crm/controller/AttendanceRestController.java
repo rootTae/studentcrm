@@ -48,13 +48,19 @@ public class AttendanceRestController {
    }
    
    // getStat
-   @GetMapping(value="/read/{s_id}/{a_date}", produces= {MediaType.APPLICATION_JSON_VALUE})
+  // @GetMapping(value="/read/{s_id}/{a_date}", produces= {MediaType.APPLICATION_JSON_VALUE})
+   @GetMapping(value="/read", produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<AttendanceVO> readForUpdate(
-         @PathVariable("s_id") int s_id,
-         @PathVariable("a_date") String a_date,
-         @RequestBody AttendanceVO vo
+//         @PathVariable("s_id") int s_id,
+//         @PathVariable("a_date") String a_date
+		   @RequestParam("s_id") String s_id,
+		   @RequestParam("a_date") String a_date
          ){
       log.info("s_id for readForUpdate at controller: " + s_id);
+      AttendanceVO vo = new AttendanceVO();
+      vo.setA_date(a_date);
+      vo.setS_id(Integer.parseInt(s_id));
+      
       AttendanceVO result = service.readForUpdate(vo);
       log.info("vo for readForUpdate at controller: " + vo);
       return new ResponseEntity<AttendanceVO>(result, HttpStatus.OK);
@@ -73,7 +79,7 @@ public class AttendanceRestController {
    // classlistByt_id
    @GetMapping(value="/classlist/{t_id}", produces= {MediaType.APPLICATION_JSON_VALUE})
    public ResponseEntity<List<ClassVO>> c_list(@PathVariable("t_id") int t_id){
-      log.info("t_id: " + t_id);
+      //log.info("t_id: " + t_id);
       List<ClassVO> classList = service.c_list(t_id);
       return new ResponseEntity<List<ClassVO>>(classList, HttpStatus.OK);
    }
@@ -83,9 +89,9 @@ public class AttendanceRestController {
          consumes = "application/json",
          produces = {MediaType.TEXT_PLAIN_VALUE})
    public ResponseEntity<String> put(@RequestBody AttendanceVO vo){
-      log.info("s_id: " + vo.getS_id());
+      //log.info("s_id: " + vo.getS_id());
       int memoCnt = service.putMemo(vo);
-      log.info("# of memo: " + memoCnt);
+      //log.info("# of memo: " + memoCnt);
       return memoCnt == 1
             ? new ResponseEntity<String>("Success", HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -98,8 +104,8 @@ public class AttendanceRestController {
          @RequestBody AttendanceVO vo
          ){
       
-      log.info("s_id" + s_id);
-      log.info("date" + a_date);
+     // log.info("s_id" + s_id);
+     // log.info("date" + a_date);
       
       return new ResponseEntity<AttendanceVO>(service.viewMemo(vo), HttpStatus.OK);
    }
@@ -166,19 +172,22 @@ public class AttendanceRestController {
 //	   vo.setFirstDayOfMonth(firstLocalDate);
 //	   vo.setLastDayOfMonth(lastLocalDate);
 //       log.info("GMA: " + vo);
-       LocalDate month = LocalDate.now(); // 현재 월을 사용
-       LocalDate firstDayOfMonth1 = month.withDayOfMonth(1);
-       LocalDate lastDayOfMonth1 = month.withDayOfMonth(month.lengthOfMonth());
+
+		/*
+		 * LocalDate month = LocalDate.now(); // 현재 월을 사용 LocalDate firstDayOfMonth1 =
+		 * month.withDayOfMonth(1); LocalDate lastDayOfMonth1 =
+		 * month.withDayOfMonth(month.lengthOfMonth());
+		 */
        
        AttendanceVO attendanceVO = new AttendanceVO();
        attendanceVO.setS_id(s_id);
-       attendanceVO.setFirstDayOfMonth(firstDayOfMonth1);
-       attendanceVO.setLastDayOfMonth(lastDayOfMonth1);
+       attendanceVO.setFirstDayOfMonth(firstDayOfMonth);
+       attendanceVO.setLastDayOfMonth(lastDayOfMonth);
        
        log.info(attendanceVO);
        System.out.println(s_id);
-       System.out.println(firstDayOfMonth1);
-       System.out.println(lastDayOfMonth1);
+       System.out.println(firstDayOfMonth);
+       System.out.println(lastDayOfMonth);
 	   
        List<AttendanceVO> result = service.getMonthlyAttendance(attendanceVO);
        log.info("결과 : "+result);

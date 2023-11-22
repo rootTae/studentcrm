@@ -12,16 +12,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AttendanceVO {
 	
-	String a_status;
-	String a_comment;
-	LocalDate a_date;
-	String class_name;
-	int s_id;
-	int count;
+	private String a_status;
+	private String a_comment;
+	private String a_date;
+	private String class_name;
+	private int s_id;
+	private int count;
 	
-	LocalDate month = LocalDate.now(); // 현재 월을 사용
-    LocalDate firstDayOfMonth = month.withDayOfMonth(1);
-    LocalDate lastDayOfMonth = month.withDayOfMonth(month.lengthOfMonth());
+	private String firstDayOfMonth;
+	private String lastDayOfMonth;
+	
+	/*
+	 * LocalDate month = LocalDate.now(); // 현재 월을 사용 LocalDate firstDayOfMonth =
+	 * month.withDayOfMonth(1); LocalDate lastDayOfMonth =
+	 * month.withDayOfMonth(month.lengthOfMonth());
+	 */
     
     
 }

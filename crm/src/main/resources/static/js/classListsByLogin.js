@@ -39,19 +39,6 @@
          console.log(data);
             if(data){
             callback(data);
-               /*let s_idArray = [];
-               let s_nameArray = [];
-               console.log(data.s_id);
-               console.log(data.s_name);
-               
-               $.each(data, function(index, item){
-                  s_idArray.push(item.s_id);
-               })
-               $.each(data, function(index, item){
-                  s_nameArray.push(item.s_name);
-               });
-               
-               callback(s_nameArra);*/
             }
          }).fail(function(xhr, status, err){
          console.log("errors")
@@ -90,12 +77,7 @@
      
     
    function updateStat(data, callback, error){
-      /*let requestData = {
-         s_id : data.s_id,
-         a_date : data.a_date,
-         a_status : data.a_status
-      };
-      */
+
       console.log("update.js");
       console.log(data);
       $.ajax({
@@ -120,19 +102,14 @@
       console.log("getMonthlyAttendance");
       console.log(data);
       let s_id = data.s_id;
-      console.log("GMTJS");
-      console.log(s_id);
       let firstDayOfMonth = data.firstDayOfMonth;
       let lastDayOfMonth = data.lastDayOfMonth;
-      console.log("GMTJS: LASTDAY");
-      console.log(lastDayOfMonth);
          
      $.ajax({
      type:'GET',
-     /*url:"/attendance/" + s_id +"/"+ firstDayOfMonth +"/"+ lastDayOfMonth,*/
-     url:"/attendance/" + s_id +"/"+ encodeURIComponent(firstDayOfMonth) + "/" + encodeURIComponent(lastDayOfMonth),
+     url:"/attendance/" + s_id +"/"+ firstDayOfMonth +"/"+ lastDayOfMonth,
+     //url:"/attendance/" + s_id +"/"+ encodeURIComponent(firstDayOfMonth) + "/" + encodeURIComponent(lastDayOfMonth),
      contentType: 'application/JSON;charset=UTF-8',
-     //data:JSON.stringify(data),
      success:function(result){
         if(result){
            callback(result);
@@ -141,28 +118,34 @@
      error:function(xhr, status, error){
         if(error){
            error();
-          
         }
      }
   });
      
   }
    
-   function readForUpdate(data, callback, error){
-      console.log("js:readForUpdate");
-      console.log(data);
-      $.getJSON("attendance/read/" + data.s_id +"/"+ data.a_date,
-         function(data){
-            if(data){
-               callback(data);
+   function readForUpdate(data, callback, error) {
+    console.log("js:readForUpdate");
+    console.log(data);
+    console.log(data.a_date);
+
+    $.ajax({
+        type: 'GET',
+        url: "/attendance/read",
+        contentType: 'application/json;charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result) {
+                callback(result);
             }
-      }).fail(function(xhr,status,err){
-         if(error){
-            error();
-            console.log(err);
-         }
-      })
-   }
+        },
+        error: function (xhr, status, err) {
+            if (error) {
+                error();
+            }
+        }
+    });
+}
 
    return{
       readInfo: readInfo,

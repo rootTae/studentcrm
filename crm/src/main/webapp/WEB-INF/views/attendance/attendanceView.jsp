@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 <%@page import="java.util.Arrays"%>
-=======
->>>>>>> branch 'develop' of https://github.com/rootTae/studentcrm.git
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -21,8 +18,10 @@
 <!-- partial:partials/_header.html -->
 <%@include file="/WEB-INF/views/include/_header.jsp" %>
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -54,7 +53,18 @@
          .memo > div {display:none; width:100px; padding: 10px; padding-bottom: 0px; box-sizing: border-box;} /* 안됨 */
          .memo div p {line-height: 10px; font-weight:normal;}
          .memo {font-weight: bold;}
-
+         
+         select {margin-right:10px;border-radius:2px;background-color:transparent;color:#fff;font-size:0.9rem;}
+         select option {color:#000}
+		.custom-swal-popup {
+		    border-radius: 20px;
+		}
+		
+		.custom-swal-title {
+		    color: #ff006e;
+		    font-size: 24px;
+		    font-weight: bold;
+		}
     </style>
     
     <script>
@@ -85,7 +95,8 @@
                    <div class="card">
                      <div class="card-body">
                        <h4 class="card-title">classes</h4>
-                       <p class="card-description">choose the class for which you want to check the attendance</p>
+                       <p class="card-description">출결체크 할 반을 아래에서 선택하세요.</p>
+                       <!-- choose the class for which you want to check the attendance -->
                        <table class="form-inline table">
                          <tr class="classList">
 
@@ -105,41 +116,44 @@
               </div>
                <div class="col-md-12 grid-margin stretch-card">
                    <div class="card">
-                     <div class="card-body">
+                     <div class="card-body table-responsive">
                        <h4 class="card-title">Attendance Sheet</h4>
-                       
-                       <button id="yearDropdownBtn">Select Year</button>
+                       <div class="row">
+                       <button class="btn btn-primary btn-fw" id="yearDropdownBtn"  style="margin-right:10px">Select Year</button>
                   <!-- 드롭다운 메뉴 -->
-                  <select id="yearDropdown" style="display: none;">
-                      <!-- 1부터 12까지의 옵션 추가 -->
-                      <option value="2021">2021</option>
-                      <option value="2022">2022</option>
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025">2025</option>
-                      <option value="2026">2026</option>
-                  </select>
-                       
-                       <button id="monthDropdownBtn">Select Month</button>
+		                  <select id="yearDropdown" class="" style="display: none;">
+		                      <!-- 1부터 12까지의 옵션 추가 -->
+		                      <option value="2021">2021</option>
+		                      <option value="2022">2022</option>
+		                      <option value="2023">2023</option>
+		                      <option value="2024">2024</option>
+		                      <option value="2025">2025</option>
+		                      <option value="2026">2026</option>
+		                  </select>
+		                       
+                     	  <button class="btn btn-primary btn-fw" id="monthDropdownBtn" style="margin-right:10px">Select Month</button>
                   <!-- 드롭다운 메뉴 -->
-                  <select id="monthDropdown" style="display: none;">
-                      <!-- 1부터 12까지의 옵션 추가 -->
-                      <option value="1">January</option>
-                      <option value="2">February</option>
-                      <option value="3">March</option>
-                      <option value="4">April</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">August</option>
-                      <option value="9">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
-                  </select>
-                  <button type="button" class="btn btn-outline-primary btn-icon-text submitBtn">
-                            <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit </button>   
-                       <p class="card-description">attend/late/absent/leave early</p>  
+		                  <select id="monthDropdown" style="display: none;">
+		                      <!-- 1부터 12까지의 옵션 추가 -->
+		                      <option value="1">January</option>
+		                      <option value="2">February</option>
+		                      <option value="3">March</option>
+		                      <option value="4">April</option>
+		                      <option value="5">May</option>
+		                      <option value="6">June</option>
+		                      <option value="7">July</option>
+		                      <option value="8">August</option>
+		                      <option value="9">September</option>
+		                      <option value="10">October</option>
+		                      <option value="11">November</option>
+		                      <option value="12">December</option>
+		                  </select>
+		                  <button type="button" class="btn btn-outline-primary btn-icon-text submitBtn">
+		                  
+                            <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit </button>  
+                             
+                       </div>
+                	       <p class="card-description mt-3">출석 : attend/ 지각 : late/ 결석 : absent/ 조퇴 : leave early</p>  
                         <!-- <form>  -->
                             <table class="table">
                                 <tr>
@@ -165,7 +179,7 @@
  <!-- container-scroller -->
  <!-- plugins:js -->
  <!-- inject:js -->
- <script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/chart.js/Chart.min.js"></script>
 <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- <script src="/assets/js/chartc.js"></script> -->
 <script src="/assets/js/off-canvas.js"></script>
@@ -173,6 +187,9 @@
 <script src="/assets/js/misc.js"></script>
 <script src="/assets/js/settings.js"></script>
 <script src="/assets/js/todolist.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
  <!-- endinject -->
  <!-- Custom js for this page -->
  <!-- End custom js for this page -->
@@ -188,11 +205,10 @@ document.getElementById('monthDropdownBtn').addEventListener('click', function()
     dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
 });
 
-// 옵션을 선택했을 때의 이벤트 처리
+
 document.getElementById('monthDropdown').addEventListener('change', function() {
     var selectedMonth = this.value;
-    alert('Selected Month: ' + selectedMonth);
-    // 여기서 선택된 월에 대한 작업을 수행할 수 있습니다.
+
 });
 
 document.getElementById('yearDropdownBtn').addEventListener('click', function() {
@@ -201,11 +217,10 @@ document.getElementById('yearDropdownBtn').addEventListener('click', function() 
     dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
 });
 
-// 옵션을 선택했을 때의 이벤트 처리
+
 document.getElementById('yearDropdown').addEventListener('change', function() {
     var selectedYear = this.value;
-    alert('Selected Year: ' + selectedYear);
-    // 여기서 선택된 월에 대한 작업을 수행할 수 있습니다.
+
 });
 
 function statusChange(cell) {
@@ -218,24 +233,8 @@ function statusChange(cell) {
    /* var isoDateString = new Date(year, month - 1, date).toISOString(); */
    var isoDateString = year+"-"+month+"-"+date;
    
-/*    var requested = { 
-          s_id: s_id,
-           a_date: isoDateString, 
-           a_status: a_status}; */
-   
    console.log("check"+a_status);
-   
-   /* updateStat({
-        s_id: studentName,
-        a_date: isoDateString, 
-        a_status: cell.className
-    }, function(response) {
-         alert('successfully updated');
-        console.log(a_date.toLocaleDateString());
-    }, function() {
-       alert('update failed');
-        console.error('Error updating status');
-    }); */
+           
    let prevStat = $(cell).children('span').text();
     console.log("prevStat");
     console.log(prevStat);
@@ -277,18 +276,13 @@ function statusChange(cell) {
          attendanceService.insertStat(requested,function(result){
         	 console.log(result);
          });
-         //return;
    } else {
       console.log('업데이트 실행');
          attendanceService.updateStat(requested, function(result){
         	 console.log(result);
          });
-         //return;
    } 
-       
-      //console.log("needed");
-      //attendanceService.updateStat(requested)
-      //console.log(a_status);
+   console.log($(this).find(".stat").text());    
 }
 
 function showStudentList(class_nameValue) {
@@ -299,15 +293,13 @@ function showStudentList(class_nameValue) {
     
     attendanceService.getStudentList({class_name: class_nameValue}, function(students){
         var studentsList = $('.studentsList');
-        /* studentsList.empty(); */
       studentsList.empty();
         var str = '';
       console.log(students);
         students.forEach(function(student){
             str += '<tr>';
             str += '<td class="' + student.s_id + '"><button class="showStat" style="width: 1px; height: 8px; border-radius: 50%; border: 1px solid #000; display: inline-block; vertical-align: middle;">&#8226;</button>' + student.s_id + '</td>';
-                   
-            //str += '<td class="' + student.s_id + '">'+student.s_id+'<div id="a_chart"></div></td>';
+            
             str += '<td class="memo">' + student.s_name+'<div></div></td>';
 
             for (var i = 1; i <= daysInMonth; i++){
@@ -317,8 +309,7 @@ function showStudentList(class_nameValue) {
             str += '</tr>';
         });
         studentsList.append(str);
-        memo();
-       // existedAttendanceSheet(); 
+        memo(); 
     });
     
     $('.submitBtn').on('click', function(e){
@@ -338,33 +329,42 @@ function showStudentList(class_nameValue) {
 
             students.forEach(function (student) {
                 str += '<tr>';
-                str += '<td class="' + student.s_id + '"><button class="showStat" style="width: 1px; height: 8px; border-radius: 50%; border: 1px solid #000; display: inline-block; vertical-align: middle;">&#8226;</button>' + student.s_id + '</td>';
+                str += '<td><button class="showStat" style="width: 1px; height: 8px; border-radius: 50%; border: 1px solid #000; display: inline-block; vertical-align: middle;">&#8226;</button>' + student.s_id + '</td>';
                 str += '<td class="memo">' + student.s_name + '<div></div></td>';
 
                 for (var i = 1; i <= daysInMonth; i++) {
                     var cellId = student.s_id + "_" + year + "_" + month + "_" + ((i < 10) ? '0' + i : i);
                     str += '<td id="' + cellId + '" class="white" onclick="statusChange(this)"><span class="stat"></span></td>';
-                    
-                    (function (s_id, a_date) {
-                        attendanceService.insertStat({ s_id: s_id, a_date: a_date }, function (dailyStatus) {
-                            console.log('Daily Status:', dailyStatus); 
+					
+                    //console.log(s_id);
+                   (function (s_id, a_date, a_status) {
+                    	var requested = {
+                    		s_id: s_id, 
+                    		a_date: a_date,
+                    		a_status: a_status
+                        }
+                    	console.log("희한");
+                        console.log(s_id);	
+                    	attendanceService.readForUpdate(requested , function (dailyStatus) {
+                            console.log('Daily Status:', dailyStatus.a_status);
+                            setDailyStatus(dailyStatus);
+                            
                         });
-                    })(student.s_id, year + "-" + month + "-" + ((i < 10) ? '0' + i : i));
+                    })(student.s_id, year + "-" + month + "-" + ((i < 10) ? '0' + i : i)); 
+					//console.log(student.a_date);
                 }
-
                 str += '</tr>';
             });
-
+            //getCntForOtherMonth(dailyStatus);
             studentsList.append(str);
+            
             memo();
         });
+        
     });
-    
-    
     
     $(document).ready(function () {
     	  	
-        // 학생 목록에 대한 이벤트 등록
         $('.studentsList').on('click', '.showStat', function(e){
             e.stopPropagation();
      
@@ -378,10 +378,10 @@ function showStudentList(class_nameValue) {
             var month = parts[2];
             var lastDayIng = new Date(year, month, 0);
             var lastDay = lastDayIng.getDate();
-			
-            /* doughnutPieData.datasets[0].data = [10, 20, 30, 40]; */
             
             console.log("마지막 날짜: "+lastDay);
+            var firstDayOfMonth = year+"-"+month+"-"+"01";
+            var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
             
             let data={
                 s_id: s_id, 
@@ -389,38 +389,43 @@ function showStudentList(class_nameValue) {
                 lastDayOfMonth: lastDayOfMonth
             }
             
-            var firstDayOfMonth = year+"-"+month+"-"+"01";
-            var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
+            console.log(data); 
             
             attendanceService.getMonthlyAttendance(data, function(statusList){
            
                 console.log("attendanceView: GMD");
-                console.log(firstDayOfMonth);
+                console.log(lastDayOfMonth);
                 getCntForEachStatus(statusList);
                 
-            });
-            
-                
+            });    
         });
-
-        // 초기 학생 목록 로드 및 이벤트 등록
-        /* showStudentList(); */
     });
     
+    function setDailyStatus(dailyStatus){
+    	var a_date = dailyStatus.a_date.replace(/-/g, '_');
+   		var cellId = $('#'+dailyStatus.s_id + '_' + a_date); 	
+   		var status = dailyStatus.a_status;
+   		console.log("setDailyStatus");
+   		
+   		console.log(cellId);
+   		console.log(status);
+   		console.log(cellId.html());
+   		if(status =='Attend'){
+   			$(cellId).removeClass('white').addClass('blue').find('span').text('Attend');	
+   		} else if(status ==='Late'){
+   			$(cellId).removeClass('white').addClass('orange').find('span').text('Late');
+   		} else if(status ==='Absent'){
+   			$(cellId).removeClass('white').addClass('red').find('span').text('Absent');
+   		} else if(status ==='Leave early'){
+   			$(cellId).removeClass('white').addClass('purple').find('span').text('Leave Early');
+   		}
+    }
+    
     function getCntForEachStatus(statusList) {
-    	/* $.ajax({
-    		url: '/chart',
-    		processData: false,
-			contentType: false,
-			type: 'GET',
-			dataType: 'json'
-    	})
-    	 */
+
     	console.log("인자값")
     	console.log(statusList);
     	console.log(statusList[0].a_status);
-    	
-    	//var chartdata = doughnutPieData.datasets[0].data;
     	
     	console.log(chartdata);
     	var chartdata = [0, 0, 0, 0];
@@ -431,12 +436,25 @@ function showStudentList(class_nameValue) {
     			chartdata[1] = statusList[i].count;
     		}else if(statusList[i].a_status === 'Absent') {
     			chartdata[2] = statusList[i].count;
-    		}else if(statusList[i].a_status === 'Leave Early') {
+    		}else if(statusList[i].a_status === 'Leave early') {
     			chartdata[3] = statusList[i].count;
     		}
     	}
     	
-    	//doughnutPieData.datasets[0].data = chartdata;
+    	if (chartdata[0] < (chartdata[1] + chartdata[2] + chartdata[3])) {
+    		Swal.fire({
+    	        icon: 'warning',
+    	        title: '학생 관리 필요',
+    	        html: '현재 출석 상태: 위험! 관리가 필요한 학생입니다.<br><br>',
+    	        showCloseButton: true,
+    	        showConfirmButton: false,
+    	        customClass: {
+    	            popup: 'custom-swal-popup',
+    	            title: 'custom-swal-title',
+    	        }
+    	    });
+        }
+	    	
     	 var doughnutPieData = {
 		    datasets: [{
 		        data: chartdata,
@@ -458,7 +476,6 @@ function showStudentList(class_nameValue) {
 		        ],
 		      }],
 
-		      // These labels appear in the legend and in the tooltips when hovering different arcs
 		      labels: [
 		        'Attend',
 		        'Late',
@@ -474,7 +491,7 @@ function showStudentList(class_nameValue) {
 		      animateRotate: true
 		    }
 		  };
-    	 //console.log(chart);
+
     	 if ($("#doughnutChart").length) {
    		    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
    		    var doughnutChart = new Chart(doughnutChartCanvas, {
@@ -483,48 +500,8 @@ function showStudentList(class_nameValue) {
    		      options: doughnutPieOptions
    		    });
    		  }
-    	 //doughnutPieData.datasets[0].data = [10,10,10,20,0,0];
-    	 
-    	/* doughnutPieData.data[1] = statusList[1].count;   
-    	doughnutPieData.data[2] = statusList[2].count;   
-    	doughnutPieData.data[3] = statusList[3].count;   */ 
     }
     
-
-    // 학생 목록을 업데이트할 때마다 호출되는 함수
-    <%-- function showStudentList() {
-        var daysInMonth = <%= daysInMonth %>;
-        var yearNow = <%= yearNow %>;
-        var monthNow = <%= monthNow %>;
-
-        // 새로운 학생 목록에 대한 이벤트 등록
-        $('.studentsList').on('click', '.showStat', function(e){
-            e.stopPropagation();
-            var cellId = $(this).parent().next().next().attr('id');
-            console.log(cellId);
-            var parts = cellId.split("_");
-
-            var s_id = parts[0];
-            var year = parts[1];
-            var month = parts[2];
-            var lastDayIng = new Date(year, month, 0);
-            var lastDay = lastDayIng.getDate();
-
-            console.log("마지막 날짜: "+lastDay);
-
-            var firstDayOfMonth = year+"-"+month+"-"+"01";
-            var lastDayOfMonth = year+"-"+month+"-"+ lastDay;
-            attendanceService.getMonthlyAttendance({
-                s_id:s_id, 
-                firstDayOfMonth:firstDayOfMonth, 
-                lastDayOfMonth:lastDayOfMonth
-            }, function(statusList){
-                console.log(s_id);
-                console.log(firstDayOfMonth);
-                console.log(statusList);
-            });
-        });
-    } --%>
    function memo() {
        
        $('.memo').on('click', function(e){
@@ -555,8 +532,6 @@ $(document).ready(function () {
    var a_status = "";
     var classListTR = $(".classList");
     var t_id = 1;
-    //console.log("classlist");
-   //console.log(t_id);
 
     attendanceService.getClassList({ t_id: t_id },
         function (list) {
@@ -574,18 +549,6 @@ $(document).ready(function () {
     
 });
 </script>
-<!-- plugins:js -->
-<!-- <script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/chartc.js"></script>
-<script src="/assets/js/off-canvas.js"></script>
-<script src="/assets/js/hoverable-collapse.js"></script>
-<script src="/assets/js/misc.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script> -->
-<!-- endinject -->
-<!-- Custom js for this page -->
-<!-- End custom js for this page -->   
    </body>
 </html>
 <%--> $('.studentList').on('click', 'readable', function(e){

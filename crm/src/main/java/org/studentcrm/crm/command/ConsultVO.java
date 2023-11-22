@@ -9,10 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConsultVO {
 	private int consult_id;
-	private String cunsult_status;
-	private String consultant;
-	private String consult_subject;
-	private String consult_content;
+	private int t_id;
+	private String t_name; //이용하는 것 없이 출력할 때 편의를 위해
 	private int s_id;
+	private String s_name; //이용하는 것 없이 출력할 때 편의를 위해
+	
+	private String consult_date;
+	private String consult_content;
+	
 	
 }

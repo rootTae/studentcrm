@@ -91,7 +91,7 @@ public class RegisterRestController {
 	}
 	
 	//수강신청 삭제
-	@DeleteMapping(value ="/{r_id}",
+	@DeleteMapping(value ="/class/{r_id}",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> registerRemove(@PathVariable("r_id") int r_id){
 		log.info("registerRemove" +r_id);

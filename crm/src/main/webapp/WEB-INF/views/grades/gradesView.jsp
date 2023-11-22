@@ -206,7 +206,7 @@
     $(document).ready(function(){
         var total = "";
         
-        
+        let nowbtn='';
         //지금 데이터 저장
         let nowename="";
         let noweid="";

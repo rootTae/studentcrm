@@ -1,5 +1,7 @@
 package org.studentcrm.crm.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +36,10 @@ public class PaymentRestController {
 
 	
 	//리스트 가져요기
-	@GetMapping(value = "/{startDate}/{endDate}",
+	@PostMapping(value = "/getlist",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<P_InformationVO>> getPaymentList(
-			@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate,
-			@RequestBody P_InformationVO vo){	
+	public ResponseEntity<List<P_InformationVO>> getPaymentList(@RequestBody P_InformationVO vo){
+		
 		return new ResponseEntity<List<P_InformationVO>>(pService.getPaymentList(vo), HttpStatus.OK);
 	}
 

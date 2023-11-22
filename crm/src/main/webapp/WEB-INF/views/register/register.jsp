@@ -178,6 +178,7 @@
         let savebtn = $(".savebtn");
         let cancelbtn = $(".cancelbtn");
        
+        nowbtn='';
        //수업 검색  
         $('#search').on('click', function(event){      
         	event.preventDefault();
@@ -413,6 +414,19 @@
 	    	    }
 	    	});
  
+	    	  deletebtn.on('click', function () {
+	              var checkedCheckbox = $('.R_checkbox:checked');
+	              if (checkedCheckbox.length > 0) {
+	                  
+	            	  var r_id = checkedCheckbox.closest("tr").find("input.R_r_id").val();
+	                  var s_id = checkedCheckbox.closest("tr").find("input.R_s_id").val();
+	                  
+	                  RegisterService.registerRemove(r_id, function () {              	 
+	                	  	getRegister(s_id);
+	                  });
+	              }
+	          });
+	    	
 
       
         // 버튼 show, hide

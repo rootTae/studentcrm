@@ -8,6 +8,7 @@
 	
 	//수강 신청
     function insertPayment(data, callback, error) {
+       console.log(data);
         $.ajax({
             type: 'post',
             url: '/paymentI/newPayment',
@@ -27,18 +28,26 @@
     }
        
     // 리스트 가져오기
-	 function getPaymentList(data,callback, error) {
-		
-	        $.getJSON("/paymentI/"+startDate+"/"+endDate, function(list) {
-	            if (callback) {
-	                callback(list);
-	            }
-	        }).fail(function(xhr, status, err) {          
-	            if (error) {
-	                error(err);
-	            }
-	        });
-	    }
+    function getPaymentList(data, callback, error) {
+	console.info(data);
+        $.ajax({
+            type: 'post',
+            url: '/paymentI/getlist',
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function (result, status, xhr) {
+                if (callback) {
+                    callback(result);
+                }
+            },
+            error: function (xhr, status, er) {
+                if (error) {
+                    error(er);
+                }
+            }
+        });
+    }
+	    
     
 	    //삭제
 	  function paymentRemove(p_id, callback, error){

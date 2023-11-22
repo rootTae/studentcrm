@@ -33,46 +33,54 @@
 				<h2>마이페이지입니다.</h2>
 				<h3>'${sessionScope.t_loginid }'님 로그인을 환영합니다.</h3>
 				
-				
-				
 				<a href="updatePage/${sessionScope.t_id }">회원정보 변경</a>
 				<a href="logout">로그아웃</a>
 			</div>
-			<div class="row">
-				<div class="col-md-6 grid-margin stretch-card">
-	                <div class="card">
-	                  <div class="card-body">
-	                    <h4 class="card-title">Default form</h4>
-	                    <p class="card-description"> Basic form layout </p>
-	                    <form class="forms-sample">
-	                      <div class="form-group">
-	                        <label for="exampleInputUsername1">Username</label>
-	                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username">
-	                      </div>
-	                      <div class="form-group">
-	                        <label for="exampleInputEmail1">Email address</label>
-	                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-	                      </div>
-	                      <div class="form-group">
-	                        <label for="exampleInputPassword1">Password</label>
-	                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-	                      </div>
-	                      <div class="form-group">
-	                        <label for="exampleInputConfirmPassword1">Confirm Password</label>
-	                        <input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Password">
-	                      </div>
-	                      <div class="form-check form-check-flat form-check-primary">
-	                        <label class="form-check-label">
-	                          <input type="checkbox" class="form-check-input"> Remember me <i class="input-helper"></i></label>
-	                      </div>
-	                      
-	                    </form>
-	                      <button type="submit" class="btn btn-primary mr-2" id="updateBtn">Update</button>
-	                      <button class="btn btn-dark" id="logoutBtn">Logout</button>
+			
+			<div class="page-header col-6">
+              <h3 class="page-title">사용자 정보</h3>
+            </div>
+          	<div class="card col-6 m-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">사용자 정보</h3>
+                <form action="/pages/updateForm" method="post" id="updateForm">
+                  <div class="row">
+	                  <div class="form-group col">
+	                    <label>아이디</label>
+	                    <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid" value="${teacher.t_loginid }" readonly>
 	                  </div>
-	                </div>
-	              </div>
-			</div><!-- /row -->
+                  </div>
+                  <div class="row">
+	                  <div class="form-group col">
+	                    <label>이름</label>
+	                    <input type="text" class="form-control p_input" id="t_name" name="t_name" value="${teacher.t_name }" readonly>
+	                  </div>
+	                  <div class="form-group col">
+	                    <label>지도 과목</label>
+	                    <input type="text" class="form-control p_input" id="t_subject" name="t_subject" value="${teacher.t_subject}" readonly>
+	                  </div>
+                  </div>
+                  <div class="row">
+	                  <div class="form-group col">
+	                    <label>담당 학급</label>
+	                    <input type="text" class="form-control p_input" id="t_class" name="t_class" value="${teacher.t_class }" readonly>
+	                  </div>
+	                  <div class="form-group col">
+	                    <label>전화번호</label>
+	                    <input type="text" class="form-control p_input" id="t_phone" name="t_phone" value="${teacher.t_phone }" readonly>
+	                  </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control p_input" id="t_email" name="t_email" value="${teacher.t_email }" readonly>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary mr-2" id="updateBtn" onclick="updateBtn()">Update</button>
+                    <button class="btn btn-dark" id="logoutBtn" onclick="logoutBtn()">Logout</button>
+                  </div>
+                </form>
+              </div>
+            </div>
              
           </div>
           <!-- content-wrapper ends -->
@@ -105,16 +113,17 @@
     	}
     	console.log("msg 없음");
     	
-        $("#logoutBtn").on("click", function(){
-        	console.log("click");
-        	alert("hey~");
-        });
+    	function updateBtn(){
+    		let t_id = ${sessionScope.t_id };
+    		location.href = "/member/updatePage/"+t_id;
+    	}
+    
         //버튼 온클릭으로 변경하기
-        /* function logoutBtn(){
+        function logoutBtn(){
         	if(confirm("로그아웃 하시겠습니까?")){
-        		location.href = "/logout";
+        		location.href = "/member/logout";
         	}
-        } */
+        } 
     </script>
     <%-- </c:if> --%>
   </body>

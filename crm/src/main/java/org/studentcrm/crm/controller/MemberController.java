@@ -44,8 +44,10 @@ public class MemberController {
 		}
 		
 		//마이페이지 화면 이동 처리
-		@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-		public String goMypage() {
+		@RequestMapping(value = "/mypage/{t_id}", method = RequestMethod.GET)
+		public String goMypage(@PathVariable("t_id") int t_id, Model model) {
+			TeacherVO vo = memberService.select(t_id);
+			model.addAttribute("teacher", vo);//마이페이지에 띄울 개인정보
 			return "member/mypage";
 		}
 		
@@ -111,13 +113,16 @@ public class MemberController {
 				RedirectAttributes RA) {
 			TeacherVO vo = memberService.login(t_loginid, t_pw);
 			//log.info(vo);
-			log.info(idCheck);
+			//log.info(idCheck);
 			Cookie userId = new Cookie("t_loginid", t_loginid);
 			userId.setMaxAge(30);
 			response.addCookie(userId);
 			
 			if(vo != null) {
-				log.info("로그인 성공");
+				//log.info("로그인 성공");
+				
+				//session.setAttribute("teacher", vo);
+				
 				session.setAttribute("t_id", vo.getT_id());
 				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
 				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
@@ -135,10 +140,11 @@ public class MemberController {
 				    check.setMaxAge(0);  // 쿠키 만료
 				    response.addCookie(check);
 				}
-				return "redirect:/member/mypage";
+				//return "redirect:/member/mypage";
+				return "redirect:/main";
 			}else {
-				log.info("로그인 실패");
-				RA.addFlashAttribute("msg", "login failed");
+				//log.info("로그인 실패");
+				RA.addFlashAttribute("msg", "로그인에 실패했습니다.");
 				return "redirect:/member/login";
 			}
 		}

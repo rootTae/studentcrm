@@ -1,21 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- partial:partials/_header.html -->
-<%@include file="/WEB-INF/views/partials/_header.jsp" %>
+<%@include file="/WEB-INF/views/include/_header.jsp" %>
 <!-- partial -->
   <body>
     <div class="container-scroller">
-      <!-- partial:/partials/_sidebar.html -->
-      <%@include file="/WEB-INF/views/partials/_sidebar.jsp" %>
+      <!-- partial:/include/_sidebar.html -->
+      <%@include file="/WEB-INF/views/include/_sidebar.jsp" %>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:/partials/_navbar.html -->
-        <%@include file="/WEB-INF/views/partials/_navbar.jsp" %>
+        <!-- partial:/include/_navbar.html -->
+        <%@include file="/WEB-INF/views/include/_navbar.jsp" %>
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-          	<h2>강사 정보 수정</h2>
-          	<div class="card w-100">
+          	<div class="page-header col-6">
+              <h3 class="page-title">사용자 정보 수정</h3>
+            </div>
+          	<div class="card col-6 m-auto">
               <div class="card-body px-5 py-5">
                 <h3 class="card-title text-left mb-3">Update</h3>
                 <form action="/pages/updateForm" method="post" id="updateForm">

@@ -27,6 +27,8 @@
    			}
    		}
    	}
+   	
+   	
 %>
 <!DOCTYPE html>
 <html>
@@ -49,6 +51,13 @@
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
   </head>
   <body>
+  	<script type="text/javascript">
+   		// alert('${msg}');
+   		if(!(${not empty msg} == "")) {
+	    	//console.log("msg 있음");
+	        alert('${msg}');
+    	}
+   	</script>
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="row w-100 m-0">
@@ -58,23 +67,23 @@
                 <h3 class="card-title text-left mb-3">Login</h3>
                 <form id="logform" action="loginForm" method="post">
                   <div class="form-group">
-                    <label>ID*</label>
+                    <label>아이디</label>
                  	 <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid"
    						 value="<%= id%>"></div>
                   <div class="form-group">
-                    <label>PASSWORD*</label>
+                    <label>비밀번호</label>
                     <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input type="checkbox" name="idCheck" class="form-check-input" value="y">Remember me</label>
+                        <input type="checkbox" name="idCheck" class="form-check-input" value="y">아이디 기억하기</label>
                     </div>
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn" onclick="location.href='mypage'">Login</button>
                   </div>
-                  <p class="sign-up">Don't have an Account?<a href="register" onclick="location.href='register'"> Sign Up</a></p>
+                  <p class="sign-up">등록 된 정보가 없습니까?<a href="register" onclick="location.href='register'"> Sign Up</a></p>
                 </form>
               </div>
             </div>
@@ -102,11 +111,11 @@
 
     <script type="text/javascript">
    		// alert('${msg}');
-   		if(!(${not empty msg} == "")) {
-	    	console.log("msg 있음");
+   		/* if(!(${not empty msg} == "")) {
+	    	//console.log("msg 있음");
 	        alert('${msg}');
-    	}
-    	console.log("msg 없음");
+    	} */
+    	//console.log("msg 없음");
   
         /* // Function to get cookie by name
         function getCookie(cookieName) {

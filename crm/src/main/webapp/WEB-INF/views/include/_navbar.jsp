@@ -13,7 +13,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
-            <p class="mb-0 d-none d-sm-block navbar-profile-name">${sessionScope.t_loginid }님</p>
+            <p class="mb-0 d-none d-sm-block navbar-profile-name"><i class="mdi mdi-account mr-2" style="vertical-align:middle;color:#00d25b"></i>${sessionScope.t_name }님 접속중</p>
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
         </a>

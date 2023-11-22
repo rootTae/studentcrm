@@ -91,7 +91,7 @@ public class MemberController {
 		public String updateForm(HttpSession session, TeacherVO vo, RedirectAttributes RA) {
 			vo.setT_id((int)session.getAttribute("t_id"));
 			int result = memberService.update(vo);
-			
+			int t_id = vo.getT_id();
 //			System.out.println(vo.getT_id());
 			if(result == 1) {
 				RA.addFlashAttribute("msg", "update success");
@@ -100,7 +100,7 @@ public class MemberController {
 			}else {
 				RA.addFlashAttribute("msg", "update failed");
 			}
-			return "redirect:/member/mypage";
+			return "redirect:/member/mypage/"+t_id;
 		}
 		
 		//login - 로그인 폼 기능(TeacherVO를 반환받기 -> 업데이트 할 때 t_id가 필요함)

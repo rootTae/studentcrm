@@ -15,14 +15,14 @@
             <img class="img-xs rounded-circle " src="/assets/images/faces/face15.jpg" alt="">
             <span class="count bg-success"></span>
           </div> -->
-          <div class="profile-name ml-0 row" style="text-align: center;">
-          	<div class="col-md-4">
+          <div class="profile-name ml-0 row">
+          	<div class="pl-0 pr-0">
           		<button type="button" class="btn btn-outline-primary" style="line-height: 10px; font-size: 12px; margin-bottom: 10px;">${sessionScope.t_subject }</button>
           	</div>
-          	<div class="col-md-4" >
+          	<div class="col-md-8" >
             	<h5 class="mb-0 font-weight-normal">${sessionScope.t_name }</h5>
             </div>
-            <div class="col-md-12" style="text-align: left;">
+            <div class="col-md-12 pl-0" style="text-align: left;">
             	<span class="classList"></span>
             </div>
            </div>
@@ -50,6 +50,14 @@
       </a>
     </li>
     <li class="nav-item menu-items">
+      <a class="nav-link" href="/register/register">
+        <span class="menu-icon">
+          <i class="mdi mdi-lead-pencil"></i>
+        </span>
+        <span class="menu-title">수강 신청 관리</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
       <a class="nav-link" href="/attendance/attendanceView">
         <span class="menu-icon">
           <i class="mdi mdi-calendar-check"></i>
@@ -66,7 +74,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="/member/mypage">
+      <a class="nav-link" href="/member/mypage/${sessionScope.t_id }">
         <span class="menu-icon">
           <i class="mdi mdi-account-card-details"></i>
         </span>

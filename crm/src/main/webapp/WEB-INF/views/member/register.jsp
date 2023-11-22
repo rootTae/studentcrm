@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>ACA2023</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
@@ -31,41 +31,41 @@
                   <div class="row">
 	                  <div class="form-group col d-flex">
 		                  <div style="width: 100%;">
-		                    <label>ID</label>
+		                    <label>아이디*</label>
 		                    <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid">
 		                  </div>
 	                  </div>
-	                  <div class="form-group col-2 d-flex">
+	                  <div class="form-group col-3 d-flex pl-0">
 	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="CheckId()"><br>
 					</div>
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>PASSWORD</label>
+	                    <label>비밀번호*</label>
 	                    <input type="password" class="form-control p_input" id="t_pw" name="t_pw">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>Confirm the password</label>
+	                    <label>비밀번호 확인*</label>
 	                    <input type="password" class="form-control p_input" id="pwCheck" name="pwCheck">
 	                  </div>
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>Name</label>
+	                    <label>이름*</label>
 	                    <input type="text" class="form-control p_input" id="t_name" name="t_name">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>Subjects</label>
+	                    <label>강의 과목*</label>
 	                    <input type="text" class="form-control p_input" id="t_subject" name="t_subject">
 	                  </div>
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>Teaching classes</label>
+	                    <label>담당 학급</label>
 	                    <input type="text" class="form-control p_input" id="t_class" name="t_class">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>Phone #</label>
+	                    <label>전화번호</label>
 	                    <input type="text" class="form-control p_input" id="t_phone" name="t_phone">
 	                  </div>
                   </div>
@@ -73,17 +73,10 @@
                     <label>Email</label>
                     <input type="email" class="form-control p_input" id="t_email" name="t_email">
                   </div>
-                  <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Remember me </label>
-                    </div>
-                    <a href="#" class="forgot-pass">Forgot password</a>
-                  </div>
                   <div class="text-center">
                     <button type="button" class="btn btn-primary btn-block enter-btn" onclick="joinCheck()">Join</button>
                   </div>
-                  <p class="sign-up text-center">Already have an Account?<a href="login"> Sign In</a></p>
+                  <p class="sign-up text-center">이미 등록 된 정보가 있습니까?<a href="login"> Sign In</a></p>
                 </form>
               </div>
             </div>
@@ -143,12 +136,14 @@
 		if(!$("#t_loginid").attr("readonly")) {
 			alert("아이디 중복체크를 해야 합니다.");
 		}else if($("#t_pw").val().length < 1){
-			alert("비밀번호를 입력하세요!");
+			alert("비밀번호를 입력하세요");
 		}else if($("#t_pw").val() !== $("#pwCheck").val()){
-			alert("비밀번호 확인란을 확인해주세요!")
+			alert("비밀번호 확인란을 확인해주세요")
 			$("#t_pwCheck").focus();
 		}else if($("#t_name").val().length < 1){
-			alert("이름을 입력하세요!");
+			alert("이름은 필수 입력 항목입니다.");
+		}else if($("#t_subject").val().length < 1){
+			alert("강의 과목은 필수 입력 항목입니다.");
 		}else if(confirm("회원 가입을 하시겠습니까?")){
 			$("#regForm").submit();
 		}

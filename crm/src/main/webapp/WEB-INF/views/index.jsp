@@ -8,8 +8,8 @@
 		.aca_func .mdi {font-size:5em;}
 		.mdi-account-multiple {color:#8f5fe8}
 		.mdi-book-open-page-variant {color:#ffab00}
-		.mdi-calendar-check {color:#fc424a}
-		.mdi-lead-pencil {color:#0090e7}
+		.mdi-calendar-check {color:#0090e7}
+		.mdi-lead-pencil {color:#fc424a}
 	</style>
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->

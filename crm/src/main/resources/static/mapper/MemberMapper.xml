@@ -11,9 +11,14 @@
 	</insert>
 	
 	<!-- update -->
-	<update id="update" parameterType="org.studentcrm.crm.command.TeacherVO">
+	<!-- <update id="update" parameterType="org.studentcrm.crm.command.TeacherVO">
 		update teacher set t_loginid = #{t_loginid}, t_name = #{t_name}, t_subject = #{t_subject}, 
 		t_class=#{t_class}, t_pw=#{t_pw}, t_phone=#{t_phone}, t_email=#{t_email}
+		where t_id = #{t_id}
+	</update> -->
+	<update id="update" parameterType="org.studentcrm.crm.command.TeacherVO">
+		update teacher set t_name = #{t_name}, t_subject = #{t_subject}, 
+		t_class=#{t_class}, t_phone=#{t_phone}, t_email=#{t_email}
 		where t_id = #{t_id}
 	</update>
 	

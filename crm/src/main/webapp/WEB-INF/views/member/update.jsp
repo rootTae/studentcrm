@@ -14,26 +14,29 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-          	<div class="page-header col-6">
+          	<div class="page-header col-6 mx-auto">
               <h3 class="page-title">사용자 정보 수정</h3>
             </div>
           	<div class="card col-6 m-auto">
               <div class="card-body px-5 py-5">
                 <h3 class="card-title text-left mb-3">Update</h3>
-                <form action="/pages/updateForm" method="post" id="updateForm">
+                <form action="/member/updateForm" method="post" id="updateForm">
                   <div class="row">
 	                  <div class="form-group col">
 	                    <label>아이디</label>
 	                    <input type="text" class="form-control p_input" id="t_loginid" name="t_loginid" value="${teacher.t_loginid }" readonly>
 	                  </div>
+	                  <!-- <div class="form-group col-2 d-flex p-0">
+	                    <input type="button" class="form-control p_input align-self-end" value="중복체크" onclick="CheckId()"><br>
+					  </div> -->
                   </div>
                   <div class="row">
 	                  <div class="form-group col">
-	                    <label>이름</label>
+	                    <label>이름*</label>
 	                    <input type="text" class="form-control p_input" id="t_name" name="t_name" value="${teacher.t_name }">
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>지도 과목</label>
+	                    <label>강의 과목*</label>
 	                    <input type="text" class="form-control p_input" id="t_subject" name="t_subject" value="${teacher.t_subject}">
 	                  </div>
                   </div>
@@ -51,23 +54,13 @@
                     <label>Email</label>
                     <input type="email" class="form-control p_input" id="t_email" name="t_email" value="${teacher.t_email }">
                   </div>
-                  <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Remember me </label>
-                    </div>
-                    <a href="#" class="forgot-pass">Forgot password</a>
-                  </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary mr-2" onclick="updateCheck()">Update</button>
-                    <button type="button" class="btn btn-dark" onclick="teacherDelete()">Delete</button>
-                  </div>
                 </form>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary mr-2" onclick="updateCheck()">Update</button>
+                  <button type="button" class="btn btn-dark" onclick="teacherDelete()">Delete</button>
+                </div>
               </div>
             </div>
-          
-          
-          
           
           </div>
           <!-- content-wrapper ends -->
@@ -92,10 +85,42 @@
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
     <script type="text/javascript">
+    
+	    /* function CheckId() {
+			var id = $("#t_loginid").val(); //id태그 value에 접근
+			var userId = {"t_loginid" : id}; //전송할 데이터의 key값 : value설정
+				
+			if(id.length < 4) {
+				alert("아이디는 4글자 이상 입력하세요");
+			} else {
+			  	$.ajax({
+			  		type : "post",     //요청 형식
+			  		url : "/member/checkId",   //요청할 주소
+			  		data : userId,//서버에 전송할 데이터  json형식 {key:value}
+			  		dataType : "json", //서버의 요청후 리턴해 주는 타입 
+			  		error : function(request, error) {
+			  			alert(error + "\n" + request.status);		
+			  		},
+			  		success : function(result) { 
+						console.log("성공실패여부:" + result);
+			  				
+			  			if(result == 1) { //중복되는 아이디가 존재함
+			  				alert("이미 존재하는 아이디 입니다");
+			  			} else {
+			  				alert("사용가능한 아이디 입니다");
+			  				$("#t_loginid").attr("readonly", true);
+			  			}
+					}
+			  	});
+			} //end else
+			//console.log(userId);
+		}  */
 	  
 	  	function updateCheck() {
 			if($("#t_name").val().length < 1){
 				alert("이름은 필수 입력 항목입니다.");
+			}else if($("#t_subject").val().length < 1){
+				alert("강의 과목은 필수 입력 항목입니다.");
 			}else if(confirm("수정 하시겠습니까?")){
 				$("#updateForm").submit();
 			}
@@ -103,7 +128,7 @@
 	  	
 	  	function teacherDelete() {
 	  		if(confirm('탈퇴 하시겠습니까?')){
-		  		location.href='/pages/delete';
+		  		location.href='/member/delete';
 	  		};
 	  	}
 	</script>

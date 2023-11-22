@@ -19,6 +19,12 @@
 %>
 <!-- partial -->
   <body>
+  	 <script type="text/javascript">
+    	if(!(${not empty msg} == "")) {
+	    	//console.log("msg 있음");
+	        alert('${msg}');
+    	}
+    </script>
     <div class="container-scroller">
       <!-- partial:/include/_sidebar.html -->
       <%@include file="/WEB-INF/views/include/_sidebar.jsp" %>
@@ -32,12 +38,9 @@
           	<div>
 				<h2>마이페이지입니다.</h2>
 				<h3>'${sessionScope.t_loginid }'님 로그인을 환영합니다.</h3>
-				
-				<a href="updatePage/${sessionScope.t_id }">회원정보 변경</a>
-				<a href="logout">로그아웃</a>
 			</div>
 			
-			<div class="page-header col-6">
+			<div class="page-header col-6 mx-auto">
               <h3 class="page-title">사용자 정보</h3>
             </div>
           	<div class="card col-6 m-auto">
@@ -56,7 +59,7 @@
 	                    <input type="text" class="form-control p_input" id="t_name" name="t_name" value="${teacher.t_name }" readonly>
 	                  </div>
 	                  <div class="form-group col">
-	                    <label>지도 과목</label>
+	                    <label>강의 과목</label>
 	                    <input type="text" class="form-control p_input" id="t_subject" name="t_subject" value="${teacher.t_subject}" readonly>
 	                  </div>
                   </div>
@@ -74,11 +77,11 @@
                     <label>Email</label>
                     <input type="email" class="form-control p_input" id="t_email" name="t_email" value="${teacher.t_email }" readonly>
                   </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary mr-2" id="updateBtn" onclick="updateBtn()">Update</button>
-                    <button class="btn btn-dark" id="logoutBtn" onclick="logoutBtn()">Logout</button>
-                  </div>
                 </form>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary mr-2" id="updateBtn" onclick="location.href='/member/updatePage/${teacher.t_id}'">Update</button>
+                  <button type="button" class="btn btn-dark" id="logoutBtn" onclick="logoutBtn()">Logout</button>
+                </div>
               </div>
             </div>
              
@@ -107,11 +110,11 @@
     <!-- End custom js for this page -->
     <%-- <c:if test="${not empty msg}"> --%>
     <script type="text/javascript">
-    	if(!(${not empty msg} == "")) {
-	    	console.log("msg 있음");
+    	/* if(!(${not empty msg} == "")) {
+	    	//console.log("msg 있음");
 	        alert('${msg}');
-    	}
-    	console.log("msg 없음");
+    	} */
+    	//console.log("msg 없음");
     	
     	function updateBtn(){
     		let t_id = ${sessionScope.t_id };

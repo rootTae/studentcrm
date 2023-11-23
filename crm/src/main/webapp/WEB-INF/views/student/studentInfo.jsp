@@ -759,7 +759,7 @@
 			
 			let regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png)$");
 			let maxSize = 5242880; //5MB
-			let uploadResult = $(".uploadResult ul");
+			let uploadResult = $(".uploadResult ul");//이 변수랑 ul 없어도 될거 같은데?
 			
 			//업로드 제한 - 사이즈, 확장자
 			function checkExtenstion(fileName, fileSize){

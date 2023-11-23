@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="org.studentcrm.crm.mapper.TeacherImageAttachMapper">
+ 	<!-- 사용자 사진 첨부 -->
+  	<insert id="insert">
+		insert into t_img_attach (t_id, uuid, uploadpath, filename, filetype)
+		values (#{t_id}, #{uuid}, #{uploadPath}, #{fileName}, #{fileType})
+	</insert>
+
+	<delete id="delete">
+		delete from t_img_attach where uuid = #{uuid}
+	</delete>
+	
+	<!-- 사용자 사진 찾기 -->
+	<select id="findByTid" resultType="org.studentcrm.crm.command.TeacherImageAttachVO">
+		select * from t_img_attach where t_id = #{t_id}
+	</select>
+	
+	<!-- 게시글 삭제시 전체 첨부파일이 삭제 되어야 함 -->
+	<!-- 사용자 사진 삭제 -->
+	<delete id="deleteDB">
+		delete from t_img_attach where t_id=#{t_id}
+	</delete>
+ </mapper>

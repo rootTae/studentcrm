@@ -27,5 +27,5 @@ public class StudentVO {
    private String s_memo;
    
    //첨부 파일 관련 멤버
-   private ImageAttachVO attachImg; 
+   private ImageAttachVO attachImg; //테이블엔 없고 여기에만 있는 필드값.
 }

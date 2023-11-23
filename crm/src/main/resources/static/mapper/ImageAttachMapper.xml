@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
  <mapper namespace="org.studentcrm.crm.mapper.ImageAttachMapper">
+ 	<!-- 학생 사진 첨부 -->
   	<insert id="insert">
 		insert into img_attach (s_id, uuid, uploadpath, filename, filetype)
 		values (#{s_id}, #{uuid}, #{uploadPath}, #{fileName}, #{fileType})
@@ -12,12 +13,14 @@
 	<delete id="delete">
 		delete from img_attach where uuid = #{uuid}
 	</delete>
-
+	
+	<!-- 학생 사진 찾기 -->
 	<select id="findBySid" resultType="org.studentcrm.crm.command.ImageAttachVO">
 		select * from img_attach where s_id = #{s_id}
 	</select>
 	
 	<!-- 게시글 삭제시 전체 첨부파일이 삭제 되어야 함 -->
+	<!-- 학생 사진 삭제 -->
 	<delete id="deleteDB">
 		delete from img_attach where s_id=#{s_id}
 	</delete>

@@ -14,12 +14,15 @@ import lombok.ToString;
 @Getter
 @Setter
 public class TeacherVO {
-   int t_id;
-   String t_loginid;
-   String t_name;
-   String t_subject;
-   String t_class;
-   String t_pw;
-   String t_phone;
-   String t_email;
+	private int t_id;
+	private String t_loginid;
+	private String t_name;
+	private String t_subject;
+	private String t_class;
+	private String t_pw;
+	private String t_phone;
+	private String t_email;
+   
+   //첨부 파일 관련 멤버
+   private TeacherImageAttachVO attachImg; 
 }

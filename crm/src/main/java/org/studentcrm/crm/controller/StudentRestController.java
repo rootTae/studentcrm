@@ -75,7 +75,7 @@ public class StudentRestController {
 		
 		//log.info("이미지 데이터 >>>>>>"+ vo.getAttachImg());
 		if(vo.getAttachImg() != null) {
-			log.info("첨부한 이미지가 있음!!!!");
+			//log.info("첨부한 이미지가 있음!!!!");
 			vo.getAttachImg();
 		}
 		
@@ -140,7 +140,7 @@ public class StudentRestController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertCommute(@RequestBody CommuteVO vo){
-		log.info(vo);
+		//log.info(vo);
 		
 		int result = cService.insertCommute(vo);
 		return result == 1 ?
@@ -156,8 +156,8 @@ public class StudentRestController {
 			@RequestBody CommuteVO vo,
 			@PathVariable("s_id") int s_id){
 		//vo.setS_id(s_id);
-		log.info("통학정보 >>>>>>>>");
-		log.info(s_id);
+		//log.info("통학정보 >>>>>>>>");
+		//log.info(s_id);
 		int result = cService.updateCommute(vo);
 		return result == 1
 				?new ResponseEntity<String>("success", HttpStatus.OK)

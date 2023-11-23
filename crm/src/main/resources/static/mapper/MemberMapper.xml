@@ -41,5 +41,10 @@
 	<select id="select" parameterType="int" resultType="org.studentcrm.crm.command.TeacherVO">
 		select * from teacher where t_id = #{t_id}
 	</select>
+	
+	<!-- 최근 추가된 t_id 가져오기 -->
+	<select id="getLastId">
+        select last_insert_id() as t_id
+    </select>
 
 </mapper>

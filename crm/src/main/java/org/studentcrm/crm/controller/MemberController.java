@@ -1,11 +1,17 @@
 package org.studentcrm.crm.controller;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.studentcrm.crm.command.ImageAttachVO;
+import org.studentcrm.crm.command.TeacherImageAttachVO;
 import org.studentcrm.crm.command.TeacherVO;
 import org.studentcrm.crm.service.MemberService;
 
@@ -51,6 +59,13 @@ public class MemberController {
 			return "member/mypage";
 		}
 		
+		//강사 번호에 맞는 첨부 파일 가져오기
+		@GetMapping(value="/getAttachImg", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<TeacherImageAttachVO> getAttachImg(int t_id){
+			//log.info("get Attach : "+sService.getAttachImg(s_id));
+			return new ResponseEntity<>(memberService.getAttachImg(t_id), HttpStatus.OK);
+		}
+		
 //		//수정 화면 이동 처리
 //		@RequestMapping(value = "/update", method = RequestMethod.GET)
 //		public String goUpdate() {
@@ -70,6 +85,13 @@ public class MemberController {
 		@PostMapping("/regForm")
 		public String registForm(TeacherVO vo, RedirectAttributes RA) {
 			int result = memberService.regist(vo);
+			//log.info("넘길 데이터 정보 : "+vo);
+			
+			if(vo.getAttachImg() != null) {
+				//log.info("첨부한 이미지가 있음!!!!");
+				vo.getAttachImg();
+			}			
+			
 			if(result == 1) {
 				RA.addFlashAttribute("msg", "register success");
 			}else {
@@ -87,12 +109,18 @@ public class MemberController {
 		}
 
 		//updateForm - 강사 정보 수정 폼
-		@RequestMapping(value="/updateForm", method = RequestMethod.POST)
+		@PostMapping("/updateForm")
 		public String updateForm(HttpSession session, TeacherVO vo, RedirectAttributes RA) {
+			log.info("업데이트 실행");
+			log.info(vo);
+			
 			vo.setT_id((int)session.getAttribute("t_id"));
 			int result = memberService.update(vo);
 			int t_id = vo.getT_id();
+			
+			log.info("업데이트 실행 : "+result);
 //			System.out.println(vo.getT_id());
+			
 			if(result == 1) {
 				RA.addFlashAttribute("msg", "update success");
 				//session.setAttribute("t_id", vo.getT_id()); 
@@ -112,17 +140,11 @@ public class MemberController {
 				HttpServletResponse response,
 				RedirectAttributes RA) {
 			TeacherVO vo = memberService.login(t_loginid, t_pw);
-			//log.info(vo);
-			//log.info(idCheck);
 			Cookie userId = new Cookie("t_loginid", t_loginid);
 			userId.setMaxAge(30);
 			response.addCookie(userId);
 			
 			if(vo != null) {
-				//log.info("로그인 성공");
-				
-				//session.setAttribute("teacher", vo);
-				
 				session.setAttribute("t_id", vo.getT_id());
 				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
 				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
@@ -152,10 +174,41 @@ public class MemberController {
 		//delete 
 		@GetMapping("/delete")
 		public String delete(HttpSession session) {
-			memberService.delete((int)session.getAttribute("t_id"));
+			int t_id = (int)session.getAttribute("t_id");
+			TeacherImageAttachVO attachImg = memberService.getAttachImg(t_id);
+			
+			int result = memberService.delete(t_id);
+			if(result == 1) {
+				deleteFiles(attachImg);
+			}
 			session.invalidate();
 			return "member/login";
 		}
+		//첨부 파일 삭제
+		private void deleteFiles(TeacherImageAttachVO attachImg) {
+			log.info("삭제할 attachImg >>>>>>>>> ");
+			log.info(attachImg);
+			//첨부파일이 있는지 확인
+			if(attachImg == null) {
+				return;
+			}
+			
+			try {
+				Path file = Paths.get("C:/upload/"+attachImg.getUploadPath()+"\\"
+						+attachImg.getUuid()+"_"+attachImg.getFileName());
+				//해당 파일이 존재하면 삭제
+				Files.deleteIfExists(file);//java.nio.Files
+				
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbnail = Paths.get("C:/upload/"+attachImg.getUploadPath()+
+							"/s_"+attachImg.getUuid()+"_"+attachImg.getFileName());
+					//썸네일 이미지 파일 삭제
+					Files.deleteIfExists(thumbnail);
+				}
+			} catch (Exception e) {
+				log.error("delete file error :"+e.getMessage());
+			}
+		 }
 		
 		//로그아웃 
 		@RequestMapping("/logout")

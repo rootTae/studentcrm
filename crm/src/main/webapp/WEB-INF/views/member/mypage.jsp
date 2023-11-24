@@ -176,7 +176,7 @@
     	//console.log("msg 없음");
     	
     	function updateBtn(){
-    		let t_id = ${sessionScope.t_id };
+    		let t_id = ${sessionScope.teacher.t_id };
     		location.href = "/member/updatePage/"+t_id;
     	}
     

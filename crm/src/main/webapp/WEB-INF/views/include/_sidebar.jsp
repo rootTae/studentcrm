@@ -17,13 +17,13 @@
           </div> -->
           <div class="profile-name ml-0 row">
           	<div class="pl-0 pr-0">
-          		<button type="button" class="btn btn-outline-primary" style="line-height: 10px; font-size: 12px; margin-bottom: 10px;">${sessionScope.t_subject }</button>
+          		<button type="button" class="btn btn-outline-primary" style="line-height: 10px; font-size: 12px; margin-bottom: 10px;">${sessionScope.teacher.t_subject }</button>
           	</div>
-          	<div class="col-md-8" >
-            	<h5 class="mb-0 font-weight-normal">${sessionScope.t_name }</h5>
+          	<div class="col" >
+            	<h5 class="mb-0 font-weight-normal">${sessionScope.teacher.t_name }</h5>
             </div>
             <div class="col-md-12 pl-0" style="text-align: left;">
-            	<span class="classList"></span>
+            	<span class="classList">${sessionScope.teacher.t_class }</span>
             </div>
            </div>
           </div>
@@ -88,7 +88,7 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script type="text/javascript" src="/js/classListsByLogin.js"></script>
 <script type="text/javascript">
-$(document).ready(function () {
+/* $(document).ready(function () {
     var classListSpan = $(".classList");
     var t_id = ${sessionScope.t_id};
     //console.log("classlist");
@@ -106,5 +106,5 @@ $(document).ready(function () {
             classListSpan.html(str);
         });
 	
-});
+}); */
 </script>

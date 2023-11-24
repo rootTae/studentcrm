@@ -111,14 +111,16 @@ public class MemberController {
 		//updateForm - 강사 정보 수정 폼
 		@PostMapping("/updateForm")
 		public String updateForm(HttpSession session, TeacherVO vo, RedirectAttributes RA) {
-			log.info("업데이트 실행");
-			log.info(vo);
+			//log.info("업데이트 실행");
+			//log.info(vo);
 			
-			vo.setT_id((int)session.getAttribute("t_id"));
+			//vo.setT_id((int)session.getAttribute("t_id"));
+			TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
+			vo.setT_id(teacher.getT_id());
 			int result = memberService.update(vo);
 			int t_id = vo.getT_id();
 			
-			log.info("업데이트 실행 : "+result);
+			//log.info("업데이트 실행 : "+result);
 //			System.out.println(vo.getT_id());
 			
 			if(result == 1) {
@@ -145,10 +147,12 @@ public class MemberController {
 			response.addCookie(userId);
 			
 			if(vo != null) {
-				session.setAttribute("t_id", vo.getT_id());
-				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
-				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
-				session.setAttribute("t_subject", vo.getT_subject());
+				//하나씩 넘기지말고 vo에 담아서 한번에 넘기기
+				session.setAttribute("teacher", vo);
+//				session.setAttribute("t_id", vo.getT_id());
+//				session.setAttribute("t_loginid", vo.getT_loginid());//수정, 삭제 대상 구분용
+//				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
+//				session.setAttribute("t_subject", vo.getT_subject());
 				//log.info("login 이후 mypage로 갈 vo 확인 "+vo);
 				RA.addFlashAttribute("msg", "login success");
 				if(idCheck != null) {
@@ -174,7 +178,9 @@ public class MemberController {
 		//delete 
 		@GetMapping("/delete")
 		public String delete(HttpSession session) {
-			int t_id = (int)session.getAttribute("t_id");
+			//int t_id = (int)session.getAttribute("t_id");
+			TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
+			int t_id = teacher.getT_id();
 			TeacherImageAttachVO attachImg = memberService.getAttachImg(t_id);
 			
 			int result = memberService.delete(t_id);
@@ -186,8 +192,8 @@ public class MemberController {
 		}
 		//첨부 파일 삭제
 		private void deleteFiles(TeacherImageAttachVO attachImg) {
-			log.info("삭제할 attachImg >>>>>>>>> ");
-			log.info(attachImg);
+			//log.info("삭제할 attachImg >>>>>>>>> ");
+			//log.info(attachImg);
 			//첨부파일이 있는지 확인
 			if(attachImg == null) {
 				return;

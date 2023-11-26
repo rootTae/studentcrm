@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <nav class="navbar p-0 fixed-top d-flex flex-row">
   <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
     <a class="navbar-brand brand-logo-mini" href="/main"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
@@ -13,7 +14,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
-            <p class="mb-0 d-none d-sm-block navbar-profile-name"><i class="mdi mdi-account mr-2" style="vertical-align:middle;color:#00d25b"></i>${sessionScope.teacher.t_name }님 접속중</p>
+            <p class="mb-0 d-none d-sm-block navbar-profile-name"><i class="mdi mdi-account-circle" style="vertical-align:middle;"></i>${sessionScope.teacher.t_name }님 접속중</p>
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
         </a>

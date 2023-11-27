@@ -8,14 +8,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsultVO {
-	private int consult_id;
-	private int t_id;
-	private String t_name; //이용하는 것 없이 출력할 때 편의를 위해
-	private int s_id;
-	private String s_name; //이용하는 것 없이 출력할 때 편의를 위해
-	
-	private String consult_date;
-	private String consult_content;
-	
-	
+   private int consult_id;
+   private int t_id;
+   private int s_id;
+   
+   //상담 기준일 설정
+   private String consult_firstDay;
+   private String consult_lastDay;
+   
+   private String consult_date;
+   private String consult_title;
+   private String consult_content;
+   
+   // join
+   private String t_name;
+   private String s_name;
+   
 }

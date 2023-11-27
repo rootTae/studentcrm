@@ -145,7 +145,7 @@
 			                            </div>
 			                            
 		                            </div>  
-	                            </div><!-- /row -->
+	                            </div><!-- /col-sm-12 -->
 	                            
 	                          </div>
 	                          	                          
@@ -229,8 +229,20 @@
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">최초 등록일</label>
 	                            <div class="col-sm-12">
-	                              <input type='text' class="form-control" name='reg_date' id='reg_date'>
-	                            </div>
+	                           
+		                            <div class="col p-0 input-daterange input-group date_box">
+	                                	<input type='text' class="form-control" name='reg_date' id='reg_date' placeholder='yyyy-mm-dd'>
+			                            <div class="calendar_btn">
+				                            <div class="col-auto pr-0 pl-0 d-flex align-items-center h-100">
+				                              <label for="reg_date" class="mb-0 btn btn-primary h-100">
+			                 						 <i class="mdi mdi-calendar mr-0"></i>
+			                 				  </label>
+				                            </div>
+			                            </div>
+			                            
+		                            </div>  
+	                            </div><!-- /col-sm-12 -->
+	                            
 	                          </div>
 	                        </div>
 	                        
@@ -244,8 +256,20 @@
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">최초 수업일</label>
 	                            <div class="col-sm-12">
-	                              <input type='text' class="form-control" name='first_date' id='first_date'>
-	                            </div>
+	                           
+		                            <div class="col p-0 input-daterange input-group date_box">
+		                                <input type='text' class="form-control" name='first_date' id='first_date' placeholder='yyyy-mm-dd'>
+			                            <div class="calendar_btn">
+				                            <div class="col-auto pr-0 pl-0 d-flex align-items-center h-100">
+				                              <label for="first_date" class="mb-0 btn btn-primary h-100">
+			                 						 <i class="mdi mdi-calendar mr-0"></i>
+			                 				  </label>
+				                            </div>
+			                            </div>
+			                            
+		                            </div>  
+	                            </div><!-- /col-sm-12 -->
+	                            
 	                          </div>
 	                        </div>
 	                      </div>
@@ -350,10 +374,17 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			//============== 데이트 피커 ===============
-			$(".birth_date").datepicker({
+			/* $(".birth_date").datepicker({
 				format: 'yyyy-mm-dd',
 				autoclose: true,
 				todayHighlight: true
+			}); */
+			$(".date_box").each(function() {
+			    $(this).datepicker({
+			        format: 'yyyy-mm-dd',
+			        autoclose: true,
+			        todayHighlight: true
+			    });
 			});
 			
 			//============== 학생 정보 검색 ===============
@@ -726,6 +757,7 @@
 				
 				studentForm.find("input:not('#s_id, .file-upload-info')").prop('readonly', false);
 				studentForm.find("input[type='radio']").prop('disabled', false);
+				$(".date_box input").prop('disabled', false);//datepicker 마우스 클릭 허용
 				$("#s_memo").prop('readonly', false); 
 				
 				$("#commuteInfo").find("input").prop('readonly', false);

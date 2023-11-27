@@ -19,18 +19,27 @@ public class StudentInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 //		Integer t_id = (Integer)session.getAttribute("t_id");
 		TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
-		int t_id = teacher.getT_id();
-		//log.info("t_id"+t_id);
 		
-		if(t_id == -1) {
+		if(teacher == null) {
 			response.sendRedirect("/member/login");
-			//log.info("t_id"+t_id);
 			return false;
-			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 
 		}else {
 			return true;
-			// 의미는 핸들러메서드를 실행한 후에 Controller를 수행한다는 의미... 
 		}
+		
+		//log.info("teacher : "+teacher);
+		//int t_id = teacher.getT_id();
+		
+//		if(t_id == -1) {
+//			response.sendRedirect("/member/login");
+//			//log.info("t_id"+t_id);
+//			return false;
+//			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 
+//		}else {
+//			return true;
+//			// 의미는 핸들러메서드를 실행한 후에 Controller를 수행한다는 의미... 
+//		}
+		
 	}
 
 	// preHandler에서 true를 리턴하여, 컨트롤러를 실행했을 때만 동작함.... 

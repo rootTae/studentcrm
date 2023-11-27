@@ -119,6 +119,7 @@ public class MemberController {
 			vo.setT_id(teacher.getT_id());
 			int result = memberService.update(vo);
 			int t_id = vo.getT_id();
+			session.setAttribute("teacher", vo);
 			
 			//log.info("업데이트 실행 : "+result);
 //			System.out.println(vo.getT_id());

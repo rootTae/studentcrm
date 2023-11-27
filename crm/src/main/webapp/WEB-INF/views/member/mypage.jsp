@@ -135,8 +135,8 @@
 	                    </form>
 	                    
 	                    <div class="text-center">
-		                  <button type="button" class="btn btn-primary mr-2" id="updateBtn" onclick="location.href='/member/updatePage/${teacher.t_id}'">Update</button>
-		                  <button type="button" class="btn btn-dark" id="logoutBtn" onclick="logoutBtn()">Logout</button>
+		                  <button type="button" class="btn btn-primary mr-2" id="updateBtn" onclick="location.href='/member/updatePage/${teacher.t_id}'">정보수정</button>
+		                  <button type="button" class="btn btn-info" id="logoutBtn" onclick="logoutBtn()">로그아웃</button>
 		                </div>
 		                
 	                   </div>

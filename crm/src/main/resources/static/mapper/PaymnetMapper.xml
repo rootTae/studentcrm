@@ -15,12 +15,12 @@
 	delete from p_information where p_id = #{p_id}
 </delete>
 
-<!-- 수정 -->
 <update id="updatePayment" parameterType="org.studentcrm.crm.command.P_InformationVO">
-        update p_information set p_date = #{p_date}, p_form=${p_form}, p_status=${p_status}
-        where p_id = #{p_id}
-    </update>
-    
+    UPDATE p_information p
+    JOIN register r ON r.r_id = p.r_id
+    SET p.p_date = #{p_date}, p.p_form = #{p_form}, p.p_status = #{p_status}
+    WHERE p_id = #{p_id};
+</update>
 
 
 <!-- 학생번호로 학생시험점수 리스트  -->

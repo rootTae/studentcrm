@@ -410,6 +410,8 @@
                     getRegister(s_id);
 	    	        btnShow3();
 	    	    } else {
+					var s_id = nowsid;	    	
+                    getRegister(s_id);
 	    	        btnShow3();
 	    	    }
 	    	});

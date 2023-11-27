@@ -108,7 +108,7 @@ public class GradesController {
 		@RequestMapping(method = {RequestMethod.PUT , RequestMethod.PATCH},
 				value ="/elist/{e_id}",
 				consumes = "application/json",
-		        produces = {MediaType.APPLICATION_JSON_VALUE})
+		        produces = {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> examModify(
 				@RequestBody ExamVO vo,
 				@PathVariable("e_id") int e_id){

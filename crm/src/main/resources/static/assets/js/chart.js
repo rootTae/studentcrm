@@ -1,43 +1,25 @@
-function clearChart(chartInstance) {
-  if (chartInstance && chartInstance.data && chartInstance.data.datasets) {
-    // 그래프의 데이터를 빈 배열로 설정하여 지우기
-    chartInstance.data.datasets.forEach(function(dataset) {
+var clearChart =(function(chartInstance) {
+  if (chartInstance) {
+      chartInstance.destroy();
+
+    chartInstance.datasets.data.forEach(function(dataset) {
       dataset.data = [];
     });
 
-    // 그래프 업데이트
-    chartInstance.update();
   }
-}
+})
 
 var getChart=(function(chartData) {
 
   'use strict';
 
-var barChart; // 변수를 선언하여 차트 인스턴스를 저장할 곳
-var multiLineCanvas; // 변수를 선언하여 차트 인스턴스를 저장할 곳
+var barChartCanvas; // 변수를 선언하여 차트 인스턴스를 저장할 곳
+var multiLineCanvas ; // 변수를 선언하여 차트 인스턴스를 저장할 곳
 
 // clearChart 함수 호출
-  clearChart(barChart);
+  clearChart(barChartCanvas);
   clearChart(multiLineCanvas);
-  
-  console.log(chartData.korScore);
-   var barChartCanvas = $("#barChart").get(0).getContext("2d");
-  barChart = new Chart(barChartCanvas, {
-    type: 'bar',
-    data: data, // 여기에 적절한 데이터를 설정해야 합니다.
-    options: options // 옵션 설정
-  });
-
-  // lineChartMulti 초기화
-  var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
-  lineChart = new Chart(multiLineCanvas, {
-    type: 'line',
-    data: multiLineData, // 여기에 적절한 데이터를 설정해야 합니다.
-    options: options // 옵션 설정
-  });
-  
-
+ 
   var data = {
   	labels: ["국어", "영어", "수학", "평균"],
     datasets: [{

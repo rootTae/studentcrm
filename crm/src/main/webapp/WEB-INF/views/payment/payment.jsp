@@ -44,8 +44,6 @@
                       <table class="table" id="studentTable">
                         <thead>
                           <tr>
-                            <th>                         
-                            </th>
                             <th>학생 번호</th>
 		                    <th>학생 이름</th>
 		                    <th>성별</th>
@@ -198,10 +196,7 @@ $(document).ready(function(){
             studentList.empty();
 
             student.forEach(function(student) {
-            	var str = '<tr>' +
-                '<td><div class="form-check form-check-muted m-0">'+
-                '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
-                '<i class="input-helper"></i></label></div></td>'+  
+            	var str = '<tr>' +            
                     '<td><input type="text" class="is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
                     '<td><input type="text" class="is_s_name" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
                     '<td><input type="text" class="is_s_gender" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
@@ -221,7 +216,7 @@ $(document).ready(function(){
         	let data = {
         			 startDate : $('#startDate').val(),
                 	 endDate : $('#endDate').val(),
-                	 s_id : $('studentId').val()		
+                	 s_id : $('#studentId').val()		
         	}        	
         
         	getPayment(data);        	
@@ -368,8 +363,8 @@ $(document).ready(function(){
 	        //수정
 	 		  function upPayment(callback) {
 	 			 var checkedCheckbox = $('.P_checkbox:checked');
-	              if (checkedCheckbox.length > 0) {
-	        	
+	              if (checkedCheckbox.length > 0) {	        	
+	            	  
 	        	let data ={
 		    			p_id : checkedCheckbox.closest("tr").find("input.p_id").val(),  
 		            	s_id : checkedCheckbox.closest("tr").find("input.s_id").val(),
@@ -379,8 +374,9 @@ $(document).ready(function(){
 		            	r_id : checkedCheckbox.closest("tr").find("input.r_id").val(),
 		            	class_name : checkedCheckbox.closest("tr").find("input.class_name").val()
 		            }    	   
+	        	console.log(data);
 
-		    	   RegisterService.registerModify(data, function (result) {
+		    	   PaymentService.paymentModify(data, function (result) {
 		                if (result == "success") {
 		                    alert('수정에 성공하셨습니다.');
 		                    
@@ -394,8 +390,7 @@ $(document).ready(function(){
 		                }
 		            });
 		        }  
-	        }
-   
+	        } 
 	 		  
 	 			// 취소
 	    	cancelbtn.on("click", function () {
@@ -412,7 +407,13 @@ $(document).ready(function(){
 	    	    	                   
 	    	        btnShow3();
 	    	    } else {
+	    	    	let data  = { startDate : $('#startDate').val(),
+	                         endDate : $('#endDate').val(),
+	                         s_id : $('#studentId').val() }
+		                    
+		                    getPayment(data);
 	    	        btnShow3();
+	    	        
 	    	    }
 	    	});
 	 

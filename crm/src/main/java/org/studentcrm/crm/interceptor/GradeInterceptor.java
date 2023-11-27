@@ -6,16 +6,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.studentcrm.crm.command.TeacherVO;
 
 public class GradeInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("PreHandle 동작!");
+		//System.out.println("PreHandle 동작!");
 		HttpSession session = request.getSession();
-		Integer t_id = (Integer)session.getAttribute("t_id");
+		//Integer t_id = (Integer)session.getAttribute("t_id");
+		TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
+		int t_id = teacher.getT_id();
 		
-		if(t_id == null) {
+		if(t_id == -1) {
 			response.sendRedirect("/member/login");
 			return false;
 			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 
@@ -30,7 +33,7 @@ public class GradeInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		System.out.println("PostHandle!");
+		//System.out.println("PostHandle!");
 		
 //		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}

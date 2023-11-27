@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.studentcrm.crm.command.TeacherVO;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	@Override
@@ -13,11 +14,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 			throws Exception {
 		System.out.println("PreHandle 동작!");
 		HttpSession session = request.getSession();
-		String t_id = (String)session.getAttribute("t_id");
-		System.out.println("t_id at logininterceptor: " + t_id);
-		if(t_id == null) {
+		//String t_id = (String)session.getAttribute("t_id");
+		TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
+		int t_id = teacher.getT_id();
+		//System.out.println("t_id at logininterceptor: " + t_id);
+		if(t_id == -1) {
 			response.sendRedirect("/member/login");
-			System.out.println("t_id at logininterceptor when null: " + t_id);
+			//System.out.println("t_id at logininterceptor when null: " + t_id);
 			return false;
 			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 
 		}else {
@@ -31,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		System.out.println("PostHandle!");
+		//System.out.println("PostHandle!");
 		
 //		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}

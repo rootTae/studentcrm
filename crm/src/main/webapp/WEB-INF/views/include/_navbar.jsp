@@ -14,7 +14,9 @@
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
-            <p class="mb-0 d-none d-sm-block navbar-profile-name"><i class="mdi mdi-account-circle" style="vertical-align:middle;"></i>${sessionScope.teacher.t_name }님 접속중</p>
+            <p class="mb-0 d-none d-sm-block navbar-profile-name">
+            	<i class="mdi mdi-account-circle" style="vertical-align:middle;"></i>
+            	${sessionScope.teacher.t_name }님 접속중</p>
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
         </a>

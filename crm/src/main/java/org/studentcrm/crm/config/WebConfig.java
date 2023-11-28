@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.studentcrm.crm.interceptor.AttendanceInterceptor;
 import org.studentcrm.crm.interceptor.GradeInterceptor;
+import org.studentcrm.crm.interceptor.IndexInterceptor;
 import org.studentcrm.crm.interceptor.LoginInterceptor;
 import org.studentcrm.crm.interceptor.PaymentInterceptor;
 import org.studentcrm.crm.interceptor.StudentInterceptor;
@@ -20,6 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new IndexInterceptor())
+		.addPathPatterns("/");
 		registry.addInterceptor(new LoginInterceptor())
 			.addPathPatterns("/member/update")
 			.addPathPatterns("/member/myPage");

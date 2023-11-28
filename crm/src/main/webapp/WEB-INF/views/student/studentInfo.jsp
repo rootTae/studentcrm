@@ -35,10 +35,10 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 정보 검색</h4>
-                    <p class="card-description">학생의 이름 혹은 학번을 입력해 주세요.</p>
+                    <p class="card-description">학생명 혹은 학생번호를 입력해 주세요.</p>
                     <form class="form-inline">
                       <input type="text" class="form-control mb-2 mr-sm-2" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 or 학번">
-                      <button type="submit" class="btn btn-primary mb-2" id="searchBtn">검색</button>
+                      <button type="submit" class="btn btn-primary mb-2 input-btn" id="searchBtn">검색</button>
                     </form>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">검색 결과</h4>
-                    <p class="card-description">클릭 시 상세 정보 보기</p>
+                    <p class="card-description">검색 결과 선택 시 상세 정보를 볼 수 있습니다.</p>
                     
 					<ul class="search_list" style='padding:0;list-style:none'></ul>
 					
@@ -110,7 +110,7 @@
 	                        
 	                        <div class="col-md-4">
 	                          <div class="form-group">
-	                            <label class="col-sm-12 col-form-label">이름</label>
+	                            <label class="col-sm-12 col-form-label">학생명</label>
 	                            <div class="col-sm-12">
 	                              <input type='text' class="form-control" name='s_name' id='s_name'>
 	                            </div>
@@ -160,7 +160,7 @@
 	                        
 	                        <div class="col-md-4">
 	                          <div class="form-group">
-	                            <label class="col-sm-12 col-form-label">학번 <code style="font-size:12px">입력, 수정불가</code></label>
+	                            <label class="col-sm-12 col-form-label">학생번호 <code style="font-size:12px">입력, 수정불가</code></label>
 	                            <div class="col-sm-12">
 	                              <input type='text' class="form-control" name='s_id' id='s_id' readonly>
 	                            </div>

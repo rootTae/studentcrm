@@ -9313,6 +9313,8 @@ fieldset:disabled .wizard > .actions a,
 .wizard > .actions fieldset:disabled a {
   pointer-events: none; }
 
+.page-body-wrapper .input-btn {height:38px;}
+
 .btn-primary, .wizard > .actions a {
   color: #fff;
   background-color: #0090e7;

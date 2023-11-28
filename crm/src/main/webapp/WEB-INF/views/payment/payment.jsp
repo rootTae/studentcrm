@@ -22,13 +22,13 @@
             </div>          
            
        		<div class="row">
-         		<div class="col-3 grid-margin stretch-card">
+         		<div class="col-5 grid-margin stretch-card ">
             		<div class="card">
            				<div class="card-body">
            					<h4 class="card-title">학생 정보 검색</h4>
-			                  <p class="card-description">학생의 이름 입력해 주세요.</p>
+			                  <p class="card-description">학생명을 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
-				                  <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_name" required placeholder="학생이름">
+				                  <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_name" required placeholder="학생명">
 				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
                   			  </form>
                 		</div>
@@ -36,7 +36,7 @@
             	</div>
 	          
 	          
-              <div class="col-9 grid-margin">
+              <div class="col-7 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 검색 결과</h4>
@@ -45,7 +45,7 @@
                         <thead>
                           <tr>
                             <th>학생 번호</th>
-		                    <th>학생 이름</th>
+		                    <th>학생명</th>
 		                    <th>성별</th>
 		                    <th>전화번호</th>
 		                    <th>학교</th>
@@ -63,10 +63,10 @@
             </div>
            
         <div class="row">   
-		 <div class="col-md-6 grid-margin stretch-card">
+		 <div class="col-md-5 grid-margin stretch-card">
 		  <div class="card">
 		    <div class="card-body">
-		      <h4 class="card-title">결제정보 검색</h4>
+		      <h4 class="card-title">결제 정보 검색</h4>
 		      <div class="form-group row">
 		      <div class="col-md-6">
 		       <div class="input-daterange input-group" id="datepicker">
@@ -101,11 +101,13 @@
                   <div class="card-body">
                     <h4 class="card-title">결제 정보 검색 결과</h4>
                     <div class="table-responsive">
+                     <div class="col-md-4 ml-auto text-right">
 	                    <button type="button" class="insertbtn btn btn-primary" style="display: none">추가</button>
-			        	<button type="button" class="updatebtn btn btn-primary" style="display: none">수정</button>
-			        	<button type="button" class="deletebtn btn btn-primary" style="display: none">삭제</button>
-			        	<button type="button" class="savebtn" style="display: none">저장</button>
-				        <button type="button" class="cancelbtn" style="display: none">취소</button>
+			        	<button type="button" class="updatebtn btn btn-secondary" style="display: none">수정</button>
+			        	<button type="button" class="deletebtn btn btn-info" style="display: none">삭제</button>
+			        	<button type="button" class="savebtn btn btn-primary" style="display: none">저장</button>
+				        <button type="button" class="cancelbtn btn btn-info" style="display: none">취소</button>
+				        </div>
                       <table class="table" id="">
                         <thead>
                           <tr>
@@ -113,7 +115,7 @@
                             </th>
                             <th hidden>결제 관리 번호</th>
                             <th hidden>등록 관리 번호</th>
-                            <th>학번</th>
+                            <th>학생번호</th>
                             <th>학생명</th>
 		                    <th>금액</th>
 		                    <th>결제상태</th>
@@ -197,12 +199,12 @@ $(document).ready(function(){
 
             student.forEach(function(student) {
             	var str = '<tr>' +            
-                    '<td><input type="text" class="is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
-                    '<td><input type="text" class="is_s_name" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
-                    '<td><input type="text" class="is_s_gender" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
-                    '<td><input type="text" class="is_s_phone" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
-                    '<td><input type="text" class="is_s_school" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
-                    '<td><input type="text" class="is_s_grade" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
+                    '<td><input type="text" class="is_s_id form-control" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
+                    '<td><input type="text" class="is_s_name form-control" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
+                    '<td><input type="text" class="is_s_gender form-control" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
+                    '<td><input type="text" class="is_s_phone form-control" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
+                    '<td><input type="text" class="is_s_school form-control" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
+                    '<td><input type="text" class="is_s_grade form-control" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
                     '</tr>';        
                 studentList.append(str);
             });
@@ -237,15 +239,15 @@ $(document).ready(function(){
                     '<i class="input-helper"></i></label></div></td>' +
                     '<td hidden><input type="text" class="p_id" name="p_id" value="' + payment.p_id  + '" readonly></td>' + // 수정된 부분
                     '<td hidden><input type="text" class="r_id" name="r_id" value="' + payment.r_id  + '" readonly></td>' + 
-                    '<td ><input type="text" class="s_id" name="s_id" readonly value="' + payment.s_id  + '"> </td>' +
-                    '<td><input type="text" class="s_name" name="s_name" readonly value="' + payment.s_name  + '"></td>' +
-                    '<td><input type="text" class="payment" name="payment" readonly value="' + payment.payment  + '"></td>' +
-                    '<td><input type="text" class="p_status" name="p_status" readonly value="' + payment.p_status  + '"></td>' +
-                    '<td><input type="text" class="p_form" name="p_form" readonly value="' + payment.p_form + '"></td>' +
-                    '<td><input type="text" class="p_date" name="p_date" readonly value="' + payment.p_date + '"></td>' +
-                    '<td><input type="text" class="class_name" name="class_name" readonly value="' + payment.class_name + '"></td>' +
-                    '<td><input type="text" class="c_startdate" name="c_startdate" readonly value="' + payment.c_startdate + '"></td>' +
-                    '<td><input type="text" class="c_enddate" name="c_enddate" readonly value="' + payment.c_enddate + '"></td>' +
+                    '<td ><input type="text" class="s_id form-control" name="s_id" readonly value="' + payment.s_id  + '"> </td>' +
+                    '<td><input type="text" class="s_name form-control" name="s_name" readonly value="' + payment.s_name  + '"></td>' +
+                    '<td><input type="text" class="payment form-control" name="payment" readonly value="' + payment.payment  + '"></td>' +
+                    '<td><input type="text" class="p_status form-control" name="p_status" readonly value="' + payment.p_status  + '"></td>' +
+                    '<td><input type="text" class="p_form form-control" name="p_form" readonly value="' + payment.p_form + '"></td>' +
+                    '<td><input type="text" class="p_date form-control" name="p_date" readonly value="' + payment.p_date + '"></td>' +
+                    '<td><input type="text" class="class_name form-control" name="class_name" readonly value="' + payment.class_name + '"></td>' +
+                    '<td><input type="text" class="c_startdate form-control" name="c_startdate" readonly value="' + payment.c_startdate + '"></td>' +
+                    '<td><input type="text" class="c_enddate form-control" name="c_enddate" readonly value="' + payment.c_enddate + '"></td>' +
                     '</tr>';        
                        paymentList.append(str);
                  });
@@ -286,15 +288,15 @@ $(document).ready(function(){
                  '<i class="input-helper"></i></label></div></td>' +
                  '<td hidden><input type="text" class="add_p_id" name="add_p_id" readonly></td>' + // 수정된 부분
                  '<td hidden><input type="text" class="add_r_id" name="add_r_id" value="' + payment.r_id  + '" readonly></td>' + 
-                 '<td ><input type="text" class="add_s_id" name="add_s_id" readonly value="' + payment.s_id  + '"> </td>' +
-                 '<td><input type="text" class="add_s_name" name="add_s_name" readonly value="' + payment.s_name  + '"></td>' +
-                 '<td><input type="text" class="add_payment" name="add_payment" readonly value="' + payment.payment  + '"> </td>' +
-                 '<td><input type="text" class="add_p_status" name="add_p_status" ></td>' +
-                 '<td><input type="text" class="add_p_form" name="add_p_form" ></td>' +
-                 '<td><input type="text" class="add_p_date" name="add_p_date" ></td>' +
-                 '<td hidden><input type="text" class="add_class_name" name="add_class_name" ></td>' +
-                 '<td hidden><input type="text" class="add_c_startdate" name="add_c_startdate"></td>' +
-                 '<td hidden><input type="text" class="add_c_enddate" name="add_c_enddate"></td>' +
+                 '<td ><input type="text" class="add_s_id form-control" name="add_s_id" readonly value="' + payment.s_id  + '"> </td>' +
+                 '<td><input type="text" class="add_s_name form-control" name="add_s_name" readonly value="' + payment.s_name  + '"></td>' +
+                 '<td><input type="text" class="add_payment form-control" name="add_payment" readonly value="' + payment.payment  + '"> </td>' +
+                 '<td><input type="text" class="add_p_status form-control" name="add_p_status" ></td>' +
+                 '<td><input type="text" class="add_p_form form-control" name="add_p_form" ></td>' +
+                 '<td><input type="text" class="add_p_date form-control" name="add_p_date" ></td>' +
+                 '<td hidden><input type="text" class="add_class_name form-control" name="add_class_name" ></td>' +
+                 '<td hidden><input type="text" class="add_c_startdate form-control" name="add_c_startdate"></td>' +
+                 '<td hidden><input type="text" class="add_c_enddate form-control" name="add_c_enddate"></td>' +
                  '</tr>';    
 	              paymentList.append(str);            
 		     }

@@ -28,8 +28,10 @@
                   <div class="card-body">
                     <h4 class="card-title">수업 검색</h4>
                     <div class="table-responsive">
+                     <div class="col-md-4 ml-auto text-right">
 				    <button type="button" class="btn btn-primary mb-2" id="search">검색</button>
-				    <button type="button" class="btn btn-primary mb-2" id="cancel">취소</button>                	
+				    <button type="button" class="btn btn-info mb-2" id="cancel">취소</button>
+				    </div>                	
                       <table class="table" id="ClassTable">
                         <thead>
                           <tr>
@@ -54,7 +56,7 @@
             
             
        		<div class="row">
-         		<div class="col-3 grid-margin stretch-card">
+         		<div class="col-5 grid-margin stretch-card">
             		<div class="card">
            				<div class="card-body">
            					<h4 class="card-title">학생 정보 검색</h4>
@@ -68,7 +70,7 @@
             	</div>
 	          
 	          
-              <div class="col-9 grid-margin">
+              <div class="col-7 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 검색 결과</h4>
@@ -101,14 +103,14 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">수강신청 리스트</h4>
+                    <h4 class="card-title">수강 신청 리스트</h4>
                     <div class="table-responsive">
-                    <div>
-	                    <button type="button" class="insertbtn" >추가</button>
-				        <button type="button" class="updatebtn" >수정</button>
-				        <button type="button" class="deletebtn" >삭제</button>
-				        <button type="button" class="savebtn" style="display: none">저장</button>
-				        <button type="button" class="cancelbtn" style="display: none">취소</button>
+                     <div class="col-md-4 ml-auto text-right">
+	                    <button type="button" class="insertbtn btn btn-primary" style="display: none">추가</button>
+				        <button type="button" class="updatebtn btn btn-secondary" style="display: none">수정</button>
+				        <button type="button" class="deletebtn btn btn-info" style="display: none">삭제</button>
+				        <button type="button" class="savebtn btn btn-primary" style="display: none">저장</button>
+				        <button type="button" class="cancelbtn btn btn-info" style="display: none">취소</button>
 				    </div>
                       <table class="table" id="registerTable">
                         <thead>
@@ -191,12 +193,12 @@
             		
             	list.forEach(function(class_){
                  	var str = '<tr>' +  
-                         '<td><input type="text" class="class_name" name="class_name" readonly value="'+ class_.class_name +'"></td>' +
-                         '<td><input type="text" class="t_name" name="t_name" readonly value="'+ class_.t_name +'"></td>' +
-                         '<td><input type="text" class="classroom" name="classroom"  readonly value="'+ class_.classroom +'"></td>' +
-                         '<td><input type="text" class="c_period" name="c_period" readonly value="'+ class_.c_period +'"></td>' +
-                         '<td><input type="text" class="c_startdate" name="c_startdate" readonly value="'+ class_.c_startdate +'"></td>' +
-                         '<td><input type="text" class="c_enddate" name="c_enddate" readonly value="'+ class_.c_enddate + '"></td>' +
+                         '<td><input type="text" class="class_name form-control" name="class_name" readonly value="'+ class_.class_name +'"></td>' +
+                         '<td><input type="text" class="t_name form-control" name="t_name" readonly value="'+ class_.t_name +'"></td>' +
+                         '<td><input type="text" class="classroom form-control" name="classroom"  readonly value="'+ class_.classroom +'"></td>' +
+                         '<td><input type="text" class="c_period form-control" name="c_period" readonly value="'+ class_.c_period +'"></td>' +
+                         '<td><input type="text" class="c_startdate form-control" name="c_startdate" readonly value="'+ class_.c_startdate +'"></td>' +
+                         '<td><input type="text" class="c_enddate form-control" name="c_enddate" readonly value="'+ class_.c_enddate + '"></td>' +
                          '</tr>';        
                       class_List.append(str);
                  });
@@ -229,12 +231,12 @@
                     '<td><div class="form-check form-check-muted m-0">'+
                     '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
                     '<i class="input-helper"></i></label></div></td>'+  
-                        '<td><input type="text" class="is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
-                        '<td><input type="text" class="is_s_name" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
-                        '<td><input type="text" class="is_s_gender" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
-                        '<td><input type="text" class="is_s_phone" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
-                        '<td><input type="text" class="is_s_school" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
-                        '<td><input type="text" class="is_s_grade" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
+                        '<td><input type="text" class="is_s_id form-control" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
+                        '<td><input type="text" class="is_s_name form-control" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
+                        '<td><input type="text" class="is_s_gender form-control" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
+                        '<td><input type="text" class="is_s_phone form-control" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
+                        '<td><input type="text" class="is_s_school form-control" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
+                        '<td><input type="text" class="is_s_grade form-control" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
                         '</tr>';        
                     studentList.append(str);
                 });
@@ -282,14 +284,14 @@
                             '<label class="form-check-label"><input type="checkbox" class="form-check-input R_checkbox">' +
                             '<i class="input-helper"></i></label></div></td>' +
                             '<td hidden><input type="text" class="R_r_id" name="R_r_id" value="' + register.r_id + '" readonly></td>' + // 수정된 부분
-                            '<td ><input type="text" class="R_s_id" name="R_s_id" readonly value="' + register.s_id + '"> </td>' +
-                            '<td><input type="text" class="R_s_name" name="R_s_name" readonly value="' + register.s_name + '"></td>' +
-                            '<td><input type="text" class="R_class_name" name="R_class_name" readonly value="' + register.class_name + '"></td>' +
-                            '<td><input type="text" class="R_t_name" name="R_t_name" readonly value="' + register.t_name + '"></td>' +
-                            '<td><input type="text" class="R_classroom" name="R_classroom" readonly value="' + register.classroom + '"></td>' +
-                            '<td><input type="text" class="R_c_period" name="R_c_period" readonly value="' + register.c_period + '"></td>' +
-                            '<td><input type="text" class="R_c_startdate" name="R_c_startdate" readonly value="' + register.c_startdate + '"></td>' +
-                            '<td><input type="text" class="R_c_enddate" name="R_c_enddate" readonly value="' + register.c_enddate + '"></td>' +
+                            '<td ><input type="text" class="R_s_id form-control" name="R_s_id" readonly value="' + register.s_id + '"> </td>' +
+                            '<td><input type="text" class="R_s_name form-control" name="R_s_name" readonly value="' + register.s_name + '"></td>' +
+                            '<td><input type="text" class="R_class_name form-control" name="R_class_name" readonly value="' + register.class_name + '"></td>' +
+                            '<td><input type="text" class="R_t_name form-control" name="R_t_name" readonly value="' + register.t_name + '"></td>' +
+                            '<td><input type="text" class="R_classroom form-control" name="R_classroom" readonly value="' + register.classroom + '"></td>' +
+                            '<td><input type="text" class="R_c_period form-control" name="R_c_period" readonly value="' + register.c_period + '"></td>' +
+                            '<td><input type="text" class="R_c_startdate form-control" name="R_c_startdate" readonly value="' + register.c_startdate + '"></td>' +
+                            '<td><input type="text" class="R_c_enddate form-control" name="R_c_enddate" readonly value="' + register.c_enddate + '"></td>' +
                             '</tr>';
                         registerList.append(str);
                     });
@@ -324,14 +326,14 @@
               '<label class="form-check-label"><input type="checkbox" class="form-check-input R_checkbox">' +
               '<i class="input-helper"></i></label></div></td>' +
               '<td hidden><input type="text" class="add_r_id" name="add_r_id" id="add_r_id" readonly></td>' + // 수정된 부분
-              '<td><input type="text" class="add_s_id" name="add_s_id" id="add_s_id" readonly value="' + register.s_id + '"> </td>' +
-              '<td><input type="text" class="add_s_name" name="add_s_name" id="add_s_name" readonly value="' + register.s_name + '"></td>' +
-              '<td><input type="text" class="add_class_name" name="add_class_name" id="add_class_name" placeholder="수업을 입력하세요."></td>' +
-              '<td hidden><input type="text" class="add_t_name" name="add_t_name" id="add_t_name" readonly></td>' +
-              '<td hidden><input type="text" class="add_classroom" name="add_classroom" id="add_classroom" readonly></td>' +
-              '<td hidden><input type="text" class="add_c_period" name="add_c_period" id="add_c_period" readonly ></td>' +
-              '<td hidden><input type="text" class="add_c_startdate" name="add_c_startdate" id="add_c_startdate" readonly"></td>' +
-              '<td hidden><input type="text" class="add_c_enddate" name="add_c_enddate"  id="add_c_enddate" readonly></td>' +
+              '<td><input type="text" class="add_s_id form-control" name="add_s_id" id="add_s_id" readonly value="' + register.s_id + '"> </td>' +
+              '<td><input type="text" class="add_s_name form-control" name="add_s_name" id="add_s_name" readonly value="' + register.s_name + '"></td>' +
+              '<td><input type="text" class="add_class_name form-control" name="add_class_name" id="add_class_name" placeholder="수업을 입력하세요."></td>' +
+              '<td hidden><input type="text" class="add_t_name form-control" name="add_t_name" id="add_t_name" readonly></td>' +
+              '<td hidden><input type="text" class="add_classroom form-control" name="add_classroom" id="add_classroom" readonly></td>' +
+              '<td hidden><input type="text" class="add_c_period form-control" name="add_c_period" id="add_c_period" readonly ></td>' +
+              '<td hidden><input type="text" class="add_c_startdate form-control" name="add_c_startdate" id="add_c_startdate" readonly"></td>' +
+              '<td hidden><input type="text" class="add_c_enddate form-control" name="add_c_enddate"  id="add_c_enddate" readonly></td>' +
               '</tr>';
           	  registerList.append(str);            
 	     }
@@ -385,6 +387,7 @@
   	   	  
 	        //성적 수정    
 	        function upRegister(callback) {
+	        	
 	    	   let data = {
 	            	r_id : $(".R_r_id").val(),
 	            	s_id : $(".R_s_id").val(),

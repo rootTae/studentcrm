@@ -42,11 +42,13 @@
                   <div class="card-body">
                     <h4 class="card-title">시험 검색 결과</h4>
                     <div class="table-responsive">
+                    <div class="col-md-4 ml-auto text-right">
 	                    <button type="button" class="inserExamtbtn btn btn-primary mb-2" >추가</button>
 			        	<button type="button" class="updateExambtn btn btn-secondary mb-2" style="display: none">수정</button>
 			        	<button type="button" class="deleteExambtn btn btn-info mb-2" style="display: none">삭제</button>
 			        	<button type="button" class="saveExambtn btn btn-primary mb-2" style="display: none">저장</button>
 			        	<button type="button" class="cancelExambtn btn btn-info mb-2" style="display: none">취소</button>
+			        </div>
                       <table class="table" id="examTable">
                         <thead>
                           <tr>
@@ -76,9 +78,9 @@
             		<div class="card">
            				<div class="card-body">
            					<h4 class="card-title">학생 정보 검색</h4>
-			                  <p class="card-description">학생의 이름 입력해 주세요.</p>
+			                  <p class="card-description">학생명을 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
-				                  <input type="text" class="form-control mb-2 mr-sm-2" name="s_name" id="s_name" required placeholder="학생이름">
+				                  <input type="text" class="form-control mb-2 mr-sm-2" name="s_name" id="s_name" required placeholder="학생명">
 				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
                   			  </form>
                 		</div>
@@ -86,9 +88,9 @@
             	</div>
 	          
 	          
-              <div class="col-7 grid-margin">
-                <div class="card">
-                  <div class="card-body">
+              <div class="col-7 grid-margin stretch-card">
+                <div class="card ">
+                  <div class="card-body ">
                     <h4 class="card-title">학생 검색 결과</h4>
                     <div class="table-responsive">
                       <table class="table" id="studentTable">
@@ -97,7 +99,7 @@
                             <th>                         
                             </th>
                             <th>학생 번호</th>
-		                    <th>학생 이름</th>
+		                    <th>학생명</th>
 		                    <th>성별</th>
 		                    <th>전화번호</th>
 		                    <th>학교</th>
@@ -121,12 +123,14 @@
                   <div class="card-body">
                     <h4 class="card-title">시험 점수 결과</h4>
                     <div class="table-responsive">
+                     <div class="col-md-4 ml-auto text-right">
 	                    <button type="button" class="insertbtn btn btn-primary mb-2" style="display: none">추가</button>
 				        <button type="button" class="updatebtn btn btn-secondary mb-2" style="display: none">수정</button>
 				        <button type="button" class="deletebtn btn btn-info mb-2" style="display: none">삭제</button>
 				        <button type="button" class="savebtn btn btn-primary mb-2" style="display: none">저장</button>
 				        <button type="button" class="cancelbtn btn btn-info mb-2" style="display: none">취소</button>
 				        <button type="button" class="chartbtn btn btn-primary mb-2" style="display: none">그래프 생성</button>
+				     </div>
                       <table class="table" id="scoreTable">
                         <thead>
                           <tr>
@@ -160,7 +164,7 @@
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body" id="line"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <h4 class="card-title">Line chart</h4>
+                    <h4 class="card-title">시험 전체 평균</h4>
                     <canvas id="linechart-multi" style="height: 181px; display: block; width: 363px;" width="363" height="181" class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
@@ -168,7 +172,7 @@
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body" id ="bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <h4 class="card-title">Bar chart</h4>
+                    <h4 class="card-title">시험 점수</h4>
                     <canvas id="barChart" style="height: 181px; display: block; width: 363px;" width="363" height="181" class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
@@ -691,6 +695,18 @@
         $('.chartbtn').on('click', function() {
             var selectedRows = $('.sl_checkbox:checked').closest('tr'); 
             
+            $('#linechart-multi').remove();
+            $('#barChart').remove(); 
+           
+           var str2 = '<canvas id="barChart" style="height: 181px; display: block; width: 363px;"'
+           + 'width="363" height="181" class="chartjs-render-monitor"></canvas>'
+           
+           var str = '<canvas id="linechart-multi" style="height: 181px; display: block; width: 363px;"'
+           +'width="363" height="181" class="chartjs-render-monitor"></canvas>'
+           
+           $('#line').append(str);
+           $('#bar').append(str2);
+           
             if (selectedRows.length > 0) {
                 var chartData = {
                     korScore: selectedRows.find('.korScore').val(),
@@ -702,9 +718,6 @@
                     mathAvg: selectedRows.find('.mathAvg').val(),
                     totalAvgScore: selectedRows.find('.total').val()
                 };
-                
-                // 이제 chartData에 선택된 행의 정보가 저장되었습니다.
-                // 이 데이터를 사용하여 원하는 작업을 수행할 수 있습니다.
 
                 getChart(chartData);
             } else {

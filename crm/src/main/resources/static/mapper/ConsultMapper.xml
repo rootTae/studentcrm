@@ -4,10 +4,10 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.studentcrm.crm.mapper.AttendanceMapper">
+<mapper namespace="org.studentcrm.crm.mapper.ConsultMapper">
 <insert id="insertConsult" parameterType="org.studentcrm.crm.command.ConsultVO" useGeneratedKeys="true" keyProperty="consult_id">>
-	insert into consult (consult_id, consult_date, t_id, s_id, consult_content)
-	values(#{consult_id}, #{consult_date}, #{t_id}, #{s_id}, #{consult_content)
+	insert into consult (consult_id, consult_date, t_id, s_id, content_title, consult_content)
+	values(#{consult_id}, #{consult_date}, #{t_id}, #{s_id}, #{content_title}, #{consult_content)
 </insert>
 
 <select id="showConsultByT_id" parameterType="java.lang.Integer" resultType="org.studentcrm.crm.command.ConsultVO" >
@@ -18,8 +18,25 @@
 	select * from consult where s_id = #{s_id} order by num desc limit 10
 </select>
 
+<select id="getStudentList" parameterType="java.lang.String" resultType="org.studentcrm.crm.command.ConsultVO">
+	select c.*, t.t_name, s.s_name from consult c 
+	inner join teacher t on c.t_id = t.t_id
+	inner join student s on c.s_id = s.s_id
+	where s.s_name = #{s_name}
+</select>
+
+<!-- 게시물 상세보기 -->
+<select id="getContent" 
+	parameterType="java.lang.Integer" 
+	resultType="org.studentcrm.crm.command.ConsultVO">
+	select c.*, t.t_name, s.s_name from consult c 
+	inner join teacher t on c.t_id = t.t_id
+	inner join student s on c.s_id = s.s_id
+	where c.s_id = #{s_id}
+</select>
+
 <update id="updateConsult" parameterType="org.studentcrm.crm.command.ConsultVO">
-	update consult set consult_date=#{consult_date}, s_id=#{s_id}, consult_content=#{consuld_content}
+	update consult set consult_content=#{consult_content} where consult_id=#{consult_id}
 </update>
 
 <delete id="deleteConsult" parameterType="java.lang.Integer">
@@ -27,19 +44,17 @@
 </delete>
 
 <!-- 게시물 총 수 -->
-<select id="getTotal" parameterType="java.lang.Integer" resultType="int">
-	select count(*) from consult where t_id=#{t_id}
-</select>
+<!-- <select id="getTotal" parameterType="java.lang.Integer" resultType="int">
+	select count(*) from consult
+</select> -->
 	
 <!-- 페이징 쿼리 -->
-<select id="pagingList"
+<!-- <select id="pagingList"
 	resultType="org.studentcrm.crm.command.ConsultVO"
 	parameterType="org.studentcrm.crm.command.Criteria">
-	select * from 
-		(select rownum as rnum, B.* from 
-			(select * from consult order by num desc) B  
-		where rownum &lt;= #{pageEnd}) 
-	where #{pageStart} &lt;= rnum 
+	select * from consult
+    order by consult_id desc
+    limit #{pageStart}, #{count}
 </select>
-
+ -->
 </mapper>

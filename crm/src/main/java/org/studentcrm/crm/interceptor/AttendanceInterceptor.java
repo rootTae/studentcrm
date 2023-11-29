@@ -18,11 +18,12 @@ public class AttendanceInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		//Integer t_id = (Integer)session.getAttribute("t_id");
 		TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
-		int t_id = teacher.getT_id();
 		
-		log.info(t_id);
+		String t_loginid = teacher.getT_loginid();
 		
-		if(t_id == -1) {
+		log.info(t_loginid);
+		
+		if(t_loginid == null) {
 			response.sendRedirect("/member/login");
 			return false;
 			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.studentcrm.crm.command.ConsultVO;
+import org.studentcrm.crm.command.Criteria;
 
 import lombok.extern.log4j.Log4j2;
 import oracle.net.aso.c;
@@ -71,6 +72,6 @@ public class ConsultTest {
    public void deleteConsult() {
       int num = 8;
       log.info(mapper.deleteConsult(num));
-   }
-
+   }   
+   
 }

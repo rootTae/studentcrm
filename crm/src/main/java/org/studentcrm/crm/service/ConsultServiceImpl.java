@@ -44,6 +44,16 @@ public class ConsultServiceImpl implements ConsultService {
       return mapper.showConsultByT_id(t_id);
    }
 
+	@Override
+	public List<ConsultVO> getContent(int consult_id) {
+		return mapper.getContent(consult_id);
+	}
+
+	@Override
+	public List<ConsultVO> getStudentList(String s_name) {
+		return mapper.getStudentList(s_name);
+	}
+
    /*
     * //페이징
     * 

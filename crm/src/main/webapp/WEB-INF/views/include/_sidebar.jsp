@@ -23,7 +23,7 @@
             	<h5 class="mb-0 font-weight-normal">${sessionScope.teacher.t_name }</h5>
             </div>
             <div class="col-md-12 pl-0" style="text-align: left;">
-            	<span class="classList">${sessionScope.teacher.t_class }</span>
+            	<span class="classList"></span>
             </div>
            </div>
           </div>
@@ -66,6 +66,14 @@
       </a>
     </li>
     <li class="nav-item menu-items">
+      <a class="nav-link" href="/consult/consultView">
+        <span class="menu-icon">
+          <i class="mdi mdi-calendar-check"></i>
+        </span>
+        <span class="menu-title">상담 관리</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
       <a class="nav-link" href="/payment/payment">
         <span class="menu-icon">
           <i class="mdi mdi-credit-card"></i>
@@ -86,19 +94,17 @@
 </nav>
 
 <script src="https://code.jquery.com/jquery.js"></script>
-<script type="text/javascript" src="/js/classListsByLogin.js"></script>
+<script type="text/javascript" src="/js/attendance.js"></script>
 <script type="text/javascript">
-/* $(document).ready(function () {
+$(document).ready(function () {
     var classListSpan = $(".classList");
-    var t_id = ${sessionScope.t_id};
+    var t_id = ${sessionScope.teacher.t_id};
     //console.log("classlist");
     //console.log("classlist on the sidebar");
 	//console.log(t_id);
     attendanceService.getClassList({ t_id: t_id },
         function (list) {
             var str = "";
-            
-            //console.log(daysInMonth);
          
             for (var i = 0, len = list.length || 0; i < len; i++) {
                 str += "<div data-list='" + list[i].class_name + "'>'" + list[i].class_name + "'</div>";
@@ -106,5 +112,5 @@
             classListSpan.html(str);
         });
 	
-}); */
+});
 </script>

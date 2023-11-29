@@ -22,6 +22,7 @@ public class TeacherVO {
 	private String t_pw;
 	private String t_phone;
 	private String t_email;
+	private int consult_id;
    
    //첨부 파일 관련 멤버
    private TeacherImageAttachVO attachImg; 

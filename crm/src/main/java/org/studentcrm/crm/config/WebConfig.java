@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.studentcrm.crm.interceptor.AttendanceInterceptor;
+import org.studentcrm.crm.interceptor.ConsultInterceptor;
 import org.studentcrm.crm.interceptor.GradeInterceptor;
 import org.studentcrm.crm.interceptor.LoginInterceptor;
 import org.studentcrm.crm.interceptor.PaymentInterceptor;
@@ -36,6 +37,8 @@ public class WebConfig implements WebMvcConfigurer {
 			.addPathPatterns("/payment/payment");
 		registry.addInterceptor(new GradeInterceptor())
 			.addPathPatterns("/grades/gradesView");
+		registry.addInterceptor(new ConsultInterceptor())
+		.addPathPatterns("/consult/consultView");
 	}
 
 }

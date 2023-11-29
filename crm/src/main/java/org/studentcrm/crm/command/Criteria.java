@@ -7,7 +7,10 @@ public class Criteria {
 	//mysql, mariadb : select * from tbl_board by num desc limit ?, ?;
 	
 	private int pageNum;    //페이지 번호
-	private int count;		//페이지 당 게시글 수... 
+	private int count;		//페이지 당 게시글 수
+	private int t_id;   // 추가
+    private int s_id;   // 추가
+    private String date; // 추가
 	
 	//기본 생성자
 	public Criteria() {

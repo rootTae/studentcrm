@@ -22,6 +22,8 @@ public class StudentVO {
    private String s_sibling;
    private String reg_date;
    private String first_date;
+   private int consult_id;
+   
    //private String s_filename;
    private String s_class;
    private String s_memo;

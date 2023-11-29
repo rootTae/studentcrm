@@ -1,3 +1,4 @@
+<%@page import="org.studentcrm.crm.command.TeacherVO"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Calendar"%>
@@ -10,6 +11,11 @@
    LocalDate date = LocalDate.now(); 
    int monthNow = date.getMonthValue();
    int yearNow = date.getYear();
+   HttpSession session1 = request.getSession();
+   TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");  
+   Integer t_id = (Integer)teacher.getT_id();
+   
+   
   /*  int daybefore = date.getDayOfMonth();
    int dayNow = (daybefore<10) ? '0' + daybefore : daybefore; */
    /* LocalDate date = new LocalDate();
@@ -196,7 +202,7 @@
  
  <!-- 여기에 스크립트 입력 -->
 <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
-<script type="text/javascript" src="/js/classListsByLogin.js"></script>
+<script type="text/javascript" src="/js/attendance.js"></script>
 <script type="text/javascript">
 
 document.getElementById('monthDropdownBtn').addEventListener('click', function() {
@@ -531,7 +537,7 @@ function showStudentList(class_nameValue) {
 $(document).ready(function () {
    var a_status = "";
     var classListTR = $(".classList");
-    var t_id = 1;
+    var t_id = <%= t_id%>;
 
     attendanceService.getClassList({ t_id: t_id },
         function (list) {

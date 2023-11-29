@@ -7,7 +7,7 @@ import org.studentcrm.crm.command.ClassVO;
 import org.studentcrm.crm.command.StudentVO;
 
 public interface AttendanceService {
-	public StudentVO readInfo(int s_id); //학생 이름을 눌렀을 때, 학생 전번, 학교 보여주기
+	public StudentVO readInfo(int s_id); //show student's basic information, 학생 이름을 눌렀을 때, 학생 전번, 학교 보여주기
 	public List<StudentVO> s_list(String class_name); //반이름으로 애들 목록+정보 불러오기
 	public List<ClassVO> c_list(int t_id); //t_id로 담당 classlist 불러오기
 	

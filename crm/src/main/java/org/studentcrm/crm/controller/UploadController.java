@@ -131,7 +131,7 @@ public class UploadController {
 							263);
 					thumbnail.close();
 				}
-				log.info("------>>>>attachFileDTO : "+attachFileDTO);
+				//log.info("------>>>>attachFileDTO : "+attachFileDTO);
 				
 				//7. add to list
 				imgFileDTO = attachFileDTO;
@@ -179,7 +179,7 @@ public class UploadController {
 	@PostMapping("/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type){
-		log.info("deleteFile: " + fileName);
+		//log.info("deleteFile: " + fileName);
 		
 		File file;
 		
@@ -190,7 +190,7 @@ public class UploadController {
 			
 			if(type.equals("image")) {//원본 파일 삭제
 				String largeFileName = file.getAbsolutePath().replace("s_", "");
-				log.info("largeFileName : "+largeFileName);
+				//log.info("largeFileName : "+largeFileName);
 				
 				file = new File(largeFileName);
 				file.delete();//원본 파일 삭제

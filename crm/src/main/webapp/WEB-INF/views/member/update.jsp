@@ -111,8 +111,8 @@
 	                      </div>
 	                      
 		                    <div class="text-center">
-			                  	<button type="button" class="btn btn-primary mr-2" id="updateBtn">Update</button>
-	                  			<button type="button" class="btn btn-dark" onclick="teacherDelete()">Delete</button>
+			                  	<button type="button" class="btn btn-primary mr-2" id="updateBtn">저장</button>
+	                  			<button type="button" class="btn btn-info" onclick="teacherDelete()">탈퇴</button>
 			                </div>
 	                    </form>
 	                    
@@ -153,7 +153,7 @@
 			}else if($("#t_subject").val().length < 1){
 				alert("강의 과목은 필수 입력 항목입니다.");
 	  			console.log("updateCheck 실행");
-			}else if(confirm("수정 하시겠습니까?")){
+			}else if(confirm("저장 하시겠습니까?")){
 				$("#updateForm").submit();
 			}
 		}

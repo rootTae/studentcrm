@@ -62,7 +62,7 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	@Override
 	public int delete(int t_id) {
-		log.info("DB에서 삭제 : "+t_id);
+		//log.info("DB에서 삭제 : "+t_id);
 		tMapper.deleteDB(t_id);
 		return mapper.delete(t_id);
 	}
@@ -86,8 +86,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public TeacherImageAttachVO getAttachImg(int t_id) {
 		
-		log.info("t_id"+t_id);
-		log.info(tMapper.findByTid(t_id));
+		//log.info("t_id"+t_id);
+		//log.info(tMapper.findByTid(t_id));
 		return tMapper.findByTid(t_id);
 	}
 }

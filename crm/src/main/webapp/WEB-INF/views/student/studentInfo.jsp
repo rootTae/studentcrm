@@ -8,6 +8,7 @@
   	.img-fluid {display:block;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);width:100%;height:auto;}
   	.imgCloseBtn {position:absolute;top:0;right:0;z-index:100;background-color:transparent;border:none;}
   	.imgCloseBtn .mdi-close-box::before {font-size:25px;}
+  	.mdi-calendar:before {line-height:24px}
   </style>
 <!-- partial -->
   <body>
@@ -34,10 +35,10 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 정보 검색</h4>
-                    <p class="card-description">학생의 이름 혹은 학번을 입력해 주세요.</p>
+                    <p class="card-description">학생명 혹은 학생번호를 입력해 주세요.</p>
                     <form class="form-inline">
                       <input type="text" class="form-control mb-2 mr-sm-2" name="s_search" id="sSearch" maxlength="10" placeholder="학생명 or 학번">
-                      <button type="submit" class="btn btn-primary mb-2" id="searchBtn">검색</button>
+                      <button type="submit" class="btn btn-primary mb-2 input-btn" id="searchBtn">검색</button>
                     </form>
                   </div>
                 </div>
@@ -47,7 +48,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">검색 결과</h4>
-                    <p class="card-description">클릭 시 상세 정보 보기</p>
+                    <p class="card-description">검색 결과 선택 시 상세 정보를 볼 수 있습니다.</p>
                     
 					<ul class="search_list" style='padding:0;list-style:none'></ul>
 					
@@ -109,7 +110,7 @@
 	                        
 	                        <div class="col-md-4">
 	                          <div class="form-group">
-	                            <label class="col-sm-12 col-form-label">이름</label>
+	                            <label class="col-sm-12 col-form-label">학생명</label>
 	                            <div class="col-sm-12">
 	                              <input type='text' class="form-control" name='s_name' id='s_name'>
 	                            </div>
@@ -120,35 +121,34 @@
 	                              <input type='text' class="form-control" name='s_school' id='s_school'>
 	                            </div>
 	                          </div>
-	                          <div class="form-group">
+	                          
+	                          <!-- <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">생년월일</label>
 	                            <div class="col-sm-12">
 	                              <input type='text' class="form-control" name='s_birth' id='s_birth' placeholder='yyyy-mm-dd'>
 	                            </div>
-	                          </div>
-	                          
-	                          <!-- <div class="form-group">
-	                            <label class="col-sm-12 col-form-label">생년월일</label>
-	                            
-	                            <div class="row col-12">
-		                            <div class="col pr-0">
-		                              <input type='text' class="form-control" name='s_birth' id='s_birth' placeholder='yyyy-mm-dd'>
-		                            </div>
-		                            
-		                            <div class="calendar_btn">
-			                            <div class="col-auto pr-0 d-flex align-items-center h-100">
-			                              <label for="s_birth" class="mb-0">
-			                              	<button type="button" class="btn btn-primary">
-		                 						 <i class="mdi mdi-calendar mr-0"></i>
-		                 					</button>
-		                 				  </label>
-			                            </div>
-		                            </div>
-		                            
-	                            </div>
-	                            
 	                          </div> -->
 	                          
+	                          <div class="form-group">
+	                            <label class="col-sm-12 col-form-label">생년월일</label>
+	                            
+	                            <div class="col-sm-12">
+		                            <div class="col p-0 input-daterange input-group date_box birth_date">
+		                            
+		                                <input type='text' class="form-control" name='s_birth' id='s_birth' placeholder='yyyy-mm-dd'>
+			                            <div class="calendar_btn">
+				                            <div class="col-auto pr-0 pl-0 d-flex align-items-center h-100">
+				                              <label for="s_birth" class="mb-0 btn btn-primary h-100">
+			                 						 <i class="mdi mdi-calendar mr-0"></i>
+			                 				  </label>
+				                            </div>
+			                            </div>
+			                            
+		                            </div>  
+	                            </div><!-- /col-sm-12 -->
+	                            
+	                          </div>
+	                          	                          
 	                          
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">전화번호</label>
@@ -160,7 +160,7 @@
 	                        
 	                        <div class="col-md-4">
 	                          <div class="form-group">
-	                            <label class="col-sm-12 col-form-label">학번 <code style="font-size:12px">입력, 수정불가</code></label>
+	                            <label class="col-sm-12 col-form-label">학생번호 <code style="font-size:12px">입력, 수정불가</code></label>
 	                            <div class="col-sm-12">
 	                              <input type='text' class="form-control" name='s_id' id='s_id' readonly>
 	                            </div>
@@ -229,8 +229,20 @@
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">최초 등록일</label>
 	                            <div class="col-sm-12">
-	                              <input type='text' class="form-control" name='reg_date' id='reg_date'>
-	                            </div>
+	                           
+		                            <div class="col p-0 input-daterange input-group date_box">
+	                                	<input type='text' class="form-control" name='reg_date' id='reg_date' placeholder='yyyy-mm-dd'>
+			                            <div class="calendar_btn">
+				                            <div class="col-auto pr-0 pl-0 d-flex align-items-center h-100">
+				                              <label for="reg_date" class="mb-0 btn btn-primary h-100">
+			                 						 <i class="mdi mdi-calendar mr-0"></i>
+			                 				  </label>
+				                            </div>
+			                            </div>
+			                            
+		                            </div>  
+	                            </div><!-- /col-sm-12 -->
+	                            
 	                          </div>
 	                        </div>
 	                        
@@ -244,8 +256,20 @@
 	                          <div class="form-group">
 	                            <label class="col-sm-12 col-form-label">최초 수업일</label>
 	                            <div class="col-sm-12">
-	                              <input type='text' class="form-control" name='first_date' id='first_date'>
-	                            </div>
+	                           
+		                            <div class="col p-0 input-daterange input-group date_box">
+		                                <input type='text' class="form-control" name='first_date' id='first_date' placeholder='yyyy-mm-dd'>
+			                            <div class="calendar_btn">
+				                            <div class="col-auto pr-0 pl-0 d-flex align-items-center h-100">
+				                              <label for="first_date" class="mb-0 btn btn-primary h-100">
+			                 						 <i class="mdi mdi-calendar mr-0"></i>
+			                 				  </label>
+				                            </div>
+			                            </div>
+			                            
+		                            </div>  
+	                            </div><!-- /col-sm-12 -->
+	                            
 	                          </div>
 	                        </div>
 	                      </div>
@@ -342,13 +366,26 @@
     <script src="/assets/js/misc.js"></script>
     <script src="/assets/js/settings.js"></script>
     <script src="/assets/js/todolist.js"></script>
+    <script src="/assets/js/bootstrap-datepicker.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
-    
     <script type="text/javascript" src="/js/studentInfo.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			//============== 데이트 피커 ===============
+			/* $(".birth_date").datepicker({
+				format: 'yyyy-mm-dd',
+				autoclose: true,
+				todayHighlight: true
+			}); */
+			$(".date_box").each(function() {
+			    $(this).datepicker({
+			        format: 'yyyy-mm-dd',
+			        autoclose: true,
+			        todayHighlight: true
+			    });
+			});
 			
 			//============== 학생 정보 검색 ===============
 			let searchList = $(".search_list");
@@ -720,6 +757,7 @@
 				
 				studentForm.find("input:not('#s_id, .file-upload-info')").prop('readonly', false);
 				studentForm.find("input[type='radio']").prop('disabled', false);
+				$(".date_box input").prop('disabled', false);//datepicker 마우스 클릭 허용
 				$("#s_memo").prop('readonly', false); 
 				
 				$("#commuteInfo").find("input").prop('readonly', false);
@@ -733,6 +771,7 @@
 				
 				studentForm.find("input:not('#s_id')").prop('readonly', true);
 				studentForm.find("input[type='radio']").prop('disabled', true);
+				$(".date_box input").prop('disabled', true);//datepicker 마우스 클릭 막기
 				$("#s_memo").prop('readonly', true); 
 				
 				$("#commuteInfo").find("input").prop('readonly', true);

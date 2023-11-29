@@ -82,7 +82,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="/member/mypage/${sessionScope.t_id }">
+      <a class="nav-link" href="/member/mypage/${sessionScope.teacher.t_id }">
         <span class="menu-icon">
           <i class="mdi mdi-account-card-details"></i>
         </span>

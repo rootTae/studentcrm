@@ -2,14 +2,11 @@
  * 
  */
  
- console.log("grades Module ........")
  
  var GradesService = (function () {
 	
 	//등록 처리
     function scoreInsert(grades, callback, error) {
-		//console.log(grades);
-
         $.ajax({
             type: 'post',
             url: '/gradesF/new',
@@ -29,8 +26,6 @@
     }
     //시험 등록 
      function examInsert(grades, callback, error) {
-        //console.log("grades ......... ");
-
         $.ajax({
             type: 'post',
             url: '../gradesF/neweaxm',
@@ -68,7 +63,6 @@
     }
     
     function getexamList(param, callback, error) {
-       // console.log(param);
         var e_name = param.e_name;
 
         $.getJSON({
@@ -108,7 +102,6 @@
     
     //삭제
   function scoreRemove(score_id, callback, error){
-   console.info(score_id);
    $.ajax({
       type : 'delete',
       url : '../gradesF/' + score_id,
@@ -126,7 +119,6 @@
    }
    //시험 삭제
    function examRemove(e_id, callback, error){
-  	//console.log(e_id);
    $.ajax({
       type : 'delete',
       url : '../gradesF/elist/' + e_id,
@@ -145,9 +137,7 @@
    
    // 수정 
    function scoreModify(grades,callback,error){
-      let s_id = grades.s_id;
-      
-      console.info(s_id);
+      let s_id = grades.s_id;  
    $.ajax({
       type : 'put',
       url : '../gradesF/'+s_id,
@@ -168,9 +158,7 @@
    
    //시험 수정
    function examModify(grades,callback,error){   
-     //console.log(grades);
       var e_id = grades.e_id;
-      //console.log(e_id);
    $.ajax({
       type : 'put',
       url : '../gradesF/elist/'+e_id,
@@ -191,8 +179,6 @@
    
    
     function AvgScore(vo, callback, error) {
-    //console.log("grades ......... ");
-	//console.log(vo);
     $.ajax({
         type: 'POST',  
         url: '../gradesF/avg',
@@ -213,15 +199,6 @@
 
    
    function SubjectsTotalAvg(grades, callback, error) {
-        //console.log("grades ......... ");
-		
-		//console.log(grades);
-      	
-	    //var e_id = grades.grades.e_id;
-    	//var e_grade = grades.grades.e_grade;
-		//console.log(e_id);
-		//console.log(e_grade);
-
        $.ajax({
 		    type: 'POST',
 		    url: '../gradesF/subAvg',

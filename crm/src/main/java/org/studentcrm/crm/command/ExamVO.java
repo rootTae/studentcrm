@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExamVO {
-
 	private int e_id;
 	private String e_name;
 	private String e_grade;

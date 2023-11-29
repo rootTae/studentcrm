@@ -13,8 +13,7 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/payment/*")
 @Log4j2
 public class PaymentController {
-	//@Setter(onMethod_ = {@Autowired})
-	//;
+
 	
 	@RequestMapping("/payment")
 	public String payment() {

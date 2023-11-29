@@ -22,6 +22,5 @@ public class ScoreVO {
 	private double avgScore; //국영수 평균 점수
 	private double totalAvgScore; //전체 국영수 평균점수
 	
-	private double examPercentage; //시험백분율
 	private double alltotal; //전체 합산점수
 }

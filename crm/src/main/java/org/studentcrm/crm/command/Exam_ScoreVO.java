@@ -9,20 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Exam_ScoreVO {
-	
-	private int score_id;
-	
+public class Exam_ScoreVO {	
+	private int score_id;	
 	private int s_id;
 	private String s_name;
-	private String s_grade;
-	
+	private String s_grade;	
 	private int e_id;
-	private String e_name;
-	
+	private String e_name;	
 	private String e_grade;
 	private LocalDate e_date;
-
 	private double korScore;
 	private double engScore;
 	private double mathScore;

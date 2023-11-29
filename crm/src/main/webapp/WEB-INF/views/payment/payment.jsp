@@ -193,7 +193,6 @@ $(document).ready(function(){
  	//학생 리스트 
     function getStudent(s_nameValue) {
         GradesService.getStudentList({ s_name: s_nameValue }, function(student) {
-            console.log(student);
             var studentList = $('.studentList');
             studentList.empty();
 
@@ -225,13 +224,11 @@ $(document).ready(function(){
         });
     
 	    function getPayment(data) {
-    		console.log(data);
     		
         	PaymentService.getPaymentList(data, function(list){
 				
             	paymentList.empty();
             	btnShow3();
-            	console.log(list);
             	list.forEach(function(payment){
                  	var str = '<tr>' +  
                  	'<td><div class="form-check form-check-muted m-0">' +
@@ -267,7 +264,6 @@ $(document).ready(function(){
 	  		     s_name: registers[0].s_name,
 	  		     payment : registers[0].payment
 	  	  }
-	  	        console.log(payment);
 	  		 	addPayment(payment)
 	  			btnShow2();        
 	  	        nowbtn = addbtn;     
@@ -311,7 +307,6 @@ $(document).ready(function(){
 	            	 	r_id : $(".add_r_id").val()        
 		            }  
 		            
-		            console.log(data);
 		            
 		            PaymentService.insertPayment(data, function(result){                   
 		                console.log("jsp : " + result);
@@ -376,7 +371,6 @@ $(document).ready(function(){
 		            	r_id : checkedCheckbox.closest("tr").find("input.r_id").val(),
 		            	class_name : checkedCheckbox.closest("tr").find("input.class_name").val()
 		            }    	   
-	        	console.log(data);
 
 		    	   PaymentService.paymentModify(data, function (result) {
 		                if (result == "success") {

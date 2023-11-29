@@ -38,8 +38,7 @@ public class PaymentRestController {
 	//리스트 가져요기
 	@PostMapping(value = "/getlist",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<P_InformationVO>> getPaymentList(@RequestBody P_InformationVO vo){
-		
+	public ResponseEntity<List<P_InformationVO>> getPaymentList(@RequestBody P_InformationVO vo){		
 		return new ResponseEntity<List<P_InformationVO>>(pService.getPaymentList(vo), HttpStatus.OK);
 	}
 
@@ -48,9 +47,7 @@ public class PaymentRestController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertPayment(@RequestBody P_InformationVO vo){	
-		log.info("payment" +vo);
 		int result =pService.pRegister(vo);
-		log.info("paymentResult" + result);
 		return result == 1 ?
 				new ResponseEntity<>("등록 성공" , HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -64,8 +61,6 @@ public class PaymentRestController {
 	public ResponseEntity<String> paymentModify(
 			@RequestBody P_InformationVO vo,
 			@PathVariable("p_id") int p_id){			
-		log.info("p_id: "+p_id);
-	    log.info("Modify: "+vo);
 		return pService.pModify(vo)==1
 				? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -75,7 +70,6 @@ public class PaymentRestController {
 	@DeleteMapping(value ="/{p_id}",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> paymentRemove(@PathVariable("p_id") int p_id){
-		log.info("registerRemove" +p_id);
 		return pService.pRemove(p_id)==1
 		? new ResponseEntity<String>("success",HttpStatus.OK)
 		:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	

@@ -186,7 +186,6 @@
         	event.preventDefault();
         	
             RegisterService.getClassList(function(list){
-            	console.log(list);
             	
             	var class_List = $('.class_List');
             	class_List.empty();
@@ -222,7 +221,6 @@
      	//학생 리스트 
         function getStudent(s_nameValue) {
             GradesService.getStudentList({ s_name: s_nameValue }, function(student) {
-                console.log(student);
                 var studentList = $('.studentList');
                 studentList.empty();
 
@@ -258,7 +256,6 @@
                 if (checkedCheckbox) {                	
                     var s_id = checkedCheckbox.closest("tr").find("input.is_s_id").val();
                     var s_name = checkedCheckbox.closest("tr").find("input.is_s_name").val();
-                    console.log(s_id);
                     getRegister(s_id);
                     
                     nowsid=s_id;
@@ -276,7 +273,6 @@
             // s_id가 어디서 왔는지 확인해야 합니다.
             RegisterService.getRegistertList(s_id, function (registers) {
                 // 데이터를 받아오는데 성공한 경우에만 아래 코드 실행
-                console.log(registers);
                 if (registers && registers.length > 0) {
                     registers.forEach(function (register) {
                         var str = '<tr>' +

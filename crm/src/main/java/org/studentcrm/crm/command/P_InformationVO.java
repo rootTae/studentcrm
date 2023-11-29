@@ -17,17 +17,12 @@ public class P_InformationVO {
 	private LocalDate c_enddate;
 	private String p_form;
 	private String p_receipt;
-	private String p_status;
-	
+	private String p_status;	
 	private String startDate;
-	private String endDate;
-	
-	
-	private int r_id;
-	
+	private String endDate;	
+	private int r_id;	
 	private int s_id;
-	private String s_name;
-	
+	private String s_name;	
 	private String class_name;
 	
 }

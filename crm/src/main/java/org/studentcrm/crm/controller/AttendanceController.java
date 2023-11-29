@@ -1,6 +1,7 @@
 package org.studentcrm.crm.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -16,4 +17,9 @@ public class AttendanceController {
 	public String attendanceView() {
 		return "attendance/attendanceView";
 	}
+	
+	@RequestMapping("/{subPath}")
+    public String handleSubPath(@PathVariable String subPath) {
+        return "error-404";
+    }
 }

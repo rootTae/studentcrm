@@ -36,6 +36,9 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
+          <div class="page-header">
+              <h3 class="page-title">상담 정보 관리</h3>
+            </div>
          <div class="row">
                <div class="col-5 grid-margin stretch-card">
                   <div class="card">
@@ -50,7 +53,7 @@
                     </div>
                </div>
        
-              <div class="col-7 grid-margin">
+              <div class="col-7 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 검색 결과</h4>

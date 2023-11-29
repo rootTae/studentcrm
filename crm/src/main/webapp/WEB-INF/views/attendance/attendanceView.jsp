@@ -93,7 +93,7 @@
           
           <!-- 여기에 내용 코드 입력 - 이 페이지를 복사해서 사용하세요 -->
              <div class="page-header">
-              <h3 class="page-title">출결 관리</h3>
+              <h3 class="page-title">출결 정보 관리</h3>
             </div>
             
              <div class="row">
@@ -116,7 +116,7 @@
                 <div class="card">
                   <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                     <h4 class="card-title">학생 출결 차트</h4>
-                    <canvas id="doughnutChart" style="height: 222px; display: block; width: 445px;" width="445" height="222" class="chartjs-render-monitor"></canvas>
+                    <canvas id="doughnutChart" style="display: block; width: 445px;" width="445" class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
               </div>
@@ -125,9 +125,9 @@
                      <div class="card-body table-responsive">
                        <h4 class="card-title">출석부</h4>
                        <div class="row">
-                       <button class="btn btn-primary btn-fw" id="yearDropdownBtn"  style="margin-right:10px">Select Year</button>
+                       <button class="btn btn-primary btn-fw" id="yearDropdownBtn"  style="height:38px; margin-right:10px">년도 선택</button>
                   <!-- 드롭다운 메뉴 -->
-		                  <select id="yearDropdown" class="" style="display: none;">
+		                  <select id="yearDropdown" class="" style="height:38px; display: none;">
 		                      <!-- 1부터 12까지의 옵션 추가 -->
 		                      <option value="2021">2021</option>
 		                      <option value="2022">2022</option>
@@ -137,9 +137,9 @@
 		                      <option value="2026">2026</option>
 		                  </select>
 		                       
-                     	  <button class="btn btn-primary btn-fw " id="monthDropdownBtn" style="margin-right:10px">Select Month</button>
+                     	  <button class="btn btn-primary btn-fw " id="monthDropdownBtn" style="height:38px; margin-right:10px">월 선택</button>
                   <!-- 드롭다운 메뉴 -->
-		                  <select id="monthDropdown" style="display: none;">
+		                  <select id="monthDropdown" style="height:38px; display: none;">
 		                      <!-- 1부터 12까지의 옵션 추가 -->
 		                      <option value="1">1월</option>
 		                      <option value="2">2월</option>
@@ -456,7 +456,9 @@ function showStudentList(class_nameValue) {
     	            popup: 'custom-swal-popup',
     	            title: 'custom-swal-title',
     	        }
-    	    });
+            }).then((result) => {
+                window.location.href = "/consult/consultView";
+            });
         }
 	    	
     	 var doughnutPieData = {
@@ -526,7 +528,7 @@ function showStudentList(class_nameValue) {
                     '<p>' + student.s_phone + '</p></div>';
               console.log(str);
                     
-                sInfoList.append(str);
+              sInfoList.append(str);
            });
        });
     }

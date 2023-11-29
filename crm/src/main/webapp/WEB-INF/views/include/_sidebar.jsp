@@ -70,7 +70,7 @@
         <span class="menu-icon">
           <i class="mdi mdi-calendar-check"></i>
         </span>
-        <span class="menu-title">상담 관리</span>
+        <span class="menu-title">상담 정보 관리</span>
       </a>
     </li>
     <li class="nav-item menu-items">

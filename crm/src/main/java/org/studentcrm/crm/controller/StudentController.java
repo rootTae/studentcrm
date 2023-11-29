@@ -2,6 +2,7 @@ package org.studentcrm.crm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.studentcrm.crm.service.StudentService;
 
@@ -20,7 +21,10 @@ public class StudentController {
 		return "student/studentInfo";
 	}
 
-	
+	@RequestMapping("/{subPath}")
+    public String handleSubPath(@PathVariable String subPath) {
+        return "error-404";
+    }
 	
 	
 }

@@ -1,6 +1,7 @@
 package org.studentcrm.crm.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/consult/*")
@@ -16,4 +17,10 @@ public class ConsultController {
    public String consultView() {
       return "consult/consultView";
    }
+   
+	@RequestMapping("/{subPath}")
+    public String handleSubPath(@PathVariable String subPath) {
+        return "error-404";
+    }
+   
 }

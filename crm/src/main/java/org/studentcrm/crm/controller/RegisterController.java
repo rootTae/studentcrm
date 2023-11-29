@@ -2,6 +2,7 @@ package org.studentcrm.crm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.studentcrm.crm.service.GradesService;
 import org.studentcrm.crm.service.RegisterService;
@@ -18,6 +19,11 @@ public class RegisterController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	GradesService gservice;
+	
+	@RequestMapping("/{subPath}")
+    public String handleSubPath(@PathVariable String subPath) {
+        return "error-404";
+    }
 	
 	@RequestMapping("/register")
 	public String register() {

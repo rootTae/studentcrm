@@ -9,27 +9,37 @@ import org.springframework.web.servlet.ModelAndView;
 import org.studentcrm.crm.command.TeacherVO;
 
 import lombok.extern.log4j.Log4j2;
+
 @Log4j2
 public class ConsultInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		//System.out.println("PreHandle 동작!");
+		System.out.println("PreHandle 동작!");
 		HttpSession session = request.getSession();
-		//Integer t_id = (Integer)session.getAttribute("t_id");
+//		Integer t_id = (Integer)session.getAttribute("t_id");
 		TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");
-		int t_id = teacher.getT_id();
 		
-		log.info(t_id);
-		
-		if(t_id == -1) {
+		if(teacher == null) {
 			response.sendRedirect("/member/login");
 			return false;
-			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 
 		}else {
 			return true;
-			// 의미는 핸들러메서드를 실행한 후에 Controller를 수행한다는 의미... 
 		}
+		
+		//log.info("teacher : "+teacher);
+		//int t_id = teacher.getT_id();
+		
+//		if(t_id == -1) {
+//			response.sendRedirect("/member/login");
+//			//log.info("t_id"+t_id);
+//			return false;
+//			// 의미는 핸들러메서드를 실행한 후 Controller를 수행하지 않음.... 
+//		}else {
+//			return true;
+//			// 의미는 핸들러메서드를 실행한 후에 Controller를 수행한다는 의미... 
+//		}
+		
 	}
 
 	// preHandler에서 true를 리턴하여, 컨트롤러를 실행했을 때만 동작함.... 
@@ -37,7 +47,7 @@ public class ConsultInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		System.out.println("PostHandle!");
+		//System.out.println("PostHandle!");
 		
 //		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}

@@ -42,8 +42,7 @@ public class RegisterRestController {
 	//학생 이름으로 학생 리스트 가져오기
 	@GetMapping(value = "/{s_name}",
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<StudentVO>> getStudentList(@PathVariable("s_name")String s_name){
-		
+	public ResponseEntity<List<StudentVO>> getStudentList(@PathVariable("s_name")String s_name){		
 		return new ResponseEntity<List<StudentVO>>(gservice.getStudentList(s_name), HttpStatus.OK);
 	}
 	
@@ -66,10 +65,7 @@ public class RegisterRestController {
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> Rregister(@RequestBody RegisterVO vo){
-		
-		log.info("register" +vo);
 		int result =rservice.rRegister(vo);
-		log.info("registerResult" + result);
 		return result == 1 ?
 				new ResponseEntity<>("시험등록 성공" , HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -83,8 +79,6 @@ public class RegisterRestController {
 	public ResponseEntity<String> registerModify(
 			@RequestBody RegisterVO vo,
 			@PathVariable("r_id") int r_id){			
-		log.info("r_id: "+r_id);
-	    log.info("registerModify: "+vo);
 		return rservice.rModify(vo)==1
 				? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -94,7 +88,6 @@ public class RegisterRestController {
 	@DeleteMapping(value ="/class/{r_id}",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> registerRemove(@PathVariable("r_id") int r_id){
-		log.info("registerRemove" +r_id);
 		return rservice.rRemove(r_id)==1
 		? new ResponseEntity<String>("success",HttpStatus.OK)
 		:new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);	

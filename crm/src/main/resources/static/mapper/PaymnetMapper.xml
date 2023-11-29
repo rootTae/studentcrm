@@ -23,7 +23,6 @@
 </update>
 
 
-<!-- 학생번호로 학생시험점수 리스트  -->
 <select id="getPaymentList" resultType="org.studentcrm.crm.command.P_InformationVO"
         parameterType="org.studentcrm.crm.command.P_InformationVO">
     SELECT *
@@ -34,7 +33,5 @@
              JOIN teacher t ON c.t_id = t.t_id
     WHERE p.p_date BETWEEN #{startDate} AND #{endDate} AND s.s_id = #{s_id}
 </select>
-
-
 
 </mapper>

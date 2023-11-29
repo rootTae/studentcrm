@@ -15,6 +15,5 @@ public interface PaymentService {
 	public int pRegister(P_InformationVO vo); 
 	public int pModify(P_InformationVO vo); 
 	public int pRemove(int p_id); 
-	
 	public List<P_InformationVO> getPaymentList(P_InformationVO vo);
 }

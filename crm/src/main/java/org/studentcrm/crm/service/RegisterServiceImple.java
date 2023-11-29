@@ -26,36 +26,31 @@ public class RegisterServiceImple implements RegisterService {
 	
 	//수강신청
 	@Override
-	public int rRegister(RegisterVO vo) {
-		
+	public int rRegister(RegisterVO vo) {		
 		return mapper.registerClass(vo);
 	}
 	
 	//수강신청 삭제
 	@Override
 	public int rRemove(int r_id) {
-
 		return mapper.deleteRegister(r_id);
 	}
 	
 	//수강신청 변경
 	@Override
 	public int rModify(RegisterVO vo) {
-
 		return mapper.updateRegister(vo);
 	}
 	
 	//반 리스트 검색	
 	@Override
-	public List<ClassVO> getClassList() {
-	
+	public List<ClassVO> getClassList() {	
 		return mapper.getClassList();
 	}
 	
 	//수강신청 리스트 검색
 	@Override
-	public List<RegisterVO> getRegistertList(int s_id) {
-	
+	public List<RegisterVO> getRegistertList(int s_id) {	
 		return mapper.getRegisterList(s_id);
 }
 

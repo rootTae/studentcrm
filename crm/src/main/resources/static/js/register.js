@@ -2,7 +2,6 @@
  * 
  */
  
- console.log("register Module ........")
  
  var RegisterService = (function () {
 	
@@ -41,7 +40,6 @@
     
     //수강신청 리스트 가져오기
 	 function getRegistertList(s_id, callback, error) {
-			console.log(s_id);
 	        $.getJSON("/registerC/class/" + s_id, function(list) {
 	            if (callback) {
 	                callback(list);
@@ -55,7 +53,6 @@
     
 	    //삭제
 	  function registerRemove(r_id, callback, error){
-	   console.info(r_id);
 	   $.ajax({
 	      type : 'delete',
 	      url :"/registerC/class/" + r_id,
@@ -75,8 +72,6 @@
 	   // 수정 
 	   function registerModify(data,callback,error){
 	      let r_id = data.r_id;
-	      console.info(data);     
-	      console.info(r_id);
 	   $.ajax({
 	      type : 'put',
 	      url : "/registerC/class/"+r_id,

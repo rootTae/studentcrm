@@ -42,7 +42,7 @@
                   <div class="card-body">
                     <h4 class="card-title">시험 검색 결과</h4>
                     <div class="table-responsive">
-                    <div class="col-md-4 ml-auto text-right">
+                    <div class="col ml-auto text-right">
 	                    <button type="button" class="inserExamtbtn btn btn-primary mb-2" >추가</button>
 			        	<button type="button" class="updateExambtn btn btn-secondary mb-2" style="display: none">수정</button>
 			        	<button type="button" class="deleteExambtn btn btn-info mb-2" style="display: none">삭제</button>
@@ -241,7 +241,6 @@
      	//학생 리스트 
         function getStudent(s_nameValue) {
             GradesService.getStudentList({ s_name: s_nameValue }, function(student) {
-                //console.log(student);
                 var studentList = $('.studentList');
                 studentList.empty();
 
@@ -280,9 +279,7 @@
 					
                     nowsid=s_id;
                     nowsname=s_name;
-                    
-                    console.log(nowsid);
-                    
+                                 
                     getscore(s_name, s_id);                    
                     btnShow3();                    	                   
                 }
@@ -601,7 +598,6 @@
         saveExambtn.on("click", function () {
             if (nowbtn == inserExamtbtn) {
                 setExam(function (result) {
-                	console.info(result);
                 	GradesService.getexamList({ e_name: e_name}, function (exams) {
                         renderExamList(exams);
                     });
@@ -655,7 +651,6 @@
                 e_grade: checkedCheckbox.closest("tr").find("input.ie_e_grade").val(), 
                 e_date: checkedCheckbox.closest("tr").find("input.ie_e_date").val() 
             }
-        	console.log(exam.e_id);
         	if(exam.e_name==''){
         		alert("시험 명을 입력하세요.");	
         	}else{

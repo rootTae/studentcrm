@@ -17,24 +17,10 @@ public class GradesViewController {
 	public String goMain() {
 		return "index";  //메인으로
 	}
-
-	@RequestMapping("/test")
-	public String test() {
-		return "grades/test";
-	}
-	
-	
 	
 	@RequestMapping("/gradesView")
 	public String gradesView() {
 		return "grades/gradesView";
 	}
 	
-//	@RequestMapping(value ="/searchStudent", method = RequestMethod.GET)
-//	public String searchStudent(Model model, String s_name) {
-//		
-//		model.addAttribute("student",s_name);
-//		
-//		return "grades/gradesView";
-//	}
 }

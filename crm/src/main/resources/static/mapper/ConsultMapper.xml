@@ -11,19 +11,23 @@
 </insert>
 
 <select id="showConsultByT_id" parameterType="java.lang.Integer" resultType="org.studentcrm.crm.command.ConsultVO" >
-	select * from consult where t_id = #{t_id} order by num desc limit 10
+	select * from consult where t_id = #{t_id} order by consult_id desc limit 10
 </select>
 
 <select id="showConsultByDateAndS_id" parameterType="java.lang.Integer" resultType="org.studentcrm.crm.command.ConsultVO" >
-	select * from consult where s_id = #{s_id} order by num desc limit 10
+	select * from consult where s_id = #{s_id} order by consult_id desc limit 10
 </select>
 
 <select id="getStudentList" parameterType="java.lang.String" resultType="org.studentcrm.crm.command.ConsultVO">
-	select c.*, t.t_name, s.s_name from consult c 
-	inner join teacher t on c.t_id = t.t_id
-	inner join student s on c.s_id = s.s_id
-	where s.s_name = #{s_name}
+	select * from student where s_name = #{s_name}
 </select>
+
+<!-- <select id="getStudentList" parameterType="java.lang.String" resultType="org.studentcrm.crm.command.ConsultVO">
+	select c.*, t.t_name, s.* from student s 
+	inner join consult c on c.s_id = s.s_id
+	inner join teacher t on t.t_id = c.t_id
+	where s.s_name = #{s_name}
+</select> -->
 
 <!-- 게시물 상세보기 -->
 <select id="getContent" 
@@ -33,6 +37,7 @@
 	inner join teacher t on c.t_id = t.t_id
 	inner join student s on c.s_id = s.s_id
 	where c.s_id = #{s_id}
+	order by c.consult_id desc limit 10
 </select>
 
 <update id="updateConsult" parameterType="org.studentcrm.crm.command.ConsultVO">

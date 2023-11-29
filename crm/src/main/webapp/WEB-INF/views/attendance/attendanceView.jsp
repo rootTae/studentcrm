@@ -93,14 +93,14 @@
           
           <!-- 여기에 내용 코드 입력 - 이 페이지를 복사해서 사용하세요 -->
              <div class="page-header">
-              <h3 class="page-title">Attendance management</h3>
+              <h3 class="page-title">출결 관리</h3>
             </div>
             
              <div class="row">
                <div class="col-7 grid-margin stretch-card">
                    <div class="card">
                      <div class="card-body">
-                       <h4 class="card-title">classes</h4>
+                       <h4 class="card-title">담당 반 명</h4>
                        <p class="card-description">출결체크 할 반을 아래에서 선택하세요.</p>
                        <!-- choose the class for which you want to check the attendance -->
                        <table class="form-inline table">
@@ -115,7 +115,7 @@
               <div class="col-lg-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <h4 class="card-title">Student Attendance chart</h4>
+                    <h4 class="card-title">학생 출결 차트</h4>
                     <canvas id="doughnutChart" style="height: 222px; display: block; width: 445px;" width="445" height="222" class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
@@ -123,7 +123,7 @@
                <div class="col-md-12 grid-margin stretch-card">
                    <div class="card">
                      <div class="card-body table-responsive">
-                       <h4 class="card-title">Attendance Sheet</h4>
+                       <h4 class="card-title">출석부</h4>
                        <div class="row">
                        <button class="btn btn-primary btn-fw" id="yearDropdownBtn"  style="margin-right:10px">Select Year</button>
                   <!-- 드롭다운 메뉴 -->
@@ -137,26 +137,24 @@
 		                      <option value="2026">2026</option>
 		                  </select>
 		                       
-                     	  <button class="btn btn-primary btn-fw" id="monthDropdownBtn" style="margin-right:10px">Select Month</button>
+                     	  <button class="btn btn-primary btn-fw " id="monthDropdownBtn" style="margin-right:10px">Select Month</button>
                   <!-- 드롭다운 메뉴 -->
 		                  <select id="monthDropdown" style="display: none;">
 		                      <!-- 1부터 12까지의 옵션 추가 -->
-		                      <option value="1">January</option>
-		                      <option value="2">February</option>
-		                      <option value="3">March</option>
-		                      <option value="4">April</option>
-		                      <option value="5">May</option>
-		                      <option value="6">June</option>
-		                      <option value="7">July</option>
-		                      <option value="8">August</option>
-		                      <option value="9">September</option>
-		                      <option value="10">October</option>
-		                      <option value="11">November</option>
-		                      <option value="12">December</option>
+		                      <option value="1">1월</option>
+		                      <option value="2">2월</option>
+		                      <option value="3">3월</option>
+		                      <option value="4">4월</option>
+		                      <option value="5">5월</option>
+		                      <option value="6">6월</option>
+		                      <option value="7">7월</option>
+		                      <option value="8">8월</option>
+		                      <option value="9">9월</option>
+		                      <option value="10">10월</option>
+		                      <option value="11">11월</option>
+		                      <option value="12">12월</option>
 		                  </select>
-		                  <button type="button" class="btn btn-outline-primary btn-icon-text submitBtn">
-		                  
-                            <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit </button>  
+		                 <button type="submit" class="btn btn-primary mb-2 input-btn">검색</button>
                              
                        </div>
                 	       <p class="card-description mt-3">출석 : attend/ 지각 : late/ 결석 : absent/ 조퇴 : leave early</p>  

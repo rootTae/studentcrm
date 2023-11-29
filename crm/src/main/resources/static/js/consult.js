@@ -54,7 +54,7 @@
 	
 	function deleteConsult(consult_id, callback, error){
 		console.log("js:deleteC");
-		consolt.log(consult_id);
+		console.log(consult_id);
 		$.ajax({
 			type: 'delete',
 			url: '/consult/delete/' + consult_id,

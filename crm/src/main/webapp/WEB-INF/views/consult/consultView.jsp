@@ -37,20 +37,20 @@
         <div class="main-panel">
           <div class="content-wrapper">
          <div class="row">
-               <div class="col-3 grid-margin stretch-card">
+               <div class="col-5 grid-margin stretch-card">
                   <div class="card">
                        <div class="card-body">
                           <h4 class="card-title">학생 정보 검색</h4>
                            <p class="card-description">학생의 이름 입력해 주세요.</p>
                            <form id="searchForm" method="post" class="form-inline">
                               <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_name" required placeholder="학생이름">
-                              <button type="submit" class="btn btn-primary mb-2" >검색</button>
+                              <button type="submit" class="btn btn-primary mb-2 input-btn" >검색</button>
                              </form>
                       </div>
                     </div>
                </div>
        
-              <div class="col-9 grid-margin">
+              <div class="col-7 grid-margin">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">학생 검색 결과</h4>
@@ -86,12 +86,12 @@
                   <div class="card-body">
                     <h4 class="card-title">상담 목록</h4>
                     <div class="table-responsive">
-                    <div>
-                    <button type="button" class="insertbtn" >추가</button>
-                    <button type="button" class="updatebtn" >수정</button>
-                    <button type="button" class="deletebtn" >삭제</button>
-                    <button type="button" class="savebtn" style="display: none">저장</button>
-                    <button type="button" class="cancelbtn" style="display: none">취소</button>
+                    <div class=text-right>
+                    <button type="button" class="btn btn-primary insertbtn" >추가</button>
+                    <button type="button" class="btn btn-secondary updatebtn" >수정</button>
+                    <button type="button" class="btn btn-info deletebtn" >삭제</button>
+                    <button type="button" class="btn btn-primary savebtn" style="display: none">저장</button>
+                    <button type="button" class="btn btn-info cancelbtn" style="display: none">취소</button>
                 </div>
                       <table class="table" id="consultTable">
                         <thead>
@@ -193,6 +193,8 @@ $(document).ready(function(){
 	$('#searchForm').submit(function(e){
 		e.preventDefault();
 		var s_name = $('#searchS_name').val();
+		console.log("jsp:searchname");
+		console.log(s_name);
 		getStudentList(s_name);
 	});
 	
@@ -208,15 +210,15 @@ $(document).ready(function(){
                 '<td><div class="form-check form-check-muted m-0">'+
                 '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
                 '<i class="input-helper"></i></label></div></td>'+  
-                	'<td hidden><input type="text" class="is_consult_id" name="is_consult_id" readonly value="'+ student.consult_id +'"></td>' +
-                	'<td hidden><input type="text" class="is_t_id" name="is_t_id" readonly value="'+ student.t_id +'"></td>' +
-                	'<td hidden><input type="text" class="is_t_name" name="is_t_name" readonly value="'+ student.t_name +'"></td>' +
-                	'<td><input type="text" class="is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
-                    '<td><input type="text" class="is_s_name" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
-                    '<td><input type="text" class="is_s_gender" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
-                    '<td><input type="text" class="is_s_phone" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
-                    '<td><input type="text" class="is_s_school" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
-                    '<td><input type="text" class="is_s_grade" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
+                	'<td hidden><input type="text" class="form-control is_consult_id" name="is_consult_id" readonly value="'+ student.consult_id +'"></td>' +
+                	'<td hidden><input type="text" class="form-control is_t_id" name="is_t_id" readonly value="'+ student.t_id +'"></td>' +
+                	'<td hidden><input type="text" class="form-control is_t_name" name="is_t_name" readonly value="'+ student.t_name +'"></td>' +
+                	'<td><input type="text" class="form-control is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
+                    '<td><input type="text" class="form-control is_s_name" name="is_s_name"  readonly value="'+ student.s_name +'"></td>' +
+                    '<td><input type="text" class="form-control is_s_gender" name="is_s_gender"  readonly value="'+ student.s_gender +'"></td>' +
+                    '<td><input type="text" class="form-control is_s_phone" name="is_s_phone" readonly value="'+ student.s_phone +'"></td>' +
+                    '<td><input type="text" class="form-control is_s_school" name="is_s_school" readonly value="'+ student.s_school +'"></td>' +
+                    '<td><input type="text" class="form-control is_s_grade" name="is_s_grade" readonly value="'+ student.s_grade + '"></td>' +
                  '</tr>';        
                 studentList.append(str);
             });
@@ -235,10 +237,10 @@ $(document).ready(function(){
 		if(checkedBox){
 			var s_id = checkedBox.closest("tr").find("input.is_s_id").val();
 			var s_name = checkedBox.closest("tr").find("input.is_s_name").val();
-			var consult_id = checkedBox.closest("tr").find("input.is_consult_id").val();
+			//var consult_id = checkedBox.closest("tr").find("input.is_consult_id").val();
 			console.log("jsp:checkbox");
-			console.log(consult_id);
-			getConsultContent(consult_id);
+			console.log(s_id);
+			getConsultContent(s_id);
 			
 			
 		}
@@ -259,14 +261,14 @@ $(document).ready(function(){
 	                   '<td><div class="form-check form-check-muted m-0">' +
 	                   '<label class="form-check-label"><input type="checkbox" class="form-check-input consult_checkbox">' +
 	                   '<i class="input-helper"></i></label></div></td>' +
-	                   '<td hidden><input type="text" class="Consult_id" name="Consult_id" value="' + consult.consult_id + '" readonly></td>' + 
-	                   '<td hidden><input type="text" class="Consult_t_id" name="Consult_t_id" readonly value="' + consult.t_id + '"> </td>' +
-	                   '<td ><input type="text" class="Consult_s_id" name="Consult_s_id" readonly value="' + consult.s_id + '"> </td>' +
-	                   '<td ><input type="text" class="Consult_s_name" name="Consult_s_name" readonly value="' + consult.s_name + '"> </td>' +
-	                   '<td><input type="text" class="Consult_t_name" name="Consult_t_name" readonly value="' + consult.t_name + '"></td>' +
-	                   '<td><input type="text" class="Consult_title" name="Consult_title" readonly value="' + consult.consult_title + '"></td>' +
-	                   '<td><input type="text" class="Consult_content content" name="Consult_content" readonly value="' + consult.consult_content + '"></td>' +
-	                   '<td><input type="text" class="Consult_date" name="Consult_date" readonly value="' + consult.consult_date + '"></td>' +
+	                   '<td hidden><input type="text" class="form-control Consult_id" name="Consult_id" value="' + consult.consult_id + '" readonly></td>' + 
+	                   '<td hidden><input type="text" class="form-control Consult_t_id" name="Consult_t_id" readonly value="' + consult.t_id + '"> </td>' +
+	                   '<td ><input type="text" class="form-control Consult_s_id" name="Consult_s_id" readonly value="' + consult.s_id + '"> </td>' +
+	                   '<td ><input type="text" class="form-control Consult_s_name" name="Consult_s_name" readonly value="' + consult.s_name + '"> </td>' +
+	                   '<td><input type="text" class="form-control Consult_t_name" name="Consult_t_name" readonly value="' + consult.t_name + '"></td>' +
+	                   '<td><input type="text" class="form-control Consult_title" name="Consult_title" readonly value="' + consult.consult_title + '"></td>' +
+	                   '<td><input type="text" class="form-control Consult_content content" name="Consult_content" readonly value="' + consult.consult_content + '"></td>' +
+	                   '<td><input type="text" class="form-control Consult_date" name="Consult_date" readonly value="' + consult.consult_date + '"></td>' +
 	                   '</tr>';
 	                   consultList.append(str);
 					});
@@ -314,13 +316,13 @@ $(document).ready(function(){
 	        '<label class="form-check-label"><input type="checkbox" class="form-check-input consult_checkbox">' +
 	        '<i class="input-helper"></i></label></div></td>' +
 	        '<td hidden><input type="text" class="addConsult_id" name="addConsult_id" value="' + consult.consult_id + '" readonly></td>' + 
-	        '<td><input type="text" class="addConsult_s_id" name="addConsult_s_id" value="' + consult.consult_s_id + '" readonly> </td>' +
-	        '<td hidden><input type="text" class="addConsult_t_id" name="addConsult_t_id" value="' + consult.consult_t_id + '" readonly> </td>' +
-	        '<td ><input type="text" class="addConsult_s_name" name="addConsult_s_name" value="' + consult.consult_s_name + '"  readonly> </td>' +
-	        '<td><input type="text" class="addConsult_t_name" name="addConsult_t_name"  value="' + consult.consult_t_name + '" readonly></td>' +
-	        '<td><input type="text" class="addConsult_title" name="addConsult_title"></td>' +
-	        '<td><input type="text" class="addConsult_content content" name="addConsult_content"></td>' +
-	        '<td><input type="text" class="addConsult_date" name="addConsult_date" readonly value="' + consult.consult_date + '"></td>' +
+	        '<td><input type="text" class="form-control addConsult_s_id" name="addConsult_s_id" value="' + consult.consult_s_id + '" readonly> </td>' +
+	        '<td hidden><input type="text" class="form-control addConsult_t_id" name="addConsult_t_id" value="' + consult.consult_t_id + '" readonly> </td>' +
+	        '<td ><input type="text" class="form-control addConsult_s_name" name="addConsult_s_name" value="' + consult.consult_s_name + '"  readonly> </td>' +
+	        '<td><input type="text" class="form-control addConsult_t_name" name="addConsult_t_name"  value="' + consult.consult_t_name + '" readonly></td>' +
+	        '<td><input type="text" class="form-control addConsult_title" name="addConsult_title"></td>' +
+	        '<td><input type="text" class="form-control addConsult_content content" name="addConsult_content"></td>' +
+	        '<td><input type="text" class="form-control addConsult_date" name="addConsult_date" readonly value="' + consult.consult_date + '"></td>' +
 	        '</tr>';
 	        consultList.append(str);
 	}
@@ -394,8 +396,21 @@ $(document).ready(function(){
 	    }
 	});
 
-    deletebtn.on('click', function () {
-         var checkedkbox = $('.consult_checkbox:checked');
+	deletebtn.on('click', function () {
+        var checkedbox = $('.consult_checkbox:checked');
+        if (checkedbox.length > 0) {
+            
+      	 var consult_id = checkedbox.closest("tr").find("input.Consult_id").val();
+      	 var s_id = checkedbox.closest("tr").find("input.Consult_s_id").val();
+      	 
+            consultService.deleteConsult(consult_id, function () {              	 
+          	  	getConsultContent(s_id);
+            });
+        }
+    });
+	
+    /* deletebtn.on('click', function () {
+         var checkedbox = $('.consult_checkbox:checked');
          if (checkedbox.length > 0) {
              
        	 var consult_id = checkedbox.closest("tr").find("input.Consult_id").val();
@@ -405,7 +420,7 @@ $(document).ready(function(){
            	  	getConsultContent(consult_id);
              });
          }
-     });
+     }); */
     
     // 버튼 show, hide
     function btnShow2(){

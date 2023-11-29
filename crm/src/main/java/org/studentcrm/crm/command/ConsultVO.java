@@ -23,5 +23,9 @@ public class ConsultVO {
    // join
    private String t_name;
    private String s_name;
+   private String s_gender;
+   private String s_phone;
+   private String s_school;
+   private String s_grade;
    
 }

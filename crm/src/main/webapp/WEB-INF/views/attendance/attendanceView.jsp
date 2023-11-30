@@ -79,7 +79,7 @@
 </head>
 <!-- partial -->
   <body>
-  <audio id="musicPlayer" controls>
+  <audio id="musicPlayer" style="position: absolute" controls >
     <source src="/music/carol.mp3" type="audio/mp3">   
 </audio>
     <div class="container-scroller">

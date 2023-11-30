@@ -284,7 +284,7 @@ $(document).ready(function(){
 		});
 	};
 	
-	$(document).on('dbclick', '.content', function () {
+	$(document).on('dblclick', '.content', function () {
         var consultContent = $(this).closest("tr").find('.content').val();
         $('#modalContent').text(consultContent);
         $('#consultModal').modal('show');
@@ -385,7 +385,7 @@ $(document).ready(function(){
 	function updateConsult(callback) {
  	   let data = {
          	consult_id : $(".Consult_id").val(),
-         	consult_content : $(".Consult_content").val()      	          	
+         	consult_content : $(".Consult_content").val()   
          }    	   
  	   
  	   consultService.updateConsult(data, function (result) {
@@ -457,7 +457,7 @@ $(document).ready(function(){
     
     function consultEdit() {
     	if($('.consult_checkbox:checked')){
-    		$('.consult_checkbox:checked').closest("tr").find("input:not('.Consult_id, .Consult_s_name, Consult_s_id, Consult_t_id, Consult_title, Consult_date')").prop('readonly', false);
+    		$('.consult_checkbox:checked').closest("tr").find("input:not('.Consult_id, .Consult_t_name, .Consult_s_name, .Consult_s_id, .Consult_t_id, .Consult_title, .Consult_date')").prop('readonly', false);
     	}
     	
     }    

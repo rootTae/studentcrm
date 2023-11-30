@@ -409,49 +409,52 @@
   
 
 
-        //성적 입력
-        function setScore(callback){
-            
-            let scoreList = {               
-                
-                s_id : $("#add_s_id").val(),
-                e_id : $("#add_e_id").val(),
-                korScore : $("#add_korScore").val(),
-                engScore : $("#add_engScore").val(),
-                mathScore : $("#add_mathScore").val()
-                
-            }  
-            
-            GradesService.scoreInsert(scoreList, function(result){                   
-                console.log("jsp : " + result);
-                callback(result);                      
-            }); 
-            
-        }
-        
-        
-        // 점수리스트저장 버튼
-        savebtn.on("click", function(){
-            //성적 입력 저장
-        	if(nowbtn == addbtn){
- 				      
-                setScore(function (callback) {
-                         	
-                });
-                s_name =$("#add_s_name").val();
-                s_id = $("#add_s_id").val();
-                getscore(s_name, s_id);
-                btnShow3();    
-            }else if (nowbtn == updatebtn) {
-                upScore(function () {
-                    btnShow3();
-                    s_name =$(".s_name").val();
-                    s_id = $(".s_id").val();
-                    getscore(s_name, s_id); 
-                });
-            }
-            
-        });
+  // 성적 입력
+     function setScore(callback) {
+         let scoreList = {
+             s_id: $("#add_s_id").val(),
+             e_id: $("#add_e_id").val(),
+             korScore: $("#add_korScore").val(),
+             engScore: $("#add_engScore").val(),
+             mathScore: $("#add_mathScore").val()
+         };
+
+         console.log("Before scoreInsert call"); // 추가된 부분
+
+         GradesService.scoreInsert(scoreList, function (result) {
+             console.log("jsp : " + result);
+             callback(result);
+         });
+     }
+
+     // 점수리스트저장 버튼
+     savebtn.on("click", function () {
+         // 성적 입력 저장
+         if (nowbtn == addbtn) {
+             s_name = $("#add_s_name").val();
+             s_id = $("#add_s_id").val();
+
+             console.log("Before setScore call"); // 추가된 부분
+
+             setScore(function (result) {
+                 console.log("Inside callback of setScore"); // 추가된 부분
+
+                 GradesService.getScoreList({ s_name: s_name, s_id: s_id }, function (scores) {
+                     renderScoreList(scores);
+                 });
+
+                 btnShow3();
+             });
+         } else if (nowbtn == updatebtn) {
+             upScore(function () {
+                 btnShow3();
+                 s_name = $(".s_name").val();
+                 s_id = $(".s_id").val();
+                 getscore(s_name, s_id);
+             });
+         }
+     });
+
           
        //성적 수정 버튼 
  		updatebtn.on("click", function () {
@@ -486,23 +489,29 @@
             }
         }       
 
-     // 점수 삭제 버튼
-        deletebtn.on('click', function () {
-            var checkedCheckbox = $('.sl_checkbox:checked');
+     
+       // 점수 삭제 버튼
+		deletebtn.on('click', function () {
+		    var checkedCheckbox = $('.sl_checkbox:checked');
+		
+		    if (checkedCheckbox.length > 0) {
+		        // 사용자에게 삭제 여부를 묻는 확인 다이얼로그 표시
+		        var isConfirmed = confirm("성적을 삭제하시겠습니까?");
+		
+		        if (isConfirmed) {
+		            var score_id = checkedCheckbox.closest("tr").find("input#score_id").val();
+		
+		            GradesService.scoreRemove(score_id, function (result) {
+		                // 삭제 요청이 성공한 경우에 실행될 코드
+		                var scoreList = $('#scoreList');
+		                scoreList.empty(); // scoreList를 비워주는 작업
+		                getscore(nowsname, nowsid); // 삭제된 정보를 다시 불러오기
+		                btnShow3(); // 버튼 상태 조정
+		            });
+		        }
+		    }
+		});
 
-            if (checkedCheckbox.length > 0) {
-                var score_id = checkedCheckbox.closest("tr").find("input#score_id").val();
-
-                GradesService.scoreRemove(score_id, function (result) {
-                    // 삭제 요청이 성공한 경우에 실행될 코드
-                    var scoreList = $('#scoreList');
-                    scoreList.empty(); // scoreList를 비워주는 작업
-                    getscore(nowsname, nowsid); // 삭제된 정보를 다시 불러오기
-                    btnShow3(); // 버튼 상태 조정
-
-                });
-            }
-        });	
 	
 	// 시험 취소
 	cancelbtn.on("click", function () {
@@ -520,6 +529,11 @@
 
 	        btnShow3();
 	    } else {
+			GradesService.getScoreList({ s_name: nowsname, s_id: nowsid }, function (scores) {
+	            
+	        	renderScoreList(scores);
+	        });
+	    	
 	        btnShow3();
 	    }
 	});
@@ -598,6 +612,7 @@
         saveExambtn.on("click", function () {
             if (nowbtn == inserExamtbtn) {
                 setExam(function (result) {
+                	var e_name = $("#add_e_name").val();
                 	GradesService.getexamList({ e_name: e_name}, function (exams) {
                         renderExamList(exams);
                     });
@@ -627,18 +642,26 @@
         });
 
         //시험 삭제 버튼
-        deleteExambtn.on('click', function () {
-            var checkedCheckbox = $('.el_checkbox:checked');
-            if (checkedCheckbox.length > 0) {
-                var e_id = checkedCheckbox.closest("tr").find("input#ie_e_id").val();
-                var e_nameValue = checkedCheckbox.closest("tr").find("input#ie_e_name").val();
-                GradesService.examRemove(e_id, function () {              	 
-                	GradesService.getexamList({ e_name: e_nameValue }, function (exams) {
-                         renderExamList(exams);
-                     });
+      deleteExambtn.on('click', function () {
+    var checkedCheckbox = $('.el_checkbox:checked');
+    if (checkedCheckbox.length > 0) {
+        // 사용자에게 삭제 여부를 묻는 확인 다이얼로그 표시
+        var isConfirmed = confirm("삭제하시겠습니까?");
+        
+        if (isConfirmed) {
+            var e_id = checkedCheckbox.closest("tr").find("input#ie_e_id").val();
+            var e_nameValue = checkedCheckbox.closest("tr").find("input#ie_e_name").val();
+            
+            // 확인이 된 경우에만 삭제 진행
+            GradesService.examRemove(e_id, function () {
+                GradesService.getexamList({ e_name: e_nameValue }, function (exams) {
+                    renderExamList(exams);
                 });
-            }
-        });
+            });
+        }
+    }
+});
+
 		
         //시험수정 이벤트
         function upExam(callback) {

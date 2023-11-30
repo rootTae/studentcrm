@@ -63,7 +63,7 @@
 			                  <p class="card-description">학생의 이름 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
 				                  <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_nam" required placeholder="학생이름">
-				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
+				                  <button type="submit" class="btn btn-primary mb-2 input-btn" >검색</button>
                   			  </form>
                 		</div>
               		</div>

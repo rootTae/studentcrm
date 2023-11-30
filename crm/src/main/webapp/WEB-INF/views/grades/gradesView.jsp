@@ -30,7 +30,7 @@
 			                  <p class="card-description">시험명을 입력해 주세요.</p>
 			                  <form id="examsearchForm" method="post" class="form-inline">
 				                  <input type="text" class="form-control mb-2 mr-sm-2" id="e_name" name="e_name" required placeholder="시험명">
-				                  <button type="button" class="btn btn-primary mb-2" >검색</button>
+				                  <button type="button" class="btn btn-primary mb-2 input-btn" >검색</button>
                   			  </form>
                 		</div>
               		</div>
@@ -81,7 +81,7 @@
 			                  <p class="card-description">학생명을 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
 				                  <input type="text" class="form-control mb-2 mr-sm-2" name="s_name" id="s_name" required placeholder="학생명">
-				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
+				                  <button type="submit" class="btn btn-primary mb-2 input-btn" >검색</button>
                   			  </form>
                 		</div>
               		</div>

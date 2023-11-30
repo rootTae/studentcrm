@@ -1,18 +1,19 @@
  var consultService = (function(){
-	function insertConsult(data, callback, error){
+	function insertConsult(param, callback, error){
 		/*let s_id = param.s_id;
 		let consult_date = param.consult_date;
 		console.log("js:insertC");
 		console.log(s_id);
 		console.log(consult_date);*/
 		console.log("js:insertC");
-		console.log(data);
-		var consult_id = data.consult_id
+		console.log(param);
+		var s_id = param.s_id;
+		var consult_date = param.consult_date;
 		$.ajax({
 			type:'post',
-			url:'/consult/new/' + consult_id+'/'+data.consult_date,
-			data: JSON.stringify(data),
-			
+			url:'/consult/new/' + s_id+'/'+ consult_date,
+			data: JSON.stringify(param),
+			contentType: 'application/json;charset=UTF-8',
 			success: function(response){
 				if(response){
 					callback(response);

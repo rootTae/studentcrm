@@ -5,9 +5,9 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.studentcrm.crm.mapper.ConsultMapper">
-<insert id="insertConsult" parameterType="org.studentcrm.crm.command.ConsultVO" useGeneratedKeys="true" keyProperty="consult_id">>
-	insert into consult (consult_id, consult_date, t_id, s_id, content_title, consult_content)
-	values(#{consult_id}, #{consult_date}, #{t_id}, #{s_id}, #{content_title}, #{consult_content)
+<insert id="insertConsult" parameterType="org.studentcrm.crm.command.ConsultVO"> <!-- useGeneratedKeys="true" keyProperty="consult_id" -->
+	insert into consult (consult_date, t_id, s_id, consult_title, consult_content)
+	values(#{consult_date}, #{t_id}, #{s_id}, #{consult_title}, #{consult_content})
 </insert>
 
 <select id="showConsultByT_id" parameterType="java.lang.Integer" resultType="org.studentcrm.crm.command.ConsultVO" >

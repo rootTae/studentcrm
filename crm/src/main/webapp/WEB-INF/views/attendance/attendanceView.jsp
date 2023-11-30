@@ -79,6 +79,9 @@
 </head>
 <!-- partial -->
   <body>
+  <audio id="musicPlayer" controls>
+    <source src="/music/carol.mp3" type="audio/mp3">   
+</audio>
     <div class="container-scroller">
       <!-- partial:/include/_sidebar.html -->
       <%@include file="/WEB-INF/views/include/_sidebar.jsp" %>
@@ -94,6 +97,7 @@
           <!-- 여기에 내용 코드 입력 - 이 페이지를 복사해서 사용하세요 -->
              <div class="page-header">
               <h3 class="page-title">출결 정보 관리</h3>
+              <button class="mdi mdi-file-music" id="playButton"></button>
             </div>
             
              <div class="row">
@@ -538,7 +542,12 @@ $(document).ready(function () {
    var a_status = "";
     var classListTR = $(".classList");
     var t_id = <%= t_id%>;
-
+    document.getElementById('playButton').addEventListener('click', function() {
+        musicPlayer.play();
+    });
+    document.getElementById('playButton').addEventListener('dblclick', function() {
+        musicPlayer.pause();
+    });
     attendanceService.getClassList({ t_id: t_id },
         function (list) {
             var str = "";

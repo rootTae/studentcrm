@@ -180,14 +180,14 @@
 		                            <div class="col-sm-6">
 		                              <div class="form-check">
 		                                <label class="form-check-label">
-		                                  <input type="radio" class="form-check-input" name="s_gender" id="s_gender_m"> 남자 <i class="input-helper"></i></label>
+		                                  <input type="radio" class="form-check-input" name="s_gender" id="s_gender_m"> 남성 <i class="input-helper"></i></label>
 		                              </div>
 		                            </div>
 		                            
 		                            <div class="col-sm-6">
 		                              <div class="form-check">
 		                                <label class="form-check-label">
-		                                  <input type="radio" class="form-check-input" name="s_gender" id="s_gender_f"> 여자 <i class="input-helper"></i></label>
+		                                  <input type="radio" class="form-check-input" name="s_gender" id="s_gender_f"> 여성 <i class="input-helper"></i></label>
 		                              </div>
 		                          	</div>
 		                          	
@@ -502,11 +502,11 @@
 						//getImage(s_id);//첨부파일
 						//$("#s_filename").val(data.s_filename);
 						
-						if(data.s_gender == "남자") {
+						if(data.s_gender == "남성") {
 							//console.log(data.s_gender);
 							$("#s_gender_m").prop('disabled', false).prop('checked', true);
 							$("#s_gender_f").prop('disabled', true);
-						} else if(data.s_gender == "여자") {
+						} else if(data.s_gender == "여성") {
 							//console.log(data.s_gender);
 							$("#s_gender_f").prop('disabled', false).prop('checked', true);
 							$("#s_gender_m").prop('disabled', true);
@@ -544,6 +544,7 @@
 				//DB에 저장은 여기가 아니라 입력 후 저장 버튼을 누르면 한다.
 				nowBtn = addBtn;
 				//console.log("nowBtn : "+ nowBtn.html());
+				//console.log("studentId : "+studentId);
 			});
 			
 			//학생 정보 등록
@@ -579,7 +580,7 @@
 				StudentService.insertStudent(student, function(result){
 					//if(result == "success") {
 					if(result > 0) {
-						alert("success");
+						alert("학생 정보를 저장했습니다.");
 						//console.log("jsp : "+result);
 						callback(result);
 					}
@@ -588,6 +589,10 @@
 	
 			//수정 버튼
 			modifyBtn.on("click", function() {
+				if(nowBtn == delBtn) {
+					alert("수정할 데이터가 없습니다.");					
+					return;
+				}
 				//저장을 누르면 nowSid로 추가, 수정, 삭제 버튼 보임
 				btnShow2();
 				
@@ -625,7 +630,7 @@
 				}
 				StudentService.updateStudent(student, function(result){
 					if(result == "success") {
-						alert(result);
+						alert("학생 정보를 수정했습니다.");
 						callback();
 					}
 				});
@@ -634,28 +639,34 @@
 			
 			//삭제 버튼
 			delBtn.on("click", function() {
-				
-				//학생 정보 삭제
-				if(studentId == "") {
-					alert("삭제할 데이터가 없습니다.");
-					return;
-				}else {
-					delStudent(studentId, function() {
-						studentInit();
-						btnShow3();
-						studentId == "";
-					});
-					delCommute(studentId);//통학 정보 삭제
+				if(confirm('학생 정보를 삭제하시겠습니까?')){
+					
+					//학생 정보 삭제
+					if(studentId == "") {
+						alert("삭제할 데이터가 없습니다.");
+						return;
+					}else {
+						delStudent(studentId, function() {
+							studentInit();
+							btnShow3();
+							//studentEdit();
+							//btnShow2();
+							studentId = "";
+							//console.log("studentId : "+studentId);
+						});
+						delCommute(studentId);//통학 정보 삭제
+						nowBtn = delBtn;
+					}
 				}
 				
 			});
 			
 			//학생 정보 삭제
 			function delStudent(studentId, callback){
-					console.log("삭제할 번호 : "+studentId);
+					//console.log("삭제할 번호 : "+studentId);
 				StudentService.deleteStudent(studentId, function(result) {
 					if(result == "success"){
-						alert("학생 정보 삭제 성공");
+						alert("학생 정보를 삭제했습니다.");
 						callback();
 					}
 				});
@@ -701,6 +712,7 @@
 			cancelBtn.on("click", function() {			
 				//첫 화면일땐 그냥 지우기만 해야 한다.
 				//if(nowSid == "") {
+				//console.log("studentId : "+studentId);
 				if(studentId == "") {
 					//console.log("이전에 보던 데이터 없음");
 					studentInit();
@@ -935,7 +947,7 @@
 			
 			//삭제 버튼 처리 - 화면에서 삭제. 실제 파일 삭제는 아님
 			$(".uploadResult").on("click", "button", function(e) {
-				if(confirm("remove this file?")) {
+				if(confirm("첨부 이미지를 삭제하시겠습니까?")) {
 					showNoImage();
 				}
 			});
@@ -981,15 +993,15 @@
 					location : $("#location").val()
 				}
 
-				console.log("다 비어있음");
+				//console.log("다 비어있음");
 				//s_id 외에 모두 비어 있으면 DB에 저장하지 않고 값이 하나라도 있을 때 저장
 				if(!(zip_code == null && address1 == null && address2 == null && location == null)) {
-					console.log("다 비어있음");
-					StudentService.insertCommute(commute, function(result){
+					/* StudentService.insertCommute(commute, function(result){
 						if(result == "success") {
 							alert("통학정보 추가 성공");
 						}
-					});
+					}); */
+					StudentService.insertCommute(commute);
 				}
 				
 			}
@@ -997,7 +1009,7 @@
 			//통학 정보 수정
 			//function upCommute(nowSid){ //nowSid : 수정할 c_id
 			function upCommute(studentId){ //nowSid : 수정할 c_id
-				console.log("studentId : "+studentId);
+				//console.log("studentId : "+studentId);
 				//입력할 데이터
 				let student = {
 					//s_id : nowSid, //update 위치 파악용
@@ -1008,11 +1020,13 @@
 					location : $("#location").val()
 				}
 				if(!(zip_code == null && address1 == null && address2 == null && location == null)) {
-					StudentService.updateCommute(student, function(result){
+					//console.log("삭제할 내용 있음");				
+					/* StudentService.updateCommute(student, function(result){
 						if(result == "success") {
 							alert("통학 정보 수정 성공");
 						}
-					});
+					}); */
+					StudentService.updateCommute(student);
 				}
 			}
 			
@@ -1020,7 +1034,7 @@
 			//function delCommute(nowSid){
 				//StudentService.deleteCommute(nowSid, function(result) {
 			function delCommute(studentId){
-				console.log("삭제할 아이디 : "+studentId);	
+				//console.log("삭제할 아이디 : "+studentId);	
 				
 				let commute = {
 					s_id :studentId,
@@ -1031,11 +1045,12 @@
 				}
 
 				if(!(zip_code == null && address1 == null && address2 == null && location == null)) {
-					StudentService.deleteCommute(studentId, function(result) {
+					/* StudentService.deleteCommute(studentId, function(result) {
 						if(result == "success"){
 							alert("통학 정보 삭제 성공");
 						}
-					});
+					}); */
+					StudentService.deleteCommute(studentId);
 				}
 				
 				

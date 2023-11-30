@@ -96,6 +96,7 @@ public class StudentRestController {
 		ImageAttachVO attachImg = sService.getAttachImg(s_id);
 		//2. 게시글 삭제 - DB에서 삭제
 		int result = sService.deleteStudent(s_id);
+		//log.info(result);
 		if(result == 1) {//첨부파일 삭제가 되면 게시글 삭제
 			//System.out.println("첨부파일이 삭제 됨");
 			//3. 파일 삭제 - 실제 파일 삭제

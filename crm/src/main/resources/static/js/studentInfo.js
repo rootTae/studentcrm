@@ -54,8 +54,8 @@
 	
 	//학생 정보 추가
 	function insertStudent(student, callback) {
-		console.log("폼데이터 확인--------");
-		console.log(student.attachImg);
+		//console.log("폼데이터 확인--------");
+		//console.log(student.attachImg);
 		
 		$.ajax({
 			type:'POST',
@@ -65,11 +65,11 @@
 			success:function(result, status, xhr){
 				if(callback){
 					callback(result);
-					console.log("js : "+result);
+					//console.log("js : "+result);
 				}
 			},
 			error:function(xhr, status, er) {
-				console.log("aaaa");
+				//console.log("aaaa");
 				if(er){
 					error(er);
 				}
@@ -167,7 +167,7 @@
 				}
 			},
 			error:function(xhr, status, er){
-				console.log("통학 에러");
+				//console.log("통학 에러");
 				if(er){
 					error(er);
 				}
@@ -182,12 +182,12 @@
 			url:'/studentRest/deleteC/'+s_id,
 			success : function(delResult, status, xhr){
 				if(callback){
-					console.log(delResult);
+					//console.log(delResult);
 					callback("통학삭제성공"+delResult);
 				}
 			},
 			error : function(xhr, status, er) {
-					console.log("삭제할 통학 정보가 없음");
+					//console.log("삭제할 통학 정보가 없음");
 				if(er){
 					callback(null);
 					error(er);
@@ -202,8 +202,8 @@
 		$.getJSON(
 			"/studentRest/getClassInfo/"+s_id,
 			function(data){
-				console.log("data : ");
-				console.log(data);
+				//console.log("data : ");
+				//console.log(data);
 				if(callback){
 					let s_classInfoArray = [];
 					$.each(data, function(index, item) {
@@ -215,8 +215,8 @@
 			}
 			
 		).fail(function(xhr, status, err) {
-			console.log(xhr);
-			console.log("학급 정보 에러");
+			//console.log(xhr);
+			//console.log("학급 정보 에러");
 			if(err){
 				error(er);
 			}

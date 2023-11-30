@@ -93,9 +93,9 @@ public class MemberController {
 			}			
 			
 			if(result == 1) {
-				RA.addFlashAttribute("msg", "register success");
+				RA.addFlashAttribute("msg", "강사 등록을 완료했습니다.");
 			}else {
-				RA.addFlashAttribute("msg", "register failed");
+				RA.addFlashAttribute("msg", "강사 등록에 실패했습니다.");
 			}
 			return "redirect:/member/login";
 		}
@@ -125,11 +125,11 @@ public class MemberController {
 //			System.out.println(vo.getT_id());
 			
 			if(result == 1) {
-				RA.addFlashAttribute("msg", "update success");
+				RA.addFlashAttribute("msg", "정보를 수정했습니다.");
 				//session.setAttribute("t_id", vo.getT_id()); 
 				//아이디도 수정가능이면 필요. update에 아이디 중복체크도 추가해야 함
 			}else {
-				RA.addFlashAttribute("msg", "update failed");
+				RA.addFlashAttribute("msg", "정보 수정에 실패했습니다.");
 			}
 			return "redirect:/member/mypage/"+t_id;
 		}
@@ -155,7 +155,7 @@ public class MemberController {
 //				session.setAttribute("t_name", vo.getT_name()); // 사이드바에 띄울 이름과 과목
 //				session.setAttribute("t_subject", vo.getT_subject());
 				//log.info("login 이후 mypage로 갈 vo 확인 "+vo);
-				RA.addFlashAttribute("msg", "login success");
+				RA.addFlashAttribute("msg", "로그인을 환영합니다.");
 				if(idCheck != null) {
 					Cookie check = new Cookie("idCheck", t_loginid);
 					check.setMaxAge(30);

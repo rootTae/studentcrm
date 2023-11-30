@@ -598,6 +598,7 @@
         saveExambtn.on("click", function () {
             if (nowbtn == inserExamtbtn) {
                 setExam(function (result) {
+                	var e_name = $("#add_e_name").val();
                 	GradesService.getexamList({ e_name: e_name}, function (exams) {
                         renderExamList(exams);
                     });

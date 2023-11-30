@@ -413,23 +413,29 @@ $(document).ready(function(){
 	    	    }
 	    	});
 	 
-	 			//삭제
-	    	  deletebtn.on('click', function () {
-	              var checkedCheckbox = $('.P_checkbox:checked');
-	              if (checkedCheckbox.length > 0) {
-	                  
-            	  var p_id = checkedCheckbox.closest("tr").find("input.p_id").val();
-      
-            	  PaymentService.paymentRemove(p_id, function () {              	 
-           			let data  = { startDate : $('#startDate').val(),
-                               endDate : $('#endDate').val(),
-                               s_id : $('#studentId').val() }
-       	                    
-       	                    getPayment(data);
-                  });
-	              }
-	          });
-	    	
+	    	deletebtn.on('click', function () {
+	    	    var checkedCheckbox = $('.P_checkbox:checked');
+
+	    	    if (checkedCheckbox.length > 0) {
+	    	        // 사용자에게 삭제 여부를 묻는 확인 다이얼로그 표시
+	    	        var isConfirmed = confirm("결제 정보를 삭제하시겠습니까?");
+
+	    	        if (isConfirmed) {
+	    	            var p_id = checkedCheckbox.closest("tr").find("input.p_id").val();
+
+	    	            PaymentService.paymentRemove(p_id, function () {
+	    	                let data = {
+	    	                    startDate: $('#startDate').val(),
+	    	                    endDate: $('#endDate').val(),
+	    	                    s_id: $('#studentId').val()
+	    	                };
+	    	                
+	    	                getPayment(data);
+	    	            });
+	    	        }
+	    	    }
+	    	});
+
 	 			
 	 			
 	     

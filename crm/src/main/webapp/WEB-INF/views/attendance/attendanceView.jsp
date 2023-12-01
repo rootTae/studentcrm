@@ -79,7 +79,7 @@
 </head>
 <!-- partial -->
   <body>
-  <audio id="musicPlayer" controls>
+  <audio id="musicPlayer" style="position: absolute" controls >
     <source src="/music/carol.mp3" type="audio/mp3">   
 </audio>
     <div class="container-scroller">
@@ -158,7 +158,7 @@
 		                      <option value="11">11월</option>
 		                      <option value="12">12월</option>
 		                  </select>
-		                 <button type="submit" class="submitBtn btn btn-primary mb-2 input-btn">검색</button> 
+		                 <button type="submit" class="submitBtn btn btn-primary mb-2 input-btn">검색</button>
                              
                        </div>
                 	       <p class="card-description mt-3">출석 : attend/ 지각 : late/ 결석 : absent/ 조퇴 : leave early</p>  

@@ -61,7 +61,7 @@ resultType="org.studentcrm.crm.command.ScoreVO">
         round(avg((es.korScore + es.engScore + es.mathScore)/3),1)as totalAvgScore
     from exam_score es
     join exam e on es.e_id = e.e_id
-    where es.e_id = #{e_id} and e.e_grade =#{e_grade}		
+    where es.e_id = #{e_id} <!-- and e.e_grade =#{e_grade} -->		
 </select>
 
 <!-- 시험 생성 -->

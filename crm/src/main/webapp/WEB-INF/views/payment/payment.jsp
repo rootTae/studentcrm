@@ -29,7 +29,7 @@
 			                  <p class="card-description">학생명을 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
 				                  <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_name" required placeholder="학생명">
-				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
+				                  <button type="submit" class="btn btn-primary mb-2 input-btn" >검색</button>
                   			  </form>
                 		</div>
               		</div>
@@ -87,7 +87,7 @@
 		          <input type="text" class="form-control" id="studentId" name="studentId" required placeholder="학생번호">
 				</div>
 		        <div style="display: flex; align-items: center;">
-  				  <button type="button" class="btn btn-primary" id="search" >검색</button>
+  				  <button type="button" class="btn btn-primary input-btn" id="search" >검색</button>
 				</div>
 		      </div>
 		    </div>
@@ -413,23 +413,29 @@ $(document).ready(function(){
 	    	    }
 	    	});
 	 
-	 			//삭제
-	    	  deletebtn.on('click', function () {
-	              var checkedCheckbox = $('.P_checkbox:checked');
-	              if (checkedCheckbox.length > 0) {
-	                  
-            	  var p_id = checkedCheckbox.closest("tr").find("input.p_id").val();
-      
-            	  PaymentService.paymentRemove(p_id, function () {              	 
-           			let data  = { startDate : $('#startDate').val(),
-                               endDate : $('#endDate').val(),
-                               s_id : $('#studentId').val() }
-       	                    
-       	                    getPayment(data);
-                  });
-	              }
-	          });
-	    	
+	    	deletebtn.on('click', function () {
+	    	    var checkedCheckbox = $('.P_checkbox:checked');
+
+	    	    if (checkedCheckbox.length > 0) {
+	    	        // 사용자에게 삭제 여부를 묻는 확인 다이얼로그 표시
+	    	        var isConfirmed = confirm("결제 정보를 삭제하시겠습니까?");
+
+	    	        if (isConfirmed) {
+	    	            var p_id = checkedCheckbox.closest("tr").find("input.p_id").val();
+
+	    	            PaymentService.paymentRemove(p_id, function () {
+	    	                let data = {
+	    	                    startDate: $('#startDate').val(),
+	    	                    endDate: $('#endDate').val(),
+	    	                    s_id: $('#studentId').val()
+	    	                };
+	    	                
+	    	                getPayment(data);
+	    	            });
+	    	        }
+	    	    }
+	    	});
+
 	 			
 	 			
 	     

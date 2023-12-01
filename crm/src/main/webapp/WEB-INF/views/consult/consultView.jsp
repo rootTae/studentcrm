@@ -16,6 +16,7 @@
 	HttpSession session1 = request.getSession();
 	TeacherVO teacher = (TeacherVO)session.getAttribute("teacher");  
 	Integer t_id = (Integer)teacher.getT_id();
+	String t_name = (String)teacher.getT_name();
 
 
 %>
@@ -63,13 +64,12 @@
                           <tr>
                             <th>                         
                             </th>
-                          <th hidden>상담 번호</th>
-                          <th>학생 번호</th>
-                          <th>학생 이름</th>
-                          <th>성별</th>
-                          <th>전화번호</th>
-                          <th>학교</th>
-                          <th>학년</th>
+	                          <th>학생 번호</th>
+	                          <th>학생 이름</th>
+	                          <th>성별</th>
+	                          <th>전화번호</th>
+	                          <th>학교</th>
+	                          <th>학년</th>
                           </tr>
                         </thead>
                         <tbody class="studentList">
@@ -171,11 +171,14 @@ $(document).ready(function(){
 	var year = tday.getFullYear();
 	var month = (tday.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 맞춤
 	var day = tday.getDate().toString().padStart(2, '0'); // 날짜를 두 자리로 맞춤
-	
+	var t_name = '<%= t_name%>';
+	var t_id = '<%= t_id%>';
 	var today = year + '-' + month + '-' + day;
-	console.log(today);
-
 	
+	console.log(today);
+	var consultList = $('#consultList');
+	
+	var nowS_id ="";
     let nowconsult_id="";
     <%-- var tday = new Date().toLocaleDateString();
     var today = new Date("<%= tday%>");
@@ -213,7 +216,6 @@ $(document).ready(function(){
                 '<td><div class="form-check form-check-muted m-0">'+
                 '<label class="form-check-label"><input type="checkbox" class="form-check-input s_checkbox">'+
                 '<i class="input-helper"></i></label></div></td>'+  
-                	'<td hidden><input type="text" class="form-control is_consult_id" name="is_consult_id" readonly value="'+ student.consult_id +'"></td>' +
                 	'<td hidden><input type="text" class="form-control is_t_id" name="is_t_id" readonly value="'+ student.t_id +'"></td>' +
                 	'<td hidden><input type="text" class="form-control is_t_name" name="is_t_name" readonly value="'+ student.t_name +'"></td>' +
                 	'<td><input type="text" class="form-control is_s_id" name="is_s_id" readonly value="'+ student.s_id +'"></td>' +
@@ -282,7 +284,7 @@ $(document).ready(function(){
 		});
 	};
 	
-	$(document).on('dbclick', '.content', function () {
+	$(document).on('dblclick', '.content', function () {
         var consultContent = $(this).closest("tr").find('.content').val();
         $('#modalContent').text(consultContent);
         $('#consultModal').modal('show');
@@ -294,17 +296,23 @@ $(document).ready(function(){
 		//console.log($('.s_checkbox:checked').closest("tr").find().prop("class"));
 		if($('.s_checkbox:checked').length>0){
 			let consult = {
-				consult_t_id: $('.s_checkbox:checked').closest("tr").find(".is_t_id").val(),
-				consult_t_name: $('.s_checkbox:checked').closest("tr").find(".is_t_name").val(),
-				consult_s_id: $('.s_checkbox:checked').closest("tr").find(".is_s_id").val(),
-				consult_s_name: $('.s_checkbox:checked').closest("tr").find(".is_s_name").val(),
-				consult_id: nowconsult_id,
+				//consult_t_id: $('.s_checkbox:checked').closest("tr").find(".is_t_id").val(),
+				//consult_t_name: $('.s_checkbox:checked').closest("tr").find(".is_t_name").val(),
+				t_id: t_id,
+				t_name: t_name,
+				s_id: $('.s_checkbox:checked').closest("tr").find(".is_s_id").val(),
+				s_name: $('.s_checkbox:checked').closest("tr").find(".is_s_name").val(),
+				//consult_id: nowconsult_id,
 				consult_date: today
 			}
 			
+			nowS_id = consult.s_id;
+			console.log(nowS_id);
 			console.log("jsp: insertbtn");
-			console.log(consult.consult_t_id);
-			console.log(consult.consult_s_id);
+			console.log(consult);
+			console.log(consult.t_id);
+			console.log(consult.s_id);
+			console.log(consult.t_name);
 			
 			addConsult(consult);
 			btnShow2();
@@ -319,10 +327,10 @@ $(document).ready(function(){
 	        '<label class="form-check-label"><input type="checkbox" class="form-check-input consult_checkbox">' +
 	        '<i class="input-helper"></i></label></div></td>' +
 	        '<td hidden><input type="text" class="addConsult_id" name="addConsult_id" value="' + consult.consult_id + '" readonly></td>' + 
-	        '<td><input type="text" class="form-control addConsult_s_id" name="addConsult_s_id" value="' + consult.consult_s_id + '" readonly> </td>' +
-	        '<td hidden><input type="text" class="form-control addConsult_t_id" name="addConsult_t_id" value="' + consult.consult_t_id + '" readonly> </td>' +
-	        '<td ><input type="text" class="form-control addConsult_s_name" name="addConsult_s_name" value="' + consult.consult_s_name + '"  readonly> </td>' +
-	        '<td><input type="text" class="form-control addConsult_t_name" name="addConsult_t_name"  value="' + consult.consult_t_name + '" readonly></td>' +
+	        '<td><input type="text" class="form-control addConsult_s_id" name="addConsult_s_id" value="' + consult.s_id + '" readonly> </td>' +
+	        '<td hidden><input type="text" class="form-control addConsult_t_id" name="addConsult_t_id" value="' + consult.t_id + '" readonly> </td>' +
+	        '<td ><input type="text" class="form-control addConsult_s_name" name="addConsult_s_name" value="' + consult.s_name + '"  readonly> </td>' +
+	        '<td><input type="text" class="form-control addConsult_t_name" name="addConsult_t_name"  value="' + consult.t_name + '" readonly></td>' +
 	        '<td><input type="text" class="form-control addConsult_title" name="addConsult_title"></td>' +
 	        '<td><input type="text" class="form-control addConsult_content content" name="addConsult_content"></td>' +
 	        '<td><input type="text" class="form-control addConsult_date" name="addConsult_date" readonly value="' + consult.consult_date + '"></td>' +
@@ -332,10 +340,12 @@ $(document).ready(function(){
 	
 	function setConsult(callback){
 		let data={
-			consult_id: $(".addConsult_id").val(),
+			//consult_id: $(".addConsult_id").val(),
 			consult_title: $(".addConsult_title").val(),
 			consult_content: $(".addConsult_content").val(), 
-			consult_date: $(".addConsult_date").val()
+			consult_date: $(".addConsult_date").val(),
+			t_id: $(".addConsult_t_id").val(),
+			s_id: $(".addConsult_s_id").val() 
 		}
 		consultService.insertConsult(data, function(result){
 			console.log("jsp:insertConsult: " + result);
@@ -347,15 +357,15 @@ $(document).ready(function(){
         
     	if(nowbtn == addbtn){	      
     		setConsult(function (callback) {            	
-            consult_id = $(".addConsult_id").val();
-            getConsultContent(consult_id);
+            s_id = $(".addConsult_s_id").val();
+            getConsultContent(s_id);
             btnShow3();    
             });	               
         } else if (nowbtn == updatebtn) {
             updateConsult(function () {
                 btnShow3();
-                consult_id = $(".Consult_id").val();
-                getConsultContent(consult_id);
+                s_id = $(".Consult_s_id").val();
+                getConsultContent(s_id);
             });
         }
         
@@ -375,7 +385,7 @@ $(document).ready(function(){
 	function updateConsult(callback) {
  	   let data = {
          	consult_id : $(".Consult_id").val(),
-         	consult_content : $(".Consult_content").val()      	          	
+         	consult_content : $(".Consult_content").val()   
          }    	   
  	   
  	   consultService.updateConsult(data, function (result) {
@@ -390,9 +400,9 @@ $(document).ready(function(){
 
 	    if (nowbtn == addbtn) {
 	    	consultList.empty();	    	       
-	    	var consult_id = nowconsultid;
+	    	var s_id = nowS_id;
 
-            getConsultContent(consult_id);
+            getConsultContent(s_id);
 	        btnShow3();
 	    } else {
 	        btnShow3();
@@ -447,7 +457,7 @@ $(document).ready(function(){
     
     function consultEdit() {
     	if($('.consult_checkbox:checked')){
-    		$('.consult_checkbox:checked').closest("tr").find("input:not('.Consult_id, .Consult_s_name, Consult_s_id, Consult_t_id, Consult_title, Consult_date')").prop('readonly', false);
+    		$('.consult_checkbox:checked').closest("tr").find("input:not('.Consult_id, .Consult_t_name, .Consult_s_name, .Consult_s_id, .Consult_t_id, .Consult_title, .Consult_date')").prop('readonly', false);
     	}
     	
     }    

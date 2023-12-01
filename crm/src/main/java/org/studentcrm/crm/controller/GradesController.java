@@ -59,7 +59,7 @@ public class GradesController {
 	//시험 점수 생성
 		@PostMapping(value = "/new",
 				consumes = "application/json",
-				produces = {MediaType.APPLICATION_JSON_VALUE+ ";charset=UTF-8"})
+				produces = {MediaType.TEXT_PLAIN_VALUE+ ";charset=UTF-8"})
 		public ResponseEntity<String> scoreInsert(@RequestBody Exam_ScoreVO vo){
 			int result =gservice.scoreRegister(vo);
 			return result == 1 ?

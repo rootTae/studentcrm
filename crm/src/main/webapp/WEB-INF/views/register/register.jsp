@@ -63,7 +63,7 @@
 			                  <p class="card-description">학생의 이름 입력해 주세요.</p>
 			                  <form id="searchForm" method="post" class="form-inline">
 				                  <input type="text" class="form-control mb-2 mr-sm-2" name="searchS_name" id="searchS_nam" required placeholder="학생이름">
-				                  <button type="submit" class="btn btn-primary mb-2" >검색</button>
+				                  <button type="submit" class="btn btn-primary mb-2 input-btn" >검색</button>
                   			  </form>
                 		</div>
               		</div>
@@ -324,7 +324,7 @@
               '<td hidden><input type="text" class="add_r_id" name="add_r_id" id="add_r_id" readonly></td>' + // 수정된 부분
               '<td><input type="text" class="add_s_id form-control" name="add_s_id" id="add_s_id" readonly value="' + register.s_id + '"> </td>' +
               '<td><input type="text" class="add_s_name form-control" name="add_s_name" id="add_s_name" readonly value="' + register.s_name + '"></td>' +
-              '<td><input type="text" class="add_class_name form-control" name="add_class_name" id="add_class_name" placeholder="수업을 입력하세요."></td>' +
+              '<td><input type="text" class="add_class_name form-control" name="add_class_name" id="add_class_name" placeholder="수업 명."></td>' +
               '<td hidden><input type="text" class="add_t_name form-control" name="add_t_name" id="add_t_name" readonly></td>' +
               '<td hidden><input type="text" class="add_classroom form-control" name="add_classroom" id="add_classroom" readonly></td>' +
               '<td hidden><input type="text" class="add_c_period form-control" name="add_c_period" id="add_c_period" readonly ></td>' +
@@ -415,18 +415,24 @@
 	    	    }
 	    	});
  
-	    	  deletebtn.on('click', function () {
-	              var checkedCheckbox = $('.R_checkbox:checked');
-	              if (checkedCheckbox.length > 0) {
-	                  
-	            	  var r_id = checkedCheckbox.closest("tr").find("input.R_r_id").val();
-	                  var s_id = checkedCheckbox.closest("tr").find("input.R_s_id").val();
-	                  
-	                  RegisterService.registerRemove(r_id, function () {              	 
-	                	  	getRegister(s_id);
-	                  });
-	              }
-	          });
+	    	
+	    	deletebtn.on('click', function () {
+	    	    var checkedCheckbox = $('.R_checkbox:checked');
+
+	    	    if (checkedCheckbox.length > 0) {
+	    	        // 사용자에게 삭제 여부를 묻는 확인 다이얼로그 표시
+	    	        var isConfirmed = confirm("정말로 삭제하시겠습니까?");
+
+	    	        if (isConfirmed) {
+	    	            var r_id = checkedCheckbox.closest("tr").find("input.R_r_id").val();
+	    	            var s_id = checkedCheckbox.closest("tr").find("input.R_s_id").val();
+
+	    	            RegisterService.registerRemove(r_id, function () {
+	    	                getRegister(s_id);
+	    	            });
+	    	        }
+	    	    }
+	    	});
 	    	
 
       

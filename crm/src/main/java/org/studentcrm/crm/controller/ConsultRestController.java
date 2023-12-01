@@ -33,9 +33,9 @@ public class ConsultRestController {
    // insert the context of the consulation. 상담기록 입력
    @PostMapping(value="/new/{s_id}/{consult_date}", 
          produces= {MediaType.TEXT_PLAIN_VALUE}, 
-         consumes="application/json")
+         consumes="application/json;charset=UTF-8")
    ResponseEntity<String> insertConsult(
-		 @PathVariable("consult_id") int consult_id,
+		 @PathVariable("s_id") int s_id,
          @PathVariable("consult_date") String consult_date,
          @RequestBody ConsultVO vo){
       log.info("insert controller(vo): " + vo);

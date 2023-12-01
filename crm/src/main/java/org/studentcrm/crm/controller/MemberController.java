@@ -84,8 +84,8 @@ public class MemberController {
 		//Regform - 강사등록 정보 입력 폼
 		@PostMapping("/regForm")
 		public String registForm(TeacherVO vo, RedirectAttributes RA) {
+			log.info("넘길 데이터 정보 : "+vo);
 			int result = memberService.regist(vo);
-			//log.info("넘길 데이터 정보 : "+vo);
 			
 			if(vo.getAttachImg() != null) {
 				//log.info("첨부한 이미지가 있음!!!!");

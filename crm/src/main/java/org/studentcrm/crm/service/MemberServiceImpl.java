@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		int result = mapper.regist(vo);
 		
 		int lastTid = mapper.getLastId();
-		//log.info(vo.getAttachImg());
+		log.info(vo.getAttachImg());
 		if(vo.getAttachImg() == null) {
 			return 1;
 		}

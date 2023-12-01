@@ -178,6 +178,8 @@
   //============== 사용자 사진 업로드 ===============
 	//첨부파일 추가 작업
 	$(document).ready(function(e) {
+		//console.log($(".upload_img").length);
+		//console.log($(".upload_img").children().eq(0).html());
 		//function sendImgData() { //저장 버튼을 눌렀을 때 실행할 함수
 			let formObj = $("form[role='form']"); //role의 값이 form 태그 선택
 			
@@ -185,13 +187,18 @@
 				e.preventDefault();
 				let str = "";
 				let upImgData = $(".upload_img");
-				//업로드할 파일을 선택한 후 만들어진 정보를 담아서 넘겨주는 것
-				str += "<input type='hidden' name='attachImg.fileName' value='"+upImgData.data("filename")+"'>";
-				str += "<input type='hidden' name='attachImg.uuid' value='"+upImgData.data("uuid")+"'>";
-				str += "<input type='hidden' name='attachImg.uploadPath' value='"+upImgData.data("path")+"'>";
-				str += "<input type='hidden' name='attachImg.fileType' value='"+upImgData.data("type")+"'>";
-				
-				formObj.append(str);
+				//console.log("filetype : "+upImgData.data("type"));
+				//if(upImgData.length > 0){
+				if(upImgData.children().length){
+					//console.log(upImgData.children().length);
+					//업로드할 파일을 선택한 후 만들어진 정보를 담아서 넘겨주는 것
+					str += "<input type='hidden' name='attachImg.fileName' value='"+upImgData.data("filename")+"'>";
+					str += "<input type='hidden' name='attachImg.uuid' value='"+upImgData.data("uuid")+"'>";
+					str += "<input type='hidden' name='attachImg.uploadPath' value='"+upImgData.data("path")+"'>";
+					str += "<input type='hidden' name='attachImg.fileType' value='"+upImgData.data("type")+"'>";
+					
+					formObj.append(str);
+				}
 				//console.log(formObj);
 				joinCheck();//최종 데이터 넘김
 			});
